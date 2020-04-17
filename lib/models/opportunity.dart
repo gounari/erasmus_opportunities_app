@@ -1,3 +1,4 @@
+import 'package:erasmusopportunitiesapp/helpers/math.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:dart_random_choice/dart_random_choice.dart';
@@ -29,6 +30,7 @@ class Opportunity {
   String provideForDisabilities;
   String description;
   String image;
+  bool favorite = false;
 
   Opportunity({
     @required this.oid,
@@ -49,10 +51,27 @@ class Opportunity {
     @required this.provideForDisabilities,
     @required this.description,
     this.image,
+    this.favorite,
   }){
     if (image == null) {
       image = randomChoice(images);
     }
+  }
+
+  String getPreviewType() {
+    return (type == 'Youth Exchange') ? 'YE' : 'TC';
+  }
+
+  String getPreviewParticipationCost() {
+    if (participationCost == 0) {
+      return 'free';
+    }
+    return '€' + removeDecimalZeroFormat(participationCost);
+  }
+
+  String getPreviewDuration() {
+    Duration difference = endDate.difference(startDate);
+    return difference.inDays.toString() + ' days';
   }
 }
 
@@ -64,13 +83,13 @@ List<Opportunity> opportunities = [
     organisationUID: 'Italy',
     venueLocation: 'Italy',
     type: 'Italy',
-    startDate: DateTime.now(),
+    startDate: DateTime(2020, DateTime.april, 16),
     endDate: DateTime.now(),
     lowAge: 20,
     highAge: 30,
     topic: 'Italy',
     applicationDeadline: DateTime.now(),
-    participationCost: 50,
+    participationCost: 0,
     reimbursementLimit: 250,
     applicationLink: 'Italy',
     provideForDisabilities: 'Italy',

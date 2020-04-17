@@ -1,6 +1,5 @@
 import 'package:erasmusopportunitiesapp/models/opportunity.dart';
 import 'package:erasmusopportunitiesapp/screens/opportunity_screen.dart';
-import 'package:erasmusopportunitiesapp/models/opportunity.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -40,32 +39,76 @@ class _HomeState extends State<Home> {
                     padding: EdgeInsets.fromLTRB(100.0, 20.0, 20.0, 20.0),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.start,
                           children: <Widget>[
-                            Container(
-                              width: 120.0,
-                              child: Text('Title bluuh bluhh bluhh bluhh',
-                                maxLines: 2,
-                                overflow: TextOverflow.ellipsis,
-                                style: TextStyle(
-                                  fontSize: 18.0,
-                                  fontWeight: FontWeight.w600,
+                            Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: <Widget>[
+                              Container(
+                                width: 120.0,
+                                child: Text(
+                                  'Title bluuh bluhh bluhh bluhh',
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: TextStyle(
+                                    fontSize: 18.0,
+                                    fontWeight: FontWeight.w600,
+                                  ),
                                 ),
                               ),
+                              Icon(
+                                Icons.favorite,
+                                color: Colors.red[500],
+                                size: 30.0,
+                              ),
+                            ],
+                          ),
+                          SizedBox(height: 5.0,),
+                          Text(
+                            'Location',
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                          ],
+                        ),
+                        Row(
+                          children: <Widget>[
+                            Container(
+                              width: 50.0,
+                              decoration: BoxDecoration(
+                                color: Theme.of(context).accentColor,
+                                borderRadius: BorderRadius.circular(10.0),
+                              ),
+                              alignment: Alignment.center,
+                              child: Text(opportunities[index].getPreviewType()),
                             ),
-                            Icon(
-                              Icons.favorite,
-                              color: Colors.red[500],
-                              size: 30.0,
+                            SizedBox(width: 10.0,),
+                            Container(
+                              width: 70.0,
+                              decoration: BoxDecoration(
+                                color: Theme.of(context).accentColor,
+                                borderRadius: BorderRadius.circular(10.0),
+                              ),
+                              alignment: Alignment.center,
+                              child: Text(opportunities[index].getPreviewParticipationCost()),
+                            ),
+                            SizedBox(width: 10.0,),
+                            Container(
+                              width: 70.0,
+                              decoration: BoxDecoration(
+                                color: Theme.of(context).accentColor,
+                                borderRadius: BorderRadius.circular(10.0),
+                              ),
+                              alignment: Alignment.center,
+                              child: Text(opportunities[index].getPreviewDuration()),
                             ),
                           ],
                         ),
-                        Text('Location'),
-
                       ],
                     ),
                   ),

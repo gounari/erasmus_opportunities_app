@@ -14,6 +14,11 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: _title,
       debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        primaryColor: Color.fromRGBO(0, 68, 149, 1),
+        accentColor: Color(0xFFD8ECF1),
+        scaffoldBackgroundColor: Color(0xFFF3F5F7),
+      ),
       home: MyStatefulWidget(),
     );
   }
@@ -60,15 +65,15 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('BottomNavigationBar Sample'),
-        backgroundColor: Color.fromRGBO(0, 68, 149, 1),
+        title: Image.asset('assets/images/logo_white.png', fit: BoxFit.contain, height: 70,),
+        backgroundColor: Theme.of(context).primaryColor,
       ),
       body: Center(
         child: _widgetOptions.elementAt(_selectedIndex),
       ),
       bottomNavigationBar: CurvedNavigationBar(
         backgroundColor: Colors.transparent,
-        color: Color.fromRGBO(0, 68, 149, 1),
+        color: Theme.of(context).primaryColor,
         items: <Widget>[
           Icon(Icons.home, color: Colors.white, size: 30),
           Icon(Icons.favorite, color: Colors.white, size: 30),

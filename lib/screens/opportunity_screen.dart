@@ -33,9 +33,12 @@ class _OpportunityScreenState extends State<OpportunityScreen> {
                 ),
                 child: Hero(
                   tag: widget.opportunity.oid,
-                  child: Image(
-                    image: AssetImage(widget.opportunity.image),
-                    fit: BoxFit.cover,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(30.0),
+                    child: Image(
+                      image: AssetImage(widget.opportunity.image),
+                      fit: BoxFit.cover,
+                    ),
                   ),
                 ),
               ),
