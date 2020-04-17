@@ -39,6 +39,7 @@ dependencies:
 
   flutter_form_builder: ^3.8.3
   flutter_progress_button: ^1.0.0
+  dart_random_choice: ^0.0.2
 
 dev_dependencies:
   flutter_test:
