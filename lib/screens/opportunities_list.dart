@@ -17,7 +17,7 @@ class _OpportunitiesListState extends State<OpportunitiesList> {
   Widget build(BuildContext context) {
 
     final oppFields = FirebaseOpportunityConstants();
-    
+
     final querySnapshot = Provider.of<QuerySnapshot>(context);
     if (querySnapshot == null) return Container();
 

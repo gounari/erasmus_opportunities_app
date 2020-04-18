@@ -1,5 +1,7 @@
 import 'dart:math';
 
+import 'package:erasmusopportunitiesapp/widgets/Circular_clipper.dart';
+import 'package:erasmusopportunitiesapp/widgets/content_scroll.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:erasmusopportunitiesapp/models/opportunity.dart';
@@ -17,98 +19,201 @@ class _OpportunityScreenState extends State<OpportunityScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: ListView(
-        padding: EdgeInsets.all(0.0),
         children: <Widget>[
           Stack(
-            children:  <Widget>[
-              Column(
-                children: <Widget>[
-                  Container(
-                    height: MediaQuery.of(context).size.width/1.4,
-                    child: Hero(
-                      tag: widget.opportunity.oid,
-                      child: Image(
-                        image: AssetImage(widget.opportunity.image),
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                  ),
-                  Transform(
-                    alignment: Alignment.center,
-                    transform: Matrix4.rotationX(pi),
-                    child: Image(
-                      image: AssetImage(widget.opportunity.image),
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                ],
-              ),
-
+            children: <Widget>[
               Container(
-                height: MediaQuery.of(context).size.height,
-                child: ListView(
-                  padding: EdgeInsets.only(top: 0.0),
+                transform: Matrix4.translationValues(0.0, -50.0, 0.0),
+                child: Hero(
+                  tag: widget.opportunity.oid,
+                  child: ClipShadowPath(
+                    clipper: CircularClipper(),
+                    shadow: Shadow(
+                        color: Colors.black,
+                        blurRadius: 20.0),
+                    child: Image(
+                      height: 400.0,
+                      width: double.infinity,
+                      fit: BoxFit.cover,
+                      image: AssetImage(widget.opportunity.image),
+                    ),
+                  ),
+                ),
+              ),
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: 0.0, vertical: 10.0),
+                child: RawMaterialButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: new Icon(
+                    Icons.arrow_back,
+                    color: Theme.of(context).primaryColor,
+                    size: 30.0,
+                  ),
+                  shape: new CircleBorder(),
+                  elevation: 2.0,
+                  fillColor: Colors.white,
+                  padding: EdgeInsets.all(5.0),
+                ),
+              ),
+              Positioned.fill(
+                bottom: 10.0,
+                child: Align(
+                  alignment: Alignment.bottomCenter,
+                  child: RawMaterialButton(
+                    padding: EdgeInsets.all(20.0),
+                    elevation: 12.0,
+                    onPressed: () => print('Apply'),
+                    shape: CircleBorder(),
+                    splashColor: Theme.of(context).primaryColor,
+                    focusColor: Theme.of(context).primaryColor,
+                    highlightColor: Theme.of(context).primaryColor,
+                    hoverColor: Theme.of(context).primaryColor,
+                    fillColor: Colors.white,
+                    child: Icon(
+                      Icons.assignment,
+                      size: 50.0,
+                      color: Theme.of(context).primaryColor,
+                    ),
+                  ),
+                ),
+              ),
+              Positioned(
+                bottom: 0.0,
+                left: 20.0,
+                child: IconButton(
+                  padding: EdgeInsets.only(left: 30.0),
+                  onPressed: () => print('Add to Favorites'),
+                  icon: Icon(Icons.favorite_border),
+                  iconSize: 30.0,
+                  color: Colors.black,
+                ),
+              ),
+              Positioned(
+                bottom: 0.0,
+                right: 25.0,
+                child: IconButton(
+                  onPressed: () => print('Share'),
+                  icon: Icon(Icons.share),
+                  iconSize: 35.0,
+                  color: Colors.black,
+                ),
+              ),
+            ],
+          ),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 40.0, vertical: 20.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                Text(
+                  widget.opportunity.title,
+                  style: TextStyle(
+                    fontSize: 20.0,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                SizedBox(height: 10.0),
+                Text(
+                  widget.opportunity.type,
+                  style: TextStyle(
+                    color: Colors.black54,
+                    fontSize: 16.0,
+                  ),
+                ),
+                SizedBox(height: 12.0),
+                Text(
+                  '⭐ ⭐ ⭐ ⭐',
+                  style: TextStyle(fontSize: 25.0),
+                ),
+                SizedBox(height: 15.0),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
-                    Stack(
+                    Column(
                       children: <Widget>[
-
-                        Container(
-                          padding: EdgeInsets.symmetric(horizontal: 0.0, vertical: 40.0),
-                          child: RawMaterialButton(
-                            onPressed: () {
-                              Navigator.pop(context);
-                            },
-                            child: new Icon(
-                              Icons.arrow_back,
-                              color: Colors.white,
-                              size: 30.0,
-                            ),
-                            shape: new CircleBorder(),
-                            elevation: 2.0,
-                            fillColor: Theme.of(context).primaryColor,
-                            padding: EdgeInsets.all(5.0),
+                        Text(
+                          'Year',
+                          style: TextStyle(
+                            color: Colors.black54,
+                            fontSize: 16.0,
                           ),
                         ),
-
-                        Container(
-                          margin: EdgeInsets.only(top: 220),
-                          padding: EdgeInsets.all(30.0),
-                          height: MediaQuery.of(context).size.height - 220.0,
-                          width: double.infinity,
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.all(Radius.circular(30)),
-                            boxShadow: [
-                              new BoxShadow(
-                                color: Theme.of(context).primaryColor,
-                                offset: new Offset(-20.0, -10.0),
-                                blurRadius: 40.0
-                              )
-                            ],
+                        SizedBox(height: 2.0),
+                        Text(
+                          widget.opportunity.getPreviewDuration(),
+                          style: TextStyle(
+                            fontSize: 20.0,
+                            fontWeight: FontWeight.w600,
                           ),
-                          child: Column(
-                            children: <Widget>[
-                              Text(
-                                widget.opportunity.title.toString().trim(),
-                                maxLines: 3,
-                                overflow: TextOverflow.ellipsis,
-                                style: TextStyle(
-                                  fontSize: 30.0,
-                                  fontWeight: FontWeight.w600,
-                                  color: Theme.of(context).primaryColor,
-                                ),
-                              ),
-                            ],
+                        ),
+                      ],
+                    ),
+                    Column(
+                      children: <Widget>[
+                        Text(
+                          'Country',
+                          style: TextStyle(
+                            color: Colors.black54,
+                            fontSize: 16.0,
+                          ),
+                        ),
+                        SizedBox(height: 2.0),
+                        Text(
+                          widget.opportunity.venueLocation,
+                          style: TextStyle(
+                            fontSize: 20.0,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ],
+                    ),
+                    Column(
+                      children: <Widget>[
+                        Text(
+                          'Length',
+                          style: TextStyle(
+                            color: Colors.black54,
+                            fontSize: 16.0,
+                          ),
+                        ),
+                        SizedBox(height: 2.0),
+                        Text(
+                          widget.opportunity.getPreviewDuration(),
+                          style: TextStyle(
+                            fontSize: 20.0,
+                            fontWeight: FontWeight.w600,
                           ),
                         ),
                       ],
                     ),
                   ],
                 ),
-              ),
-            ],
+                SizedBox(height: 25.0),
+                Container(
+                  height: 120.0,
+                  child: SingleChildScrollView(
+                    child: Text(
+                      widget.opportunity.description,
+                      style: TextStyle(
+                        color: Colors.black54,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
+//          ContentScroll(
+//            //images: widget.movie.screenshots,
+//            title: 'Screenshots',
+//            imageHeight: 200.0,
+//            imageWidth: 250.0,
+//          ),
         ],
       ),
     );
