@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:erasmusopportunitiesapp/models/opportunity.dart';
@@ -20,29 +22,29 @@ class _OpportunityScreenState extends State<OpportunityScreen> {
         children: <Widget>[
           Stack(
             children:  <Widget>[
-              Container(
-                height: MediaQuery.of(context).size.width/1.4,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(30.0),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black26,
-                      offset: Offset(0.0, 2.0),
-                      blurRadius: 6.0,
+              Column(
+                children: <Widget>[
+                  Container(
+                    height: MediaQuery.of(context).size.width/1.4,
+                    child: Hero(
+                      tag: widget.opportunity.oid,
+                      child: Image(
+                        image: AssetImage(widget.opportunity.image),
+                        fit: BoxFit.cover,
+                      ),
                     ),
-                  ],
-                ),
-                child: Hero(
-                  tag: widget.opportunity.oid,
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(30.0),
+                  ),
+                  Transform(
+                    alignment: Alignment.center,
+                    transform: Matrix4.rotationX(pi),
                     child: Image(
                       image: AssetImage(widget.opportunity.image),
                       fit: BoxFit.cover,
                     ),
                   ),
-                ),
+                ],
               ),
+
               IconButton(
                 padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 40.0),
                 icon: Icon(Icons.arrow_back),
@@ -52,13 +54,14 @@ class _OpportunityScreenState extends State<OpportunityScreen> {
                   Navigator.pop(context);
                 },
               ),
+
               Container(
                 height: MediaQuery.of(context).size.height,
                 child: ListView(
                   padding: EdgeInsets.only(top: 220.0),
                   children: <Widget>[
                     Container(
-
+                      padding: EdgeInsets.all(30.0),
                       height: MediaQuery.of(context).size.height - 220.0,
                       width: double.infinity,
                       decoration: BoxDecoration(
