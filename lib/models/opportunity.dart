@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:erasmusopportunitiesapp/helpers/math.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
@@ -27,7 +28,7 @@ class Opportunity {
   double participationCost;
   double reimbursementLimit;
   String applicationLink;
-  String provideForDisabilities;
+  List<dynamic> provideForDisabilities;
   String description;
   String image;
   bool favorite = false;
@@ -75,43 +76,43 @@ class Opportunity {
   }
 }
 
-List<Opportunity> opportunities = [
-  Opportunity(
-    oid: 'adhagdgahgdhagdhagdh',
-    title: 'One',
-    organisationName: 'Venice',
-    organisationUID: 'Italy',
-    venueLocation: 'Italy',
-    type: 'Italy',
-    startDate: DateTime(2020, DateTime.april, 16),
-    endDate: DateTime.now(),
-    lowAge: 20,
-    highAge: 30,
-    topic: 'Italy',
-    applicationDeadline: DateTime.now(),
-    participationCost: 0,
-    reimbursementLimit: 250,
-    applicationLink: 'Italy',
-    provideForDisabilities: 'Italy',
-    description: 'Italy',
-  ),
-  Opportunity(
-    oid: 'jahdjhajdhajhdja',
-    title: 'Two',
-    organisationName: 'Venice',
-    organisationUID: 'Italy',
-    venueLocation: 'Italy',
-    type: 'Italy',
-    startDate: DateTime.now(),
-    endDate: DateTime.now(),
-    lowAge: 20,
-    highAge: 30,
-    topic: 'Italy',
-    applicationDeadline: DateTime.now(),
-    participationCost: 50,
-    reimbursementLimit: 250,
-    applicationLink: 'Italy',
-    provideForDisabilities: 'Italy',
-    description: 'Italy',
-  ),
-];
+//List<Opportunity> opportunitiesList = [
+//  Opportunity(
+//    oid: 'adhagdgahgdhagdhagdh',
+//    title: 'One',
+//    organisationName: 'Venice',
+//    organisationUID: 'Italy',
+//    venueLocation: 'Italy',
+//    type: 'Italy',
+//    startDate: DateTime(2020, DateTime.april, 16),
+//    endDate: DateTime.now(),
+//    lowAge: 20,
+//    highAge: 30,
+//    topic: 'Italy',
+//    applicationDeadline: DateTime.now(),
+//    participationCost: 0,
+//    reimbursementLimit: 250,
+//    applicationLink: 'Italy',
+//    provideForDisabilities: 'Italy',
+//    description: 'Italy',
+//  ),
+//  Opportunity(
+//    oid: 'jahdjhajdhajhdja',
+//    title: 'Two',
+//    organisationName: 'Venice',
+//    organisationUID: 'Italy',
+//    venueLocation: 'Italy',
+//    type: 'Italy',
+//    startDate: DateTime.now(),
+//    endDate: DateTime.now(),
+//    lowAge: 20,
+//    highAge: 30,
+//    topic: 'Italy',
+//    applicationDeadline: DateTime.now(),
+//    participationCost: 50,
+//    reimbursementLimit: 250,
+//    applicationLink: 'Italy',
+//    provideForDisabilities: 'Italy',
+//    description: 'Italy',
+//  ),
+//];
