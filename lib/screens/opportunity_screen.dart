@@ -15,7 +15,8 @@ class _OpportunityScreenState extends State<OpportunityScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
+      body: ListView(
+        padding: EdgeInsets.all(0.0),
         children: <Widget>[
           Stack(
             children:  <Widget>[
@@ -53,8 +54,41 @@ class _OpportunityScreenState extends State<OpportunityScreen> {
                   },
                 ),
               ),
+              Padding(
+                padding: EdgeInsets.only(top: 220.0),
+                child: Container(
+                  padding: EdgeInsets.all(30.0),
+                  height: MediaQuery.of(context).size.height - 220.0,
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.all(Radius.circular(30)),
+                    boxShadow: [
+                      new BoxShadow(
+                        color: Theme.of(context).primaryColor,
+                        offset: new Offset(-20.0, -10.0),
+                        blurRadius: 40.0
+                      )
+                    ],
+                  ),
+                  child: Column(
+                    children: <Widget>[
+                      Text(
+                        widget.opportunity.title.toString().trim(),
+                        maxLines: 3,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                          fontSize: 30.0,
+                          fontWeight: FontWeight.w600,
+                          color: Theme.of(context).primaryColor,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
             ],
-          )
+          ),
         ],
       ),
     );

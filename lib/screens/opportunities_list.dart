@@ -164,7 +164,6 @@ class _OpportunitiesListState extends State<OpportunitiesList> {
                       width: 110.0,
                       image: AssetImage(opportunities[index].image),
                       fit: BoxFit.cover,
-
                     ),
                   ),
                 ),
