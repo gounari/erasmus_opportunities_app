@@ -1,5 +1,5 @@
 import 'dart:math';
-
+import 'package:url_launcher/url_launcher.dart';
 import 'package:erasmusopportunitiesapp/widgets/Circular_clipper.dart';
 import 'package:erasmusopportunitiesapp/widgets/content_scroll.dart';
 import 'package:flutter/cupertino.dart';
@@ -66,13 +66,25 @@ class _OpportunityScreenState extends State<OpportunityScreen> {
                   child: RawMaterialButton(
                     padding: EdgeInsets.all(20.0),
                     elevation: 12.0,
-                    onPressed: () => print('Apply'),
                     shape: CircleBorder(),
                     splashColor: Theme.of(context).primaryColor,
                     focusColor: Theme.of(context).primaryColor,
                     highlightColor: Theme.of(context).primaryColor,
                     hoverColor: Theme.of(context).primaryColor,
                     fillColor: Colors.white,
+                    onPressed: () async {
+                      print('1');
+                      final url = widget.opportunity.applicationLink;
+                      if (await canLaunch(url)) {
+                        await launch(url);
+                      } else {
+                        final snackBar = SnackBar(
+                          content: Text('An error accured! Please try again.'),
+                          backgroundColor: Colors.red,
+                        );
+                        Scaffold.of(context).showSnackBar(snackBar);
+                      }
+                    },
                     child: Icon(
                       Icons.assignment,
                       size: 50.0,
