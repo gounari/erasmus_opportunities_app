@@ -66,7 +66,7 @@ class _OpportunitiesListState extends State<OpportunitiesList> {
                   borderRadius: BorderRadius.circular(20.0),
                 ),
                 child: Padding(
-                  padding: EdgeInsets.fromLTRB(100.0, 20.0, 20.0, 20.0),
+                  padding: EdgeInsets.fromLTRB(100.0, 15.0, 20.0, 20.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -80,21 +80,16 @@ class _OpportunitiesListState extends State<OpportunitiesList> {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: <Widget>[
                               Container(
-                                width: 150.0,
+                                width: 200.0,
                                 child: Text(
                                   opportunities[index].title.toString().trim(),
-                                  maxLines: 2,
+                                  maxLines: 3,
                                   overflow: TextOverflow.ellipsis,
                                   style: TextStyle(
                                     fontSize: 18.0,
                                     fontWeight: FontWeight.w600,
                                   ),
                                 ),
-                              ),
-                              Icon(
-                                Icons.favorite,
-                                color: Colors.red[500],
-                                size: 30.0,
                               ),
                             ],
                           ),
