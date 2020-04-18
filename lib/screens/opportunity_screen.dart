@@ -45,50 +45,56 @@ class _OpportunityScreenState extends State<OpportunityScreen> {
                 ],
               ),
 
-              IconButton(
-                padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 40.0),
-                icon: Icon(Icons.arrow_back),
-                iconSize: 30.0,
-                color: Colors.black,
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-              ),
-
               Container(
                 height: MediaQuery.of(context).size.height,
                 child: ListView(
-                  padding: EdgeInsets.only(top: 220.0),
+                  padding: EdgeInsets.only(top: 0.0),
                   children: <Widget>[
-                    Container(
-                      padding: EdgeInsets.all(30.0),
-                      height: MediaQuery.of(context).size.height - 220.0,
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.all(Radius.circular(30)),
-                        boxShadow: [
-                          new BoxShadow(
-                            color: Theme.of(context).primaryColor,
-                            offset: new Offset(-20.0, -10.0),
-                            blurRadius: 40.0
-                          )
-                        ],
-                      ),
-                      child: Column(
-                        children: <Widget>[
-                          Text(
-                            widget.opportunity.title.toString().trim(),
-                            maxLines: 3,
-                            overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
-                              fontSize: 30.0,
-                              fontWeight: FontWeight.w600,
-                              color: Theme.of(context).primaryColor,
-                            ),
+                    Stack(
+                      children: <Widget>[
+
+                        IconButton(
+                          padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 40.0),
+                          icon: Icon(Icons.arrow_back),
+                          iconSize: 30.0,
+                          color: Colors.black,
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                        ),
+
+                        Container(
+                          margin: EdgeInsets.only(top: 220),
+                          padding: EdgeInsets.all(30.0),
+                          height: MediaQuery.of(context).size.height - 220.0,
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.all(Radius.circular(30)),
+                            boxShadow: [
+                              new BoxShadow(
+                                color: Theme.of(context).primaryColor,
+                                offset: new Offset(-20.0, -10.0),
+                                blurRadius: 40.0
+                              )
+                            ],
                           ),
-                        ],
-                      ),
+                          child: Column(
+                            children: <Widget>[
+                              Text(
+                                widget.opportunity.title.toString().trim(),
+                                maxLines: 3,
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(
+                                  fontSize: 30.0,
+                                  fontWeight: FontWeight.w600,
+                                  color: Theme.of(context).primaryColor,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
                     ),
                   ],
                 ),
