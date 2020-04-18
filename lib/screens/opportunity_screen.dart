@@ -85,10 +85,9 @@ class _OpportunityScreenState extends State<OpportunityScreen> {
                 bottom: 0.0,
                 left: 20.0,
                 child: IconButton(
-                  padding: EdgeInsets.only(left: 30.0),
                   onPressed: () => print('Add to Favorites'),
                   icon: Icon(Icons.favorite_border),
-                  iconSize: 30.0,
+                  iconSize: 35.0,
                   color: Colors.black,
                 ),
               ),
@@ -113,31 +112,19 @@ class _OpportunityScreenState extends State<OpportunityScreen> {
                   widget.opportunity.title,
                   style: TextStyle(
                     fontSize: 20.0,
+                    color: Theme.of(context).primaryColor,
                     fontWeight: FontWeight.bold,
                   ),
                   textAlign: TextAlign.center,
                 ),
-                SizedBox(height: 10.0),
-                Text(
-                  widget.opportunity.type,
-                  style: TextStyle(
-                    color: Colors.black54,
-                    fontSize: 16.0,
-                  ),
-                ),
                 SizedBox(height: 12.0),
-                Text(
-                  '⭐ ⭐ ⭐ ⭐',
-                  style: TextStyle(fontSize: 25.0),
-                ),
-                SizedBox(height: 15.0),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
                     Column(
                       children: <Widget>[
                         Text(
-                          'Year',
+                          'Fee',
                           style: TextStyle(
                             color: Colors.black54,
                             fontSize: 16.0,
@@ -145,9 +132,9 @@ class _OpportunityScreenState extends State<OpportunityScreen> {
                         ),
                         SizedBox(height: 2.0),
                         Text(
-                          widget.opportunity.getPreviewDuration(),
+                          widget.opportunity.getPreviewParticipationCost(),
                           style: TextStyle(
-                            fontSize: 20.0,
+                            fontSize: 18.0,
                             fontWeight: FontWeight.w600,
                           ),
                         ),
@@ -156,7 +143,7 @@ class _OpportunityScreenState extends State<OpportunityScreen> {
                     Column(
                       children: <Widget>[
                         Text(
-                          'Country',
+                          'Location',
                           style: TextStyle(
                             color: Colors.black54,
                             fontSize: 16.0,
@@ -166,7 +153,7 @@ class _OpportunityScreenState extends State<OpportunityScreen> {
                         Text(
                           widget.opportunity.venueLocation,
                           style: TextStyle(
-                            fontSize: 20.0,
+                            fontSize: 18.0,
                             fontWeight: FontWeight.w600,
                           ),
                         ),
@@ -175,7 +162,7 @@ class _OpportunityScreenState extends State<OpportunityScreen> {
                     Column(
                       children: <Widget>[
                         Text(
-                          'Length',
+                          'Duration',
                           style: TextStyle(
                             color: Colors.black54,
                             fontSize: 16.0,
@@ -185,7 +172,7 @@ class _OpportunityScreenState extends State<OpportunityScreen> {
                         Text(
                           widget.opportunity.getPreviewDuration(),
                           style: TextStyle(
-                            fontSize: 20.0,
+                            fontSize: 18.0,
                             fontWeight: FontWeight.w600,
                           ),
                         ),
@@ -195,7 +182,7 @@ class _OpportunityScreenState extends State<OpportunityScreen> {
                 ),
                 SizedBox(height: 25.0),
                 Container(
-                  height: 120.0,
+                  height: 140.0,
                   child: SingleChildScrollView(
                     child: Text(
                       widget.opportunity.description,
@@ -204,6 +191,119 @@ class _OpportunityScreenState extends State<OpportunityScreen> {
                       ),
                     ),
                   ),
+                ),
+                SizedBox(height: 25.0),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Row(
+                      children: <Widget>[
+                        Text(
+                          'Start Date: ',
+                          style: TextStyle(
+                            color: Colors.black54,
+                            fontSize: 16.0,
+                          ),
+                        ),
+                        SizedBox(height: 2.0),
+                        Text(
+                          widget.opportunity.getStartDate(),
+                          style: TextStyle(
+                            fontSize: 16.0,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ],
+                    ),
+                    Row(
+                      children: <Widget>[
+                        Text(
+                          'End Date: ',
+                          style: TextStyle(
+                            color: Colors.black54,
+                            fontSize: 16.0,
+                          ),
+                        ),
+                        SizedBox(height: 2.0),
+                        Text(
+                          widget.opportunity.getEndDate(),
+                          style: TextStyle(
+                            fontSize: 16.0,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ],
+                    ),
+                    Row(
+                      children: <Widget>[
+                        Text(
+                          'Reimbursment Limit: ',
+                          style: TextStyle(
+                            color: Colors.black54,
+                            fontSize: 16.0,
+                          ),
+                        ),
+                        SizedBox(height: 2.0),
+                        Text(
+                          widget.opportunity.getReimbursementLimit(),
+                          style: TextStyle(
+                            fontSize: 16.0,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ],
+                    ),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Text(
+                          'Organisation: ',
+                          style: TextStyle(
+                            color: Colors.black54,
+                            fontSize: 16.0,
+                          ),
+                        ),
+                        SizedBox(height: 2.0),
+                        Flexible(
+                          child: Text(
+                            widget.opportunity.organisationName,
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                              fontSize: 16.0,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Text(
+                          'Organisation can provide: ',
+                          style: TextStyle(
+                            color: Colors.black54,
+                            fontSize: 16.0,
+                          ),
+                        ),
+                        SizedBox(height: 2.0),
+                        Flexible(
+                          child: Text(
+                            widget.opportunity.getProvideForDisabilitiesList(),
+                            maxLines: 100,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                              fontSize: 16.0,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
               ],
             ),

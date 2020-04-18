@@ -2,6 +2,7 @@ import 'package:erasmusopportunitiesapp/helpers/math.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:dart_random_choice/dart_random_choice.dart';
+import 'package:intl/intl.dart';
 
 List<String> images = [
   'assets/images/happy_people0.jpg',
@@ -72,5 +73,29 @@ class Opportunity {
   String getPreviewDuration() {
     Duration difference = endDate.difference(startDate);
     return difference.inDays.toString() + ' days';
+  }
+
+  String getStartDate() {
+    return DateFormat('dd-MM-yyyy').format(startDate);
+  }
+
+  String getEndDate() {
+    return DateFormat('dd-MM-yyyy').format(endDate);
+  }
+
+  String getReimbursementLimit() {
+    if (reimbursementLimit == 0) {
+      return 'no reimbursement';
+    }
+    return '€' + removeDecimalZeroFormat(reimbursementLimit);
+  }
+
+  String getProvideForDisabilitiesList() {
+    String list = '';
+    for (var disability in provideForDisabilities) {
+      list += '- ' + disability.toString() + '\n';
+    }
+    if (provideForDisabilities.isEmpty) return 'no assistance';
+    return  list;
   }
 }
