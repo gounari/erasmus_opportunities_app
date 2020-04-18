@@ -1,12 +1,20 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:erasmusopportunitiesapp/screens/home.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 
-void main() => runApp(MyApp());
+void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
+      .then((_) {
+    runApp(new MyApp());
+  });
+}
 
 /// This Widget is the main application widget.
 class MyApp extends StatelessWidget {
+
   static const String _title = 'Home';
 
   @override
