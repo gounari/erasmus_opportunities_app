@@ -63,7 +63,7 @@ class _OpportunitiesListState extends State<OpportunitiesList> {
             children: <Widget>[
               Container(
                 margin: EdgeInsets.fromLTRB(40.0, 5.0, 20.0, 5.0),
-                height: 170.0,
+                height: 180.0,
                 width: double.infinity,
                 decoration: BoxDecoration(
                   color: Colors.white,
@@ -84,7 +84,7 @@ class _OpportunitiesListState extends State<OpportunitiesList> {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: <Widget>[
                               Container(
-                                width: 200.0,
+                                width: 190.0,
                                 child: Text(
                                   opportunities[index].title.toString().trim(),
                                   maxLines: 3,
@@ -122,7 +122,7 @@ class _OpportunitiesListState extends State<OpportunitiesList> {
                       Row(
                         children: <Widget>[
                           Container(
-                            width: 50.0,
+                            width: 30.0,
                             decoration: BoxDecoration(
                               color: Theme.of(context).accentColor,
                               borderRadius: BorderRadius.circular(10.0),
@@ -132,7 +132,7 @@ class _OpportunitiesListState extends State<OpportunitiesList> {
                           ),
                           SizedBox(width: 10.0,),
                           Container(
-                            width: 70.0,
+                            width: 50.0,
                             decoration: BoxDecoration(
                               color: Theme.of(context).accentColor,
                               borderRadius: BorderRadius.circular(10.0),
@@ -142,7 +142,7 @@ class _OpportunitiesListState extends State<OpportunitiesList> {
                           ),
                           SizedBox(width: 10.0,),
                           Container(
-                            width: 70.0,
+                            width: 65.0,
                             decoration: BoxDecoration(
                               color: Theme.of(context).accentColor,
                               borderRadius: BorderRadius.circular(10.0),
