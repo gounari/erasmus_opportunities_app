@@ -53,14 +53,22 @@ class _OpportunityScreenState extends State<OpportunityScreen> {
                     Stack(
                       children: <Widget>[
 
-                        IconButton(
-                          padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 40.0),
-                          icon: Icon(Icons.arrow_back),
-                          iconSize: 30.0,
-                          color: Colors.black,
-                          onPressed: () {
-                            Navigator.pop(context);
-                          },
+                        Container(
+                          padding: EdgeInsets.symmetric(horizontal: 0.0, vertical: 40.0),
+                          child: RawMaterialButton(
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                            child: new Icon(
+                              Icons.arrow_back,
+                              color: Colors.white,
+                              size: 30.0,
+                            ),
+                            shape: new CircleBorder(),
+                            elevation: 2.0,
+                            fillColor: Theme.of(context).primaryColor,
+                            padding: EdgeInsets.all(5.0),
+                          ),
                         ),
 
                         Container(

@@ -17,7 +17,11 @@ class _OpportunitiesListState extends State<OpportunitiesList> {
   Widget build(BuildContext context) {
 
     final oppFields = FirebaseOpportunityConstants();
-    final oppDocuments = Provider.of<QuerySnapshot>(context).documents;
+    
+    final querySnapshot = Provider.of<QuerySnapshot>(context);
+    if (querySnapshot == null) return Container();
+
+    final oppDocuments = querySnapshot.documents;
     var opportunities = new List(oppDocuments.length);
 
     for (int i = 0; i < oppDocuments.length; i++) {
