@@ -80,10 +80,10 @@ class _OpportunitiesListState extends State<OpportunitiesList> {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: <Widget>[
                               Container(
-                                width: 120.0,
+                                width: 150.0,
                                 child: Text(
-                                  opportunities[index].title,
-                                  maxLines: 3,
+                                  opportunities[index].title.toString().trim(),
+                                  maxLines: 2,
                                   overflow: TextOverflow.ellipsis,
                                   style: TextStyle(
                                     fontSize: 18.0,
@@ -100,9 +100,23 @@ class _OpportunitiesListState extends State<OpportunitiesList> {
                           ),
                           SizedBox(height: 5.0,),
                           Text(
-                            opportunities[index].venueLocation,
+                            opportunities[index].topic,
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,
+                          ),
+                          RichText(
+                            text: TextSpan(
+                              style: Theme.of(context).textTheme.body1,
+                              children: [
+                                WidgetSpan(
+                                  child: Padding(
+                                    padding: EdgeInsets.symmetric(vertical: 2.7),
+                                    child: Icon(Icons.location_on, color: Colors.blueGrey, size: 11.7,),
+                                  ),
+                                ),
+                                TextSpan(text: '' + opportunities[index].venueLocation),
+                              ],
+                            ),
                           ),
                         ],
                       ),
