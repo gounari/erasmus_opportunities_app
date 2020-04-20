@@ -76,7 +76,39 @@ class OpportunityListFilters extends StatelessWidget {
                           icon: Icon(Icons.filter_list),
                           label: Text('Filters',),
                         ),
-                        
+                        Expanded(
+                          child: SingleChildScrollView(
+                            scrollDirection: Axis.horizontal,
+                            child: Row(
+                              children: <Widget>[
+                                SizedBox(width: 10.0,),
+                                OutlineButton.icon(
+                                  onPressed: () {  },
+                                  color: Colors.white,
+                                  textColor: Colors.white,
+                                  icon: Icon(Icons.whatshot),
+                                  label: Text('Urgent',),
+                                ),
+                                SizedBox(width: 10.0,),
+                                OutlineButton.icon(
+                                  onPressed: () {  },
+                                  color: Colors.white,
+                                  textColor: Colors.white,
+                                  icon: Icon(Icons.favorite_border),
+                                  label: Text('Liked',),
+                                ),
+                                SizedBox(width: 10.0,),
+                                OutlineButton.icon(
+                                  onPressed: () {  },
+                                  color: Colors.white,
+                                  textColor: Colors.white,
+                                  icon: Icon(Icons.money_off),
+                                  label: Text('Free',),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
                       ],
                     ),
                   ),
