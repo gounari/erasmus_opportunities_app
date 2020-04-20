@@ -9,6 +9,7 @@ class OpportunityListFilters extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
+    var _searchController = TextEditingController();
 
     final opportunities = Provider.of<List<Opportunity>>(context);
     var filteredOpportunities = opportunities;
@@ -24,36 +25,49 @@ class OpportunityListFilters extends StatelessWidget {
       builder: (context, StateSetter setState) =>
 
         FocusWatcher(
-          child: Scaffold(
-            appBar: AppBar(
-              brightness: Brightness.light,
-              elevation: 0.0,
-              backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-              title: TextField(
-                onChanged: (title) {
+          child: SafeArea(
+            child: Container(
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                    child: TextField(
+                      controller: _searchController,
+                      onChanged: (title) {
 
-                  setState(() => _filterOpportunities(title));
-                },
-                style: TextStyle(color: Colors.black),
-                decoration: InputDecoration(
-                  suffixIcon: IconButton(
-                    icon: Icon(Icons.search),
-                    onPressed: () {
-                      setState(() {
-
-                      });
-                    },
+                        setState(() => _filterOpportunities(title));
+                      },
+                      style: TextStyle(color: Colors.black),
+                      decoration: InputDecoration(
+                        prefixIcon: Icon(Icons.search),
+                        suffixIcon: IconButton(
+                          icon: Icon(Icons.cancel),
+                          onPressed: () {
+                            setState(() {
+                              _searchController.clear();
+                              filteredOpportunities = opportunities;
+                            });
+                          },
+                        ),
+                        focusedBorder: InputBorder.none,
+                        enabledBorder: InputBorder.none,
+                        errorBorder: InputBorder.none,
+                        disabledBorder: InputBorder.none,
+                        contentPadding: EdgeInsets.only(left: 15, bottom: 11, top: 11, right: 15),
+                        hintText: 'Search titles',
+                      ),
+                    ),
                   ),
-                  focusedBorder: InputBorder.none,
-                  enabledBorder: InputBorder.none,
-                  errorBorder: InputBorder.none,
-                  disabledBorder: InputBorder.none,
-                  contentPadding: EdgeInsets.only(left: 15, bottom: 11, top: 11, right: 15),
-                  hintText: 'Search titles',
-                ),
+                  Expanded(
+                      child: OpportunitiesList(opportunities: filteredOpportunities),
+                  ),
+                ],
               ),
             ),
-            body: OpportunitiesList(opportunities: filteredOpportunities),
           ),
         ),
 
