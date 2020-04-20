@@ -1,5 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:erasmusopportunitiesapp/helpers/opportunity_constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -8,6 +6,11 @@ import 'package:erasmusopportunitiesapp/models/opportunity.dart';
 import 'opportunity_screen.dart';
 
 class OpportunitiesList extends StatefulWidget {
+
+  final List<Opportunity> opportunities;
+
+  OpportunitiesList({this.opportunities});
+
   @override
   _OpportunitiesListState createState() => _OpportunitiesListState();
 }
@@ -16,46 +19,16 @@ class _OpportunitiesListState extends State<OpportunitiesList> {
   @override
   Widget build(BuildContext context) {
 
-    final oppFields = FirebaseOpportunityConstants();
-
-    final querySnapshot = Provider.of<QuerySnapshot>(context);
-    if (querySnapshot == null) return Container();
-
-    final oppDocuments = querySnapshot.documents;
-    var opportunities = new List(oppDocuments.length);
-
-    for (int i = 0; i < oppDocuments.length; i++) {
-      opportunities[i] = Opportunity(
-        oid: oppDocuments[i].documentID,
-        title: oppDocuments[i][oppFields.title],
-        organisationName: oppDocuments[i][oppFields.organisationName],
-        organisationUID: oppDocuments[i][oppFields.organisationUID],
-        venueLocation: oppDocuments[i][oppFields.venueLocation],
-        type: oppDocuments[i][oppFields.type],
-        startDate: oppDocuments[i][oppFields.startDate].toDate(),
-        endDate: oppDocuments[i][oppFields.endDate].toDate(),
-        lowAge: oppDocuments[i][oppFields.lowAge],
-        highAge: oppDocuments[i][oppFields.highAge],
-        topic: oppDocuments[i][oppFields.topic],
-        applicationDeadline: oppDocuments[i][oppFields.applicationDeadline].toDate(),
-        participationCost: oppDocuments[i][oppFields.participationCost].toDouble(),
-        reimbursementLimit: oppDocuments[i][oppFields.reimbursementLimit].toDouble(),
-        applicationLink: oppDocuments[i][oppFields.applicationLink],
-        provideForDisabilities: oppDocuments[i][oppFields.provideForDisabilities],
-        description: oppDocuments[i][oppFields.description],
-      );
-    }
-
     return ListView.builder(
       padding: EdgeInsets.only(top: 10.0, bottom: 15.0),
-      itemCount: opportunities.length,
+      itemCount: widget.opportunities.length,
       itemBuilder: (BuildContext context, int index) {
         return GestureDetector(
           onTap: () => Navigator.push(
             context,
             MaterialPageRoute(
                 builder: (_) => OpportunityScreen(
-                  opportunity: opportunities[index],
+                  opportunity: widget.opportunities[index],
                 )
             ),
           ),
@@ -86,7 +59,7 @@ class _OpportunitiesListState extends State<OpportunitiesList> {
                               Container(
                                 width: 190.0,
                                 child: Text(
-                                  opportunities[index].title.toString().trim(),
+                                  widget.opportunities[index].title.toString().trim(),
                                   maxLines: 3,
                                   overflow: TextOverflow.ellipsis,
                                   style: TextStyle(
@@ -99,7 +72,7 @@ class _OpportunitiesListState extends State<OpportunitiesList> {
                           ),
                           SizedBox(height: 5.0,),
                           Text(
-                            opportunities[index].topic,
+                            widget.opportunities[index].topic,
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,
                           ),
@@ -113,7 +86,7 @@ class _OpportunitiesListState extends State<OpportunitiesList> {
                                     child: Icon(Icons.location_on, color: Colors.blueGrey, size: 11.7,),
                                   ),
                                 ),
-                                TextSpan(text: '' + opportunities[index].venueLocation),
+                                TextSpan(text: '' + widget.opportunities[index].venueLocation),
                               ],
                             ),
                           ),
@@ -128,7 +101,7 @@ class _OpportunitiesListState extends State<OpportunitiesList> {
                               borderRadius: BorderRadius.circular(10.0),
                             ),
                             alignment: Alignment.center,
-                            child: Text(opportunities[index].getPreviewType()),
+                            child: Text(widget.opportunities[index].getPreviewType()),
                           ),
                           SizedBox(width: 10.0,),
                           Container(
@@ -138,7 +111,7 @@ class _OpportunitiesListState extends State<OpportunitiesList> {
                               borderRadius: BorderRadius.circular(10.0),
                             ),
                             alignment: Alignment.center,
-                            child: Text(opportunities[index].getPreviewParticipationCost()),
+                            child: Text(widget.opportunities[index].getPreviewParticipationCost()),
                           ),
                           SizedBox(width: 10.0,),
                           Container(
@@ -148,7 +121,7 @@ class _OpportunitiesListState extends State<OpportunitiesList> {
                               borderRadius: BorderRadius.circular(10.0),
                             ),
                             alignment: Alignment.center,
-                            child: Text(opportunities[index].getPreviewDuration()),
+                            child: Text(widget.opportunities[index].getPreviewDuration()),
                           ),
                         ],
                       ),
@@ -161,12 +134,12 @@ class _OpportunitiesListState extends State<OpportunitiesList> {
                 top: 15.0,
                 bottom: 15.0,
                 child: Hero(
-                  tag: opportunities[index].oid,
+                  tag: widget.opportunities[index].oid,
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(20.0),
                     child: Image(
                       width: 110.0,
-                      image: AssetImage(opportunities[index].image),
+                      image: AssetImage(widget.opportunities[index].image),
                       fit: BoxFit.cover,
                     ),
                   ),

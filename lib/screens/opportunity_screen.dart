@@ -1,7 +1,5 @@
-import 'dart:math';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:erasmusopportunitiesapp/widgets/Circular_clipper.dart';
-import 'package:erasmusopportunitiesapp/widgets/content_scroll.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:erasmusopportunitiesapp/models/opportunity.dart';
