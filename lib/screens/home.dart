@@ -11,12 +11,40 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+
   @override
   Widget build(BuildContext context) {
     return StreamProvider<QuerySnapshot>.value(
       value: DatabaseService().opportunities,
-      child: Container(
-        child: OpportunitiesList(),
+      child: Scaffold(
+        appBar: AppBar(
+          brightness: Brightness.light,
+          elevation: 0.0,
+          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+          title: TextField(
+            onChanged: (value) {
+            },
+            style: TextStyle(color: Colors.black),
+            textInputAction: TextInputAction.search,
+            decoration: InputDecoration(
+              suffixIcon: IconButton(
+                icon: Icon(Icons.search),
+                onPressed: () {
+                  setState(() {
+
+                  });
+                },
+              ),
+              focusedBorder: InputBorder.none,
+              enabledBorder: InputBorder.none,
+              errorBorder: InputBorder.none,
+              disabledBorder: InputBorder.none,
+              contentPadding: EdgeInsets.only(left: 15, bottom: 11, top: 11, right: 15),
+              hintText: 'Search titles',
+            ),
+          ),
+        ),
+        body: OpportunitiesList(),
       ),
     );
   }

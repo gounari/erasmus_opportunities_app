@@ -72,10 +72,6 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Image.asset('assets/images/logo_white.png', fit: BoxFit.contain, height: 70,),
-        backgroundColor: Theme.of(context).primaryColor,
-      ),
       body: Center(
         child: _widgetOptions.elementAt(_selectedIndex),
       ),
