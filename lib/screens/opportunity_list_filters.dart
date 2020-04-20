@@ -62,6 +62,24 @@ class OpportunityListFilters extends StatelessWidget {
                       ),
                     ),
                   ),
+                  Container(
+                    height: 50.0,
+                    width: MediaQuery.of(context).size.width,
+                    color: Theme.of(context).primaryColor,
+                    padding: EdgeInsets.symmetric(horizontal: 20.0),
+                    child: Row(
+                      children: <Widget>[
+                        OutlineButton.icon(
+                          onPressed: () {  },
+                          color: Colors.white,
+                          textColor: Colors.white,
+                          icon: Icon(Icons.filter_list),
+                          label: Text('Filters',),
+                        ),
+                        
+                      ],
+                    ),
+                  ),
                   Expanded(
                       child: OpportunitiesList(opportunities: filteredOpportunities),
                   ),
