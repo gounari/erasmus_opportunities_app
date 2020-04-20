@@ -41,6 +41,7 @@ dependencies:
   flutter_progress_button: ^1.0.0
   dart_random_choice: ^0.0.2
   url_launcher: ^5.4.2
+  flutter_focus_watcher: ^0.0.1
 
 dev_dependencies:
   flutter_test:

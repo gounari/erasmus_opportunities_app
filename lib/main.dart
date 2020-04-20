@@ -19,15 +19,24 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: _title,
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primaryColor: Color.fromRGBO(0, 68, 149, 1),
-        accentColor: Color(0xFFD8ECF1),
-        scaffoldBackgroundColor: Color(0xFFF3F5F7),
+    return GestureDetector(
+      onTap: () {
+        FocusScopeNode currentFocus = FocusScope.of(context);
+
+        if (!currentFocus.hasPrimaryFocus) {
+          currentFocus.unfocus();
+        }
+      },
+      child: MaterialApp(
+        title: _title,
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          primaryColor: Color.fromRGBO(0, 68, 149, 1),
+          accentColor: Color(0xFFD8ECF1),
+          scaffoldBackgroundColor: Color(0xFFF3F5F7),
+        ),
+        home: MyStatefulWidget(),
       ),
-      home: MyStatefulWidget(),
     );
   }
 }

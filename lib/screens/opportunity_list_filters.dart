@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'opportunities_list.dart';
+import 'package:flutter_focus_watcher/flutter_focus_watcher.dart';
 
 class OpportunityListFilters extends StatelessWidget {
   @override
@@ -22,37 +23,38 @@ class OpportunityListFilters extends StatelessWidget {
     return StatefulBuilder(
       builder: (context, StateSetter setState) =>
 
-        Scaffold(
-          appBar: AppBar(
-            brightness: Brightness.light,
-            elevation: 0.0,
-            backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-            title: TextField(
-              onChanged: (title) {
+        FocusWatcher(
+          child: Scaffold(
+            appBar: AppBar(
+              brightness: Brightness.light,
+              elevation: 0.0,
+              backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+              title: TextField(
+                onChanged: (title) {
 
-                setState(() => _filterOpportunities(title));
-              },
-              style: TextStyle(color: Colors.black),
-              textInputAction: TextInputAction.search,
-              decoration: InputDecoration(
-                suffixIcon: IconButton(
-                  icon: Icon(Icons.search),
-                  onPressed: () {
-                    setState(() {
+                  setState(() => _filterOpportunities(title));
+                },
+                style: TextStyle(color: Colors.black),
+                decoration: InputDecoration(
+                  suffixIcon: IconButton(
+                    icon: Icon(Icons.search),
+                    onPressed: () {
+                      setState(() {
 
-                    });
-                  },
+                      });
+                    },
+                  ),
+                  focusedBorder: InputBorder.none,
+                  enabledBorder: InputBorder.none,
+                  errorBorder: InputBorder.none,
+                  disabledBorder: InputBorder.none,
+                  contentPadding: EdgeInsets.only(left: 15, bottom: 11, top: 11, right: 15),
+                  hintText: 'Search titles',
                 ),
-                focusedBorder: InputBorder.none,
-                enabledBorder: InputBorder.none,
-                errorBorder: InputBorder.none,
-                disabledBorder: InputBorder.none,
-                contentPadding: EdgeInsets.only(left: 15, bottom: 11, top: 11, right: 15),
-                hintText: 'Search titles',
               ),
             ),
+            body: OpportunitiesList(opportunities: filteredOpportunities),
           ),
-          body: OpportunitiesList(opportunities: filteredOpportunities),
         ),
 
     );
