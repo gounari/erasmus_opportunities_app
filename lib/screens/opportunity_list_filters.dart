@@ -1,4 +1,5 @@
 import 'package:erasmusopportunitiesapp/models/opportunity.dart';
+import 'package:erasmusopportunitiesapp/widgets/MyCostumOutlineButton.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -10,15 +11,27 @@ class OpportunityListFilters extends StatelessWidget {
   Widget build(BuildContext context) {
 
     var _searchController = TextEditingController();
+    var filtersButtonPressed = false;
+    var urgentButtonPressed = false;
+    var likedButtonPressed = false;
+    var freeButtonPressed = false;
 
     final opportunities = Provider.of<List<Opportunity>>(context);
     var filteredOpportunities = opportunities;
 
-    void _filterOpportunities(value) {
+    void _filterOpportunitiesByTitle(value) {
         filteredOpportunities = opportunities
             .where((opportunity) =>
             opportunity.title.toLowerCase().contains(value.toLowerCase()))
             .toList();
+    }
+
+    void _filterOpportunitiesByDeadlineChosen() {
+      filteredOpportunities.sort((a, b) => a.applicationDeadline.compareTo(b.applicationDeadline));
+    }
+
+    void _filterOpportunitiesByDeadlineUnchosen() {
+      filteredOpportunities.sort((a, b) => a.startDate.compareTo(b.startDate));
     }
 
     return StatefulBuilder(
@@ -39,7 +52,7 @@ class OpportunityListFilters extends StatelessWidget {
                       controller: _searchController,
                       onChanged: (title) {
 
-                        setState(() => _filterOpportunities(title));
+                        setState(() => _filterOpportunitiesByTitle(title));
                       },
                       style: TextStyle(color: Colors.black),
                       decoration: InputDecoration(
@@ -69,16 +82,17 @@ class OpportunityListFilters extends StatelessWidget {
                     padding: EdgeInsets.symmetric(horizontal: 20.0),
                     child: Row(
                       children: <Widget>[
-                        OutlineButton.icon(
-                          onPressed: () {  },
-                          borderSide: BorderSide(
-                            width: 1.0,
-                            color: Theme.of(context).primaryColor,
-                            style: BorderStyle.solid,
-                          ),
-                          textColor: Theme.of(context).primaryColor,
-                          icon: Icon(Icons.filter_list),
-                          label: Text('Filters',),
+                        FiltersOutlineButton(
+                          text: 'Filters',
+                          color1: filtersButtonPressed? Theme.of(context).primaryColor : Colors.white,
+                          color2: filtersButtonPressed? Colors.white : Theme.of(context).primaryColor,
+                          borderColor: Theme.of(context).primaryColor,
+                          onPressed: () {
+                            setState(() {
+                              filtersButtonPressed = !filtersButtonPressed;
+                            });
+                          },
+                          icon: Icons.filter_list,
                         ),
                         Expanded(
                           child: Container(
@@ -87,40 +101,48 @@ class OpportunityListFilters extends StatelessWidget {
                               scrollDirection: Axis.horizontal,
                               child: Row(
                                 children: <Widget>[
-                                  OutlineButton.icon(
-                                    onPressed: () {  },
-                                    borderSide: BorderSide(
-                                      width: 1.0,
-                                      color: Theme.of(context).primaryColor,
-                                      style: BorderStyle.solid,
-                                    ),
-                                    textColor: Theme.of(context).primaryColor,
-                                    icon: Icon(Icons.whatshot),
-                                    label: Text('Urgent',),
+                                  FiltersOutlineButton(
+                                    text: 'Urgent',
+                                    color1: urgentButtonPressed? Theme.of(context).primaryColor : Colors.white,
+                                    color2: urgentButtonPressed? Colors.white : Theme.of(context).primaryColor,
+                                    borderColor: Theme.of(context).primaryColor,
+                                    onPressed: () {
+                                      setState(() {
+                                        if (urgentButtonPressed) {
+                                          _filterOpportunitiesByDeadlineUnchosen();
+                                        } else {
+                                          _filterOpportunitiesByDeadlineChosen();
+                                        }
+                                        urgentButtonPressed = !urgentButtonPressed;
+                                      });
+                                    },
+                                    icon: Icons.whatshot,
                                   ),
                                   SizedBox(width: 10.0,),
-                                  OutlineButton.icon(
-                                    onPressed: () {  },
-                                    borderSide: BorderSide(
-                                      width: 1.0,
-                                      color: Theme.of(context).primaryColor,
-                                      style: BorderStyle.solid,
-                                    ),
-                                    textColor: Theme.of(context).primaryColor,
-                                    icon: Icon(Icons.favorite_border),
-                                    label: Text('Liked',),
+                                  FiltersOutlineButton(
+                                    text: 'Liked',
+                                    color1: likedButtonPressed? Theme.of(context).primaryColor : Colors.white,
+                                    color2: likedButtonPressed? Colors.white : Theme.of(context).primaryColor,
+                                    borderColor: Theme.of(context).primaryColor,
+                                    onPressed: () {
+                                      setState(() {
+                                        likedButtonPressed = !likedButtonPressed;
+                                      });
+                                    },
+                                    icon: Icons.favorite_border,
                                   ),
                                   SizedBox(width: 10.0,),
-                                  OutlineButton.icon(
-                                    onPressed: () {  },
-                                    borderSide: BorderSide(
-                                      width: 1.0,
-                                      color: Theme.of(context).primaryColor,
-                                      style: BorderStyle.solid,
-                                    ),
-                                    textColor: Theme.of(context).primaryColor,
-                                    icon: Icon(Icons.money_off),
-                                    label: Text('Free',),
+                                  FiltersOutlineButton(
+                                    text: 'Free',
+                                    color1: freeButtonPressed? Theme.of(context).primaryColor : Colors.white,
+                                    color2: freeButtonPressed? Colors.white : Theme.of(context).primaryColor,
+                                    borderColor: Theme.of(context).primaryColor,
+                                    onPressed: () {
+                                      setState(() {
+                                        freeButtonPressed = !freeButtonPressed;
+                                      });
+                                    },
+                                    icon: Icons.money_off,
                                   ),
                                 ],
                               ),
@@ -141,4 +163,6 @@ class OpportunityListFilters extends StatelessWidget {
 
     );
   }
+
+  OpportunityListFilters();
 }
