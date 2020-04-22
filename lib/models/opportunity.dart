@@ -31,7 +31,7 @@ class Opportunity {
   List<dynamic> provideForDisabilities;
   String description;
   String image;
-  bool favorite = false;
+  bool liked = false;
 
   Opportunity({
     @required this.oid,
@@ -52,7 +52,7 @@ class Opportunity {
     @required this.provideForDisabilities,
     @required this.description,
     this.image,
-    this.favorite,
+    this.liked,
   }){
     if (image == null) {
       image = randomChoice(images);

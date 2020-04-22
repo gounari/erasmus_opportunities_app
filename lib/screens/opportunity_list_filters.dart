@@ -1,3 +1,4 @@
+import 'package:erasmusopportunitiesapp/models/Filters.dart';
 import 'package:erasmusopportunitiesapp/models/opportunity.dart';
 import 'package:erasmusopportunitiesapp/widgets/MyCostumOutlineButton.dart';
 import 'package:flutter/cupertino.dart';
@@ -12,27 +13,11 @@ class OpportunityListFilters extends StatelessWidget {
 
     var _searchController = TextEditingController();
     var filtersButtonPressed = false;
-    var urgentButtonPressed = false;
-    var likedButtonPressed = false;
-    var freeButtonPressed = false;
 
     final opportunities = Provider.of<List<Opportunity>>(context);
     var filteredOpportunities = opportunities;
+    final filters = Filters();
 
-    void _filterOpportunitiesByTitle(value) {
-        filteredOpportunities = opportunities
-            .where((opportunity) =>
-            opportunity.title.toLowerCase().contains(value.toLowerCase()))
-            .toList();
-    }
-
-    void _filterOpportunitiesByDeadlineChosen() {
-      filteredOpportunities.sort((a, b) => a.applicationDeadline.compareTo(b.applicationDeadline));
-    }
-
-    void _filterOpportunitiesByDeadlineUnchosen() {
-      filteredOpportunities.sort((a, b) => a.startDate.compareTo(b.startDate));
-    }
 
     return StatefulBuilder(
       builder: (context, StateSetter setState) =>
@@ -51,8 +36,10 @@ class OpportunityListFilters extends StatelessWidget {
                     child: TextField(
                       controller: _searchController,
                       onChanged: (title) {
-
-                        setState(() => _filterOpportunitiesByTitle(title));
+                        setState(() {
+                          print(title);
+                          filteredOpportunities = filters.setTitle(opportunities, title);
+                        });
                       },
                       style: TextStyle(color: Colors.black),
                       decoration: InputDecoration(
@@ -62,7 +49,7 @@ class OpportunityListFilters extends StatelessWidget {
                           onPressed: () {
                             setState(() {
                               _searchController.clear();
-                              filteredOpportunities = opportunities;
+                              filteredOpportunities = filters.setTitle(opportunities, '');
                             });
                           },
                         ),
@@ -103,17 +90,12 @@ class OpportunityListFilters extends StatelessWidget {
                                 children: <Widget>[
                                   FiltersOutlineButton(
                                     text: 'Urgent',
-                                    color1: urgentButtonPressed? Theme.of(context).primaryColor : Colors.white,
-                                    color2: urgentButtonPressed? Colors.white : Theme.of(context).primaryColor,
+                                    color1: filters.sortByUrgent ? Theme.of(context).primaryColor : Colors.white,
+                                    color2: filters.sortByUrgent? Colors.white : Theme.of(context).primaryColor,
                                     borderColor: Theme.of(context).primaryColor,
                                     onPressed: () {
                                       setState(() {
-                                        if (urgentButtonPressed) {
-                                          _filterOpportunitiesByDeadlineUnchosen();
-                                        } else {
-                                          _filterOpportunitiesByDeadlineChosen();
-                                        }
-                                        urgentButtonPressed = !urgentButtonPressed;
+                                        filteredOpportunities = filters.setSortByUrgent(opportunities);
                                       });
                                     },
                                     icon: Icons.whatshot,
@@ -121,12 +103,12 @@ class OpportunityListFilters extends StatelessWidget {
                                   SizedBox(width: 10.0,),
                                   FiltersOutlineButton(
                                     text: 'Liked',
-                                    color1: likedButtonPressed? Theme.of(context).primaryColor : Colors.white,
-                                    color2: likedButtonPressed? Colors.white : Theme.of(context).primaryColor,
+                                    color1: filters.liked? Theme.of(context).primaryColor : Colors.white,
+                                    color2: filters.liked? Colors.white : Theme.of(context).primaryColor,
                                     borderColor: Theme.of(context).primaryColor,
                                     onPressed: () {
                                       setState(() {
-                                        likedButtonPressed = !likedButtonPressed;
+                                        filteredOpportunities = filters.setLiked(opportunities);
                                       });
                                     },
                                     icon: Icons.favorite_border,
@@ -134,12 +116,12 @@ class OpportunityListFilters extends StatelessWidget {
                                   SizedBox(width: 10.0,),
                                   FiltersOutlineButton(
                                     text: 'Free',
-                                    color1: freeButtonPressed? Theme.of(context).primaryColor : Colors.white,
-                                    color2: freeButtonPressed? Colors.white : Theme.of(context).primaryColor,
+                                    color1: filters.free? Theme.of(context).primaryColor : Colors.white,
+                                    color2: filters.free? Colors.white : Theme.of(context).primaryColor,
                                     borderColor: Theme.of(context).primaryColor,
                                     onPressed: () {
                                       setState(() {
-                                        freeButtonPressed = !freeButtonPressed;
+                                        filteredOpportunities = filters.setFree(opportunities);
                                       });
                                     },
                                     icon: Icons.money_off,
@@ -163,6 +145,4 @@ class OpportunityListFilters extends StatelessWidget {
 
     );
   }
-
-  OpportunityListFilters();
 }
