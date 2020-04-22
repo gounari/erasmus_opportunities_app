@@ -65,47 +65,65 @@ class OpportunityListFilters extends StatelessWidget {
                   Container(
                     height: 50.0,
                     width: MediaQuery.of(context).size.width,
-                    color: Theme.of(context).primaryColor,
+                    color: Theme.of(context).scaffoldBackgroundColor,
                     padding: EdgeInsets.symmetric(horizontal: 20.0),
                     child: Row(
                       children: <Widget>[
                         OutlineButton.icon(
                           onPressed: () {  },
-                          color: Colors.white,
-                          textColor: Colors.white,
+                          borderSide: BorderSide(
+                            width: 1.0,
+                            color: Theme.of(context).primaryColor,
+                            style: BorderStyle.solid,
+                          ),
+                          textColor: Theme.of(context).primaryColor,
                           icon: Icon(Icons.filter_list),
                           label: Text('Filters',),
                         ),
                         Expanded(
-                          child: SingleChildScrollView(
-                            scrollDirection: Axis.horizontal,
-                            child: Row(
-                              children: <Widget>[
-                                SizedBox(width: 10.0,),
-                                OutlineButton.icon(
-                                  onPressed: () {  },
-                                  color: Colors.white,
-                                  textColor: Colors.white,
-                                  icon: Icon(Icons.whatshot),
-                                  label: Text('Urgent',),
-                                ),
-                                SizedBox(width: 10.0,),
-                                OutlineButton.icon(
-                                  onPressed: () {  },
-                                  color: Colors.white,
-                                  textColor: Colors.white,
-                                  icon: Icon(Icons.favorite_border),
-                                  label: Text('Liked',),
-                                ),
-                                SizedBox(width: 10.0,),
-                                OutlineButton.icon(
-                                  onPressed: () {  },
-                                  color: Colors.white,
-                                  textColor: Colors.white,
-                                  icon: Icon(Icons.money_off),
-                                  label: Text('Free',),
-                                ),
-                              ],
+                          child: Container(
+                            margin: EdgeInsets.only(left: 10.0),
+                            child: SingleChildScrollView(
+                              scrollDirection: Axis.horizontal,
+                              child: Row(
+                                children: <Widget>[
+                                  OutlineButton.icon(
+                                    onPressed: () {  },
+                                    borderSide: BorderSide(
+                                      width: 1.0,
+                                      color: Theme.of(context).primaryColor,
+                                      style: BorderStyle.solid,
+                                    ),
+                                    textColor: Theme.of(context).primaryColor,
+                                    icon: Icon(Icons.whatshot),
+                                    label: Text('Urgent',),
+                                  ),
+                                  SizedBox(width: 10.0,),
+                                  OutlineButton.icon(
+                                    onPressed: () {  },
+                                    borderSide: BorderSide(
+                                      width: 1.0,
+                                      color: Theme.of(context).primaryColor,
+                                      style: BorderStyle.solid,
+                                    ),
+                                    textColor: Theme.of(context).primaryColor,
+                                    icon: Icon(Icons.favorite_border),
+                                    label: Text('Liked',),
+                                  ),
+                                  SizedBox(width: 10.0,),
+                                  OutlineButton.icon(
+                                    onPressed: () {  },
+                                    borderSide: BorderSide(
+                                      width: 1.0,
+                                      color: Theme.of(context).primaryColor,
+                                      style: BorderStyle.solid,
+                                    ),
+                                    textColor: Theme.of(context).primaryColor,
+                                    icon: Icon(Icons.money_off),
+                                    label: Text('Free',),
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                         ),
