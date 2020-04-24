@@ -3,6 +3,7 @@ import 'package:erasmusopportunitiesapp/screens/opportunity_list_filters.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:erasmusopportunitiesapp/services/database.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 class Home extends StatefulWidget {
