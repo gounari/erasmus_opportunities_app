@@ -2,7 +2,7 @@ import 'package:erasmusopportunitiesapp/models/Filters.dart';
 import 'package:erasmusopportunitiesapp/models/opportunity.dart';
 import 'package:erasmusopportunitiesapp/screens/filters.dart';
 import 'package:erasmusopportunitiesapp/screens/opportunity_screen.dart';
-import 'package:erasmusopportunitiesapp/widgets/MyCostumOutlineButton.dart';
+import 'package:erasmusopportunitiesapp/widgets/FiltersOutlineButton.dart';
 import 'package:erasmusopportunitiesapp/widgets/PopUpScreenRoute.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
