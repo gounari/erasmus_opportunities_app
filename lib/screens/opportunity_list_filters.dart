@@ -3,6 +3,7 @@ import 'package:erasmusopportunitiesapp/models/opportunity.dart';
 import 'package:erasmusopportunitiesapp/screens/filters.dart';
 import 'package:erasmusopportunitiesapp/screens/opportunity_screen.dart';
 import 'package:erasmusopportunitiesapp/widgets/MyCostumOutlineButton.dart';
+import 'package:erasmusopportunitiesapp/widgets/PopUpScreenRoute.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -78,16 +79,7 @@ class OpportunityListFilters extends StatelessWidget {
                           borderColor: Theme.of(context).primaryColor,
                           onPressed: () {
                             setState(() {
-
-
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                  builder: (_) =>
-                                  FiltersScreen()
-                                ),
-                              );
-
+                              Navigator.of(context).push(createRoute(FiltersScreen()));
                             });
                           },
                           icon: Icons.filter_list,
@@ -157,3 +149,4 @@ class OpportunityListFilters extends StatelessWidget {
     );
   }
 }
+

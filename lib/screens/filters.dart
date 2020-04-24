@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_statusbarcolor/flutter_statusbarcolor.dart';
 
 class FiltersScreen extends StatefulWidget {
   @override
@@ -9,6 +10,9 @@ class FiltersScreen extends StatefulWidget {
 class _FiltersScreenState extends State<FiltersScreen> {
   @override
   Widget build(BuildContext context) {
+
+    FlutterStatusbarcolor.setNavigationBarColor(Colors.black);
+
     return Container(
       color: Theme.of(context).scaffoldBackgroundColor,
       child: Column(
@@ -39,7 +43,7 @@ class _FiltersScreenState extends State<FiltersScreen> {
                 ),
                 FlatButton(
                   onPressed: () {
-                    /*...*/
+                    Navigator.pop(context);
                   },
                   child: Text(
                     "Done",
@@ -58,3 +62,4 @@ class _FiltersScreenState extends State<FiltersScreen> {
     );
   }
 }
+
