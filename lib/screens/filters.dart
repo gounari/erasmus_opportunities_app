@@ -184,7 +184,7 @@ class _FiltersScreenState extends State<FiltersScreen> {
                       ),
 
                       FormBuilderCustomField(
-                        attribute: "duration",
+                        attribute: "venue_location",
                         validators: [
                           FormBuilderValidators.required(),
                         ],
@@ -203,6 +203,50 @@ class _FiltersScreenState extends State<FiltersScreen> {
                                     dataSource: countries,
                                     textField: 'name',
                                     valueField: 'name',
+                                    filterable: true,
+                                    required: false,
+                                    value: null,
+                                    onSaved: (value) {
+                                      print('The value is $value');
+                                    }
+                                ),
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+
+                      SizedBox(height: 30.0,),
+
+                      Text(
+                        "Participating Countries",
+                        style: TextStyle(
+                          fontSize: 20.0,
+                          color: Theme.of(context).primaryColor,
+                        ),
+                      ),
+
+                      FormBuilderCustomField(
+                        attribute: "participating_countries",
+                        validators: [
+                          FormBuilderValidators.required(),
+                        ],
+                        formField: FormField(
+                          enabled: true,
+                          builder: (FormFieldState<dynamic> field) {
+                            return InputDecorator(
+                              decoration: InputDecoration(
+                                border: InputBorder.none,
+                                errorText: field.errorText,
+                              ),
+                              child: Container(
+                                padding: EdgeInsets.only(top: 20.0),
+                                child: MultiSelect(
+                                    autovalidate: false,
+                                    dataSource: countries,
+                                    textField: 'name',
+                                    valueField: 'name',
+                                    hintText: 'Tap to select countries',
                                     filterable: true,
                                     required: false,
                                     value: null,

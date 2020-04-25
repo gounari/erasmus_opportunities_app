@@ -23,7 +23,7 @@ class MultiSelect extends FormField<dynamic> {
         dynamic initialValue,
         bool autovalidate = false,
         this.titleText = 'Title',
-        this.hintText = 'Tap to select venue',
+        this.hintText = 'Tap to select location',
         this.required = false,
         this.value,
         this.leading,
