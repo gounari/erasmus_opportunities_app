@@ -1,4 +1,3 @@
-import 'package:erasmusopportunitiesapp/widgets/SortingOutlineButton.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
@@ -11,10 +10,17 @@ class FiltersScreen extends StatefulWidget {
 }
 
 class _FiltersScreenState extends State<FiltersScreen> {
+
+  final GlobalKey<FormBuilderState> _fbKey = GlobalKey<FormBuilderState>();
+
+  var _durationRange = RangeValues(1, 90);
+  var _durationStart = '0';
+  var _durationEnd = '90';
+  var _dateRangeLabelText = 'Anytime';
+
   @override
   Widget build(BuildContext context) {
 
-    final GlobalKey<FormBuilderState> _fbKey = GlobalKey<FormBuilderState>();
     FlutterStatusbarcolor.setNavigationBarColor(Colors.black);
 
     return Scaffold(
@@ -48,10 +54,13 @@ class _FiltersScreenState extends State<FiltersScreen> {
                         attribute: "favorite_ice_cream",
                         initialValue: "start_date",
                         activeColor: Theme.of(context).primaryColor,
+                        decoration: InputDecoration(
+                          border: InputBorder.none,
+                        ),
                         options: <FormBuilderFieldOption>[
                           FormBuilderFieldOption(
                               child: Text("Start Date"),
-                              value: "start_date"
+                              value: "start_date",
                           ),
                           FormBuilderFieldOption(
                               child: Text("Deadline"),
@@ -80,7 +89,15 @@ class _FiltersScreenState extends State<FiltersScreen> {
                         lastDate: DateTime.utc(2023),
                         firstDate: DateTime.now(),
                         attribute: 'date_range',
-                        decoration: InputDecoration(labelText: "Select Dates"),
+                        onChanged: (dates) {
+                          setState(() {
+                            print('in');
+                            _dateRangeLabelText = '';
+                          });
+                        },
+                        decoration: InputDecoration(
+                          labelText:  _dateRangeLabelText,
+                          border: InputBorder.none,),
                       ),
 
                       SizedBox(height: 30.0,),
@@ -92,7 +109,49 @@ class _FiltersScreenState extends State<FiltersScreen> {
                           color: Theme.of(context).primaryColor,
                         ),
                       ),
+                      Text(
+                        '$_durationStart to $_durationEnd days',
+                        style: TextStyle(
+                          fontSize: 10.0,
+                        ),
+                      ),
 
+                      FormBuilderCustomField(
+                        attribute: "duration",
+                        validators: [
+                          FormBuilderValidators.required(),
+                        ],
+                        formField: FormField(
+                          enabled: true,
+                          builder: (FormFieldState<dynamic> field) {
+                            return InputDecorator(
+                              decoration: InputDecoration(
+                                border: InputBorder.none,
+                                errorText: field.errorText,
+                              ),
+                              child: Container(
+                                height: 100,
+                                padding: EdgeInsets.only(top: 20.0),
+                                child: RangeSlider(
+                                  min: 1,
+                                  max: 90,
+                                  activeColor: Theme.of(context).primaryColor,
+                                  labels: RangeLabels('$_durationStart days', '$_durationEnd days'),
+                                  values: _durationRange,
+                                  divisions: 90,
+                                  onChanged: (RangeValues value) {
+                                    setState(() {
+                                      _durationRange = value;
+                                      _durationStart = value.start.floor().toString();
+                                      _durationEnd = value.end.floor().toString();
+                                    });
+                                  },
+                                ),
+                              ),
+                            );
+                          },
+                        ),
+                      ),
 
                       FormBuilderDateTimePicker(
                         attribute: "date",
