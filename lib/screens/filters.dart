@@ -1,3 +1,4 @@
+import 'package:erasmusopportunitiesapp/helpers/accessibility.dart';
 import 'package:erasmusopportunitiesapp/helpers/countries.dart';
 import 'package:erasmusopportunitiesapp/helpers/topics.dart';
 import 'package:erasmusopportunitiesapp/widgets/multiselect.dart';
@@ -23,6 +24,14 @@ class _FiltersScreenState extends State<FiltersScreen> {
   var _ageRange = RangeValues(12, 120);
   var _ageStart = '12';
   var _ageEnd = '120';
+
+  var _feesRange = RangeValues(0, 500);
+  var _feesStart = '0';
+  var _feesEnd = '500';
+
+  var _expensesRange = RangeValues(0, 500);
+  var _expensesStart = '0';
+  var _expensesEnd = '500';
 
   var _dateRangeLabelText = 'Tap to select dates';
 
@@ -301,7 +310,7 @@ class _FiltersScreenState extends State<FiltersScreen> {
                                   min: 12,
                                   max: 120,
                                   activeColor: Theme.of(context).primaryColor,
-                                  labels: RangeLabels('$_ageStart days', '$_ageEnd days'),
+                                  labels: RangeLabels('$_ageStart', '$_ageEnd'),
                                   values: _ageRange,
                                   divisions: 108,
                                   onChanged: (RangeValues value) {
@@ -362,120 +371,134 @@ class _FiltersScreenState extends State<FiltersScreen> {
                         ),
                       ),
 
-                      FormBuilderDateTimePicker(
-                        attribute: "date",
-                        inputType: InputType.date,
-                        decoration:
-                        InputDecoration(labelText: "Appointment Time"),
+                      SizedBox(height: 30.0,),
+
+                      Text(
+                        "Non Refundable Fees",
+                        style: TextStyle(
+                          fontSize: 20.0,
+                          color: Theme.of(context).primaryColor,
+                        ),
                       ),
-                      FormBuilderSlider(
-                        attribute: "slider",
-                        validators: [FormBuilderValidators.min(6)],
-                        min: 0.0,
-                        max: 10.0,
-                        initialValue: 1.0,
-                        divisions: 20,
-                        decoration:
-                        InputDecoration(labelText: "Number of things"),
-                      ),
-                      FormBuilderCheckbox(
-                        attribute: 'accept_terms',
-                        label: Text(
-                            "I have read and agree to the terms and conditions"),
-                        validators: [
-                          FormBuilderValidators.requiredTrue(
-                            errorText:
-                            "You must accept terms and conditions to continue",
-                          ),
-                        ],
-                      ),
-                      FormBuilderDropdown(
-                        attribute: "gender",
-                        decoration: InputDecoration(labelText: "Gender"),
-                        // initialValue: 'Male',
-                        hint: Text('Select Gender'),
-                        validators: [FormBuilderValidators.required()],
-                        items: ['Male', 'Female', 'Other']
-                            .map((gender) => DropdownMenuItem(
-                            value: gender,
-                            child: Text("$gender")
-                        )).toList(),
-                      ),
-                      FormBuilderTextField(
-                        attribute: "age",
-                        decoration: InputDecoration(labelText: "Age"),
-                        validators: [
-                          FormBuilderValidators.numeric(),
-                          FormBuilderValidators.max(70),
-                        ],
-                      ),
-                      FormBuilderSegmentedControl(
-                        decoration:
-                        InputDecoration(labelText: "Movie Rating (Archer)"),
-                        attribute: "movie_rating",
-                        options: List.generate(5, (i) => i + 1)
-                            .map(
-                                (number) => FormBuilderFieldOption(value: number))
-                            .toList(),
-                      ),
-                      FormBuilderSwitch(
-                        label: Text('I Accept the tems and conditions'),
-                        attribute: "accept_terms_switch",
-                        initialValue: true,
-                      ),
-                      FormBuilderTouchSpin(
-                        decoration: InputDecoration(labelText: "Stepper"),
-                        attribute: "stepper",
-                        initialValue: 10,
-                        step: 1,
-                      ),
-                      FormBuilderRate(
-                        decoration: InputDecoration(labelText: "Rate this form"),
-                        attribute: "rate",
-                        iconSize: 32.0,
-                        initialValue: 1,
-                        max: 5,
-                      ),
-                      FormBuilderCheckboxList(
-                        decoration:
-                        InputDecoration(labelText: "The language of my people"),
-                        attribute: "languages",
-                        initialValue: ["Dart"],
-                        options: [
-                          FormBuilderFieldOption(value: "Dart"),
-                          FormBuilderFieldOption(value: "Kotlin"),
-                          FormBuilderFieldOption(value: "Java"),
-                          FormBuilderFieldOption(value: "Swift"),
-                          FormBuilderFieldOption(value: "Objective-C"),
-                        ],
+                      Text(
+                        '£$_feesStart to £$_feesEnd',
+                        style: TextStyle(
+                          fontSize: 10.0,
+                        ),
                       ),
 
-                      FormBuilderFilterChip(
-                        attribute: "pets",
-                        options: [
-                          FormBuilderFieldOption(
-                              child: Text("Cats"),
-                              value: "cats"
-                          ),
-                          FormBuilderFieldOption(
-                              child: Text("Dogs"),
-                              value: "dogs"
-                          ),
-                          FormBuilderFieldOption(
-                              child: Text("Rodents"),
-                              value: "rodents"
-                          ),
-                          FormBuilderFieldOption(
-                              child: Text("Birds"),
-                              value: "birds"
-                          ),
+                      FormBuilderCustomField(
+                        attribute: "fees",
+                        validators: [
+                          FormBuilderValidators.required(),
                         ],
+                        formField: FormField(
+                          enabled: true,
+                          builder: (FormFieldState<dynamic> field) {
+                            return InputDecorator(
+                              decoration: InputDecoration(
+                                border: InputBorder.none,
+                                errorText: field.errorText,
+                              ),
+                              child: Container(
+                                height: 100,
+                                padding: EdgeInsets.only(top: 20.0),
+                                child: RangeSlider(
+                                  min: 0,
+                                  max: 500,
+                                  activeColor: Theme.of(context).primaryColor,
+                                  labels: RangeLabels('£$_feesStart', '£$_feesEnd'),
+                                  values: _feesRange,
+                                  divisions: 20,
+                                  onChanged: (RangeValues value) {
+                                    setState(() {
+                                      _feesRange = value;
+                                      _feesStart = value.start.floor().toString();
+                                      _feesEnd = value.end.floor().toString();
+                                    });
+                                  },
+                                ),
+                              ),
+                            );
+                          },
+                        ),
                       ),
-                      FormBuilderSignaturePad(
-                        decoration: InputDecoration(labelText: "Signature"),
-                        attribute: "signature",
-                        height: 100,
+
+                      SizedBox(height: 30.0,),
+
+                      Text(
+                        "Reimbursable Expenses Amount",
+                        style: TextStyle(
+                          fontSize: 20.0,
+                          color: Theme.of(context).primaryColor,
+                        ),
                       ),
+                      Text(
+                        '£$_expensesStart to £$_expensesEnd',
+                        style: TextStyle(
+                          fontSize: 10.0,
+                        ),
+                      ),
+
+                      FormBuilderCustomField(
+                        attribute: "expenses",
+                        validators: [
+                          FormBuilderValidators.required(),
+                        ],
+                        formField: FormField(
+                          enabled: true,
+                          builder: (FormFieldState<dynamic> field) {
+                            return InputDecorator(
+                              decoration: InputDecoration(
+                                border: InputBorder.none,
+                                errorText: field.errorText,
+                              ),
+                              child: Container(
+                                height: 100,
+                                padding: EdgeInsets.only(top: 20.0),
+                                child: RangeSlider(
+                                  min: 0,
+                                  max: 500,
+                                  activeColor: Theme.of(context).primaryColor,
+                                  labels: RangeLabels('£$_expensesStart', '£$_expensesEnd'),
+                                  values: _expensesRange,
+                                  divisions: 20,
+                                  onChanged: (RangeValues value) {
+                                    setState(() {
+                                      _expensesRange = value;
+                                      _expensesStart = value.start.floor().toString();
+                                      _expensesEnd = value.end.floor().toString();
+                                    });
+                                  },
+                                ),
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+
+                      SizedBox(height: 30.0,),
+
+                      Text(
+                        "Organisations that provide",
+                        style: TextStyle(
+                          fontSize: 20.0,
+                          color: Theme.of(context).primaryColor,
+                        ),
+                      ),
+
+                      FormBuilderCheckboxList(
+                        decoration: InputDecoration(
+                          border: InputBorder.none,
+                        ),
+                        activeColor: Theme.of(context).primaryColor,
+                        attribute: "accessibility",
+                        initialValue: [accessibility[0].value],
+                        options: accessibility,
+                      ),
+
+                      SizedBox(height: 30.0,),
+
                     ],
                   ),
                 ),
