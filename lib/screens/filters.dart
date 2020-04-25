@@ -1,4 +1,5 @@
 import 'package:erasmusopportunitiesapp/helpers/countries.dart';
+import 'package:erasmusopportunitiesapp/helpers/topics.dart';
 import 'package:erasmusopportunitiesapp/widgets/multiselect.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -310,6 +311,50 @@ class _FiltersScreenState extends State<FiltersScreen> {
                                       _ageEnd = value.end.floor().toString();
                                     });
                                   },
+                                ),
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+
+                      SizedBox(height: 30.0,),
+
+                      Text(
+                        "Topics",
+                        style: TextStyle(
+                          fontSize: 20.0,
+                          color: Theme.of(context).primaryColor,
+                        ),
+                      ),
+
+                      FormBuilderCustomField(
+                        attribute: "topics",
+                        validators: [
+                          FormBuilderValidators.required(),
+                        ],
+                        formField: FormField(
+                          enabled: true,
+                          builder: (FormFieldState<dynamic> field) {
+                            return InputDecorator(
+                              decoration: InputDecoration(
+                                border: InputBorder.none,
+                                errorText: field.errorText,
+                              ),
+                              child: Container(
+                                padding: EdgeInsets.only(top: 20.0),
+                                child: MultiSelect(
+                                    autovalidate: false,
+                                    dataSource: topics,
+                                    textField: 'topic',
+                                    valueField: 'topic',
+                                    hintText: 'Tap to select topics',
+                                    filterable: true,
+                                    required: false,
+                                    value: null,
+                                    onSaved: (value) {
+                                      print('The value is $value');
+                                    }
                                 ),
                               ),
                             );
