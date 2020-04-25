@@ -14,11 +14,15 @@ class FiltersScreen extends StatefulWidget {
 class _FiltersScreenState extends State<FiltersScreen> {
 
   final GlobalKey<FormBuilderState> _fbKey = GlobalKey<FormBuilderState>();
-  final String title = 'heheghwge';
 
   var _durationRange = RangeValues(1, 90);
   var _durationStart = '0';
   var _durationEnd = '90';
+
+  var _ageRange = RangeValues(12, 120);
+  var _ageStart = '12';
+  var _ageEnd = '120';
+
   var _dateRangeLabelText = 'Tap to select dates';
 
   @override
@@ -253,6 +257,59 @@ class _FiltersScreenState extends State<FiltersScreen> {
                                     onSaved: (value) {
                                       print('The value is $value');
                                     }
+                                ),
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+
+                      SizedBox(height: 30.0,),
+
+                      Text(
+                        "Ages Accepted",
+                        style: TextStyle(
+                          fontSize: 20.0,
+                          color: Theme.of(context).primaryColor,
+                        ),
+                      ),
+                      Text(
+                        '$_ageStart to $_ageEnd years old',
+                        style: TextStyle(
+                          fontSize: 10.0,
+                        ),
+                      ),
+
+                      FormBuilderCustomField(
+                        attribute: "ages_accepted",
+                        validators: [
+                          FormBuilderValidators.required(),
+                        ],
+                        formField: FormField(
+                          enabled: true,
+                          builder: (FormFieldState<dynamic> field) {
+                            return InputDecorator(
+                              decoration: InputDecoration(
+                                border: InputBorder.none,
+                                errorText: field.errorText,
+                              ),
+                              child: Container(
+                                height: 100,
+                                padding: EdgeInsets.only(top: 20.0),
+                                child: RangeSlider(
+                                  min: 12,
+                                  max: 120,
+                                  activeColor: Theme.of(context).primaryColor,
+                                  labels: RangeLabels('$_ageStart days', '$_ageEnd days'),
+                                  values: _ageRange,
+                                  divisions: 108,
+                                  onChanged: (RangeValues value) {
+                                    setState(() {
+                                      _ageRange = value;
+                                      _ageStart = value.start.floor().toString();
+                                      _ageEnd = value.end.floor().toString();
+                                    });
+                                  },
                                 ),
                               ),
                             );
