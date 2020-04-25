@@ -1,3 +1,4 @@
+import 'package:erasmusopportunitiesapp/widgets/multiselect.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
@@ -12,11 +13,12 @@ class FiltersScreen extends StatefulWidget {
 class _FiltersScreenState extends State<FiltersScreen> {
 
   final GlobalKey<FormBuilderState> _fbKey = GlobalKey<FormBuilderState>();
+  final String title = 'heheghwge';
 
   var _durationRange = RangeValues(1, 90);
   var _durationStart = '0';
   var _durationEnd = '90';
-  var _dateRangeLabelText = 'Anytime';
+  var _dateRangeLabelText = 'Tap to select dates';
 
   @override
   Widget build(BuildContext context) {
@@ -106,7 +108,7 @@ class _FiltersScreenState extends State<FiltersScreen> {
                         onChanged: (dates) {
                           setState(() {
                             if (dates.toString().isEmpty) {
-                              _dateRangeLabelText = 'Anytime';
+                              _dateRangeLabelText = 'Tap to select dates';
                             } else {
                               _dateRangeLabelText = '';
                             }
@@ -164,6 +166,75 @@ class _FiltersScreenState extends State<FiltersScreen> {
                                     });
                                   },
                                 ),
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+
+                      SizedBox(height: 30.0,),
+
+                      Text(
+                        "Venue Location",
+                        style: TextStyle(
+                          fontSize: 20.0,
+                          color: Theme.of(context).primaryColor,
+                        ),
+                      ),
+
+                      FormBuilderCustomField(
+                        attribute: "duration",
+                        validators: [
+                          FormBuilderValidators.required(),
+                        ],
+                        formField: FormField(
+                          enabled: true,
+                          builder: (FormFieldState<dynamic> field) {
+                            return InputDecorator(
+                              decoration: InputDecoration(
+                                border: InputBorder.none,
+                                errorText: field.errorText,
+                              ),
+                              child: Container(
+                                padding: EdgeInsets.only(top: 20.0),
+                                child: MultiSelect(
+                                    autovalidate: false,
+                                    dataSource: [
+                                      {
+                                        "display": "Australia",
+                                        "value": 1,
+                                      },
+                                      {
+                                        "display": "Canada",
+                                        "value": 2,
+                                      },
+                                      {
+                                        "display": "India",
+                                        "value": 3,
+                                      },
+                                      {
+                                        "display": "United States",
+                                        "value": 4,
+                                      }
+                                    ],
+                                    textField: 'display',
+                                    valueField: 'value',
+                                    filterable: true,
+                                    required: false,
+                                    value: null,
+                                    onSaved: (value) {
+                                      print('The value is $value');
+                                    }
+                                ),
+
+
+
+
+
+
+
+
+
                               ),
                             );
                           },
@@ -341,4 +412,3 @@ class _FiltersScreenState extends State<FiltersScreen> {
     );
   }
 }
-
