@@ -1,3 +1,4 @@
+import 'package:erasmusopportunitiesapp/helpers/countries.dart';
 import 'package:erasmusopportunitiesapp/widgets/multiselect.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -199,26 +200,9 @@ class _FiltersScreenState extends State<FiltersScreen> {
                                 padding: EdgeInsets.only(top: 20.0),
                                 child: MultiSelect(
                                     autovalidate: false,
-                                    dataSource: [
-                                      {
-                                        "display": "Australia",
-                                        "value": 1,
-                                      },
-                                      {
-                                        "display": "Canada",
-                                        "value": 2,
-                                      },
-                                      {
-                                        "display": "India",
-                                        "value": 3,
-                                      },
-                                      {
-                                        "display": "United States",
-                                        "value": 4,
-                                      }
-                                    ],
-                                    textField: 'display',
-                                    valueField: 'value',
+                                    dataSource: countries,
+                                    textField: 'name',
+                                    valueField: 'name',
                                     filterable: true,
                                     required: false,
                                     value: null,
@@ -226,15 +210,6 @@ class _FiltersScreenState extends State<FiltersScreen> {
                                       print('The value is $value');
                                     }
                                 ),
-
-
-
-
-
-
-
-
-
                               ),
                             );
                           },
@@ -389,6 +364,7 @@ class _FiltersScreenState extends State<FiltersScreen> {
                   FlatButton(
                     onPressed: () {
                       Navigator.pop(context);
+                      _fbKey.currentState.save();
                     },
                     child: Text(
                       "Done",
