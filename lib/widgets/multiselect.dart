@@ -91,8 +91,13 @@ class MultiSelect extends FormField<dynamic> {
             },
             child: InputDecorator(
               decoration: InputDecoration(
+                filled: false,
+                fillColor: Colors.white,
                 contentPadding: EdgeInsets.only(left: 0.0, top: 0.0, right: 0.0),
-                border: InputBorder.none,
+                errorBorder: InputBorder.none,
+                enabledBorder: InputBorder.none,
+                errorText: state.hasError ? state.errorText : null,
+                errorMaxLines: 50,
               ),
               isEmpty: (state.value == null || state.value == '' || (state.value != null &&  state.value.length == 0)),
               child: Column(

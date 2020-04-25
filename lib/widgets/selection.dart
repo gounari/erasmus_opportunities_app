@@ -66,21 +66,56 @@ class _SelectionModalState extends State<SelectionModal> {
   }
 
   Widget _buildAppBar(BuildContext context) {
-    return AppBar(
-      leading: Container(),
-      elevation: 0.0,
-      title: Text(widget.title, style: TextStyle(fontSize: 16.0)),
-      actions: <Widget>[
-        IconButton(
-          icon: Icon(
-            Icons.close,
-            size: 26.0,
+    return Container(
+      color: Theme.of(context).scaffoldBackgroundColor,
+      height: 57.0,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          FlatButton(
+            onPressed: () {
+              Navigator.pop(context, null);
+            },
+            child: Text(
+              "Cancel",
+              style: TextStyle(
+                fontSize: 18.0,
+                color: Theme.of(context).primaryColor,
+              ),
+            ),
           ),
-          onPressed: () {
-            Navigator.pop(context, null);
-          },
-        ),
-      ],
+          Text(
+            "Countries",
+            style: TextStyle(
+              fontSize: 20.0,
+              color: Theme.of(context).primaryColor,
+              decoration: TextDecoration.none,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          FlatButton(
+            onPressed: _localDataSourceWithState.where((item) => item['checked']).length > widget.maxLength ? null :
+                (){
+              var selectedValuesObjectList = _localDataSourceWithState
+                  .where((item) => item['checked'])
+                  .toList();
+              var selectedValues = [];
+              selectedValuesObjectList.forEach((item) {
+                selectedValues.add(item['value']);
+              });
+              Navigator.pop(context, selectedValues);
+            },
+            child: Text(
+              "Save",
+              style: TextStyle(
+                fontSize: 18.0,
+                color: Theme.of(context).primaryColor,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 
@@ -88,56 +123,12 @@ class _SelectionModalState extends State<SelectionModal> {
     return SafeArea(
       child: Column(
         children: <Widget>[
+          _buildAppBar(context),
           widget.filterable ? _buildSearchText() : new SizedBox(),
           Expanded(
             child: _optionsList(),
           ),
           _currentlySelectedOptions(),
-          Container(
-            color: Colors.grey.shade600,
-            child: ButtonBar(
-                alignment: MainAxisAlignment.spaceBetween,
-                mainAxisSize: MainAxisSize.max,
-                children: <Widget>[
-                  ButtonTheme(
-                    height: 50.0,
-                    child: RaisedButton.icon(
-                      label: Text('Cancel'),
-                      icon: Icon(
-                        Icons.clear,
-                        size: 20.0,
-                      ),
-                      color: Colors.grey.shade100,
-                      onPressed: () {
-                        Navigator.pop(context, null);
-                      },
-                    ),
-                  ),
-                  ButtonTheme(
-                    height: 50.0,
-                    child: RaisedButton.icon(
-                      label: Text('Save'),
-                      icon: Icon(
-                        Icons.save,
-                        size: 20.0,
-                      ),
-                      color: Theme.of(context).primaryColor,
-                      textColor: Colors.white,
-                      onPressed: _localDataSourceWithState.where((item) => item['checked']).length > widget.maxLength ? null :
-                          (){
-                        var selectedValuesObjectList = _localDataSourceWithState
-                            .where((item) => item['checked'])
-                            .toList();
-                        var selectedValues = [];
-                        selectedValuesObjectList.forEach((item) {
-                          selectedValues.add(item['value']);
-                        });
-                        Navigator.pop(context, selectedValues);
-                      },
-                    ),
-                  )
-                ]),
-          )
         ],
       ),
     );
@@ -172,19 +163,21 @@ class _SelectionModalState extends State<SelectionModal> {
     });
     return selectedOptions.length > 0
         ? Container(
-      padding: EdgeInsets.all(10.0),
-      color: Colors.grey.shade400,
+      padding: EdgeInsets.all(20.0),
+      color: Colors.white,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
-          new Text(
+          Text(
             'Currently selected ${selectedOptions.length} items (tap to remove)', // use languageService here
             style: TextStyle(
-                color: Colors.black87, fontWeight: FontWeight.bold),
+                color: Colors.black
+            ),
           ),
+          SizedBox(height: 10.0,),
           ConstrainedBox(
-              constraints: new BoxConstraints(
+              constraints: BoxConstraints(
                 maxHeight: MediaQuery.of(context).size.height / 8,
               ),
               child: Scrollbar(
@@ -226,21 +219,21 @@ class _SelectionModalState extends State<SelectionModal> {
 
   Widget _buildSearchText() {
     return Container(
-      color: Theme.of(context).primaryColor,
-      padding: EdgeInsets.only(left: 8.0, right: 8.0, bottom: 10.0),
+      color: Theme.of(context).scaffoldBackgroundColor,
+      padding: EdgeInsets.only(left: 8.0, right: 8.0, bottom: 10.0, top: 10.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
           Container(
             child: TextField(
               controller: _controller,
-              keyboardAppearance: Brightness.light,
+              keyboardAppearance: Brightness.dark,
               onChanged: searchOperation,
-              decoration: new InputDecoration(
+              decoration: InputDecoration(
                   contentPadding: EdgeInsets.all(12.0),
-                  border: new OutlineInputBorder(
-                    borderRadius: const BorderRadius.all(
-                      const Radius.circular(6.0),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(30.0),
                     ),
                   ),
                   filled: true,
@@ -268,7 +261,6 @@ class _SelectionModalState extends State<SelectionModal> {
   Widget build(BuildContext context) {
     return new Scaffold(
       key: globalKey,
-      appBar: _buildAppBar(context),
       body: _buildBody(context),
     );
   }
