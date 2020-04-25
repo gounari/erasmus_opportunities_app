@@ -59,15 +59,29 @@ class _FiltersScreenState extends State<FiltersScreen> {
                         ),
                         options: <FormBuilderFieldOption>[
                           FormBuilderFieldOption(
-                              child: Text("Start Date"),
+                              child: Text(
+                                "Start Date",
+                                style: TextStyle(
+                                  fontSize: 16.0,
+                                ),
+                              ),
                               value: "start_date",
                           ),
                           FormBuilderFieldOption(
-                              child: Text("Deadline"),
+                              child: Text(
+                                  "Deadline",
+                                style: TextStyle(
+                                  fontSize: 16.0,
+                                ),
+                              ),
                               value: "deadline"
                           ),
                           FormBuilderFieldOption(
-                              child: Text("Date Added"),
+                              child: Text("Date Added",
+                                style: TextStyle(
+                                  fontSize: 16.0,
+                                ),
+                              ),
                               value: "date_added"
                           ),
                         ],
@@ -85,14 +99,17 @@ class _FiltersScreenState extends State<FiltersScreen> {
                       ),
 
                       FormBuilderDateRangePicker(
-                        format: DateFormat("yyyy-MM-dd"),
+                        format: DateFormat("dd/MM/yyyy"),
                         lastDate: DateTime.utc(2023),
                         firstDate: DateTime.now(),
                         attribute: 'date_range',
                         onChanged: (dates) {
                           setState(() {
-                            print('in');
-                            _dateRangeLabelText = '';
+                            if (dates.toString().isEmpty) {
+                              _dateRangeLabelText = 'Anytime';
+                            } else {
+                              _dateRangeLabelText = '';
+                            }
                           });
                         },
                         decoration: InputDecoration(
