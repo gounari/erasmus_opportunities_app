@@ -101,6 +101,7 @@ class _FiltersScreenState extends State<FiltersScreen> {
     var _ageRange = filters.agesAcceptedList;
     var _ageStart = _ageRange.start.floor().toString();
     var _ageEnd = _ageRange.end.floor().toString();
+    var _ageText = '$_ageStart to $_ageEnd years old';
     _setAge(RangeValues value) {
       setState(() {
         if (value != filters.getDefaultAgesAccepted()) filters.agesAccepted = true;
@@ -124,6 +125,7 @@ class _FiltersScreenState extends State<FiltersScreen> {
     var _feesRange = filters.nonRefundableFeesList;
     var _feesStart = _feesRange.start.floor().toString();
     var _feesEnd = _feesRange.end.floor().toString();
+    var _feesText = '£$_feesStart to £$_feesEnd';
     _setFees(RangeValues value) {
       setState(() {
         if (value != filters.getDefaultNonRefundableFees()) filters.nonRefundableFees = true;
@@ -135,6 +137,7 @@ class _FiltersScreenState extends State<FiltersScreen> {
     var _expensesRange = filters.reimbursableExpensesList;
     var _expensesStart = _expensesRange.start.floor().toString();
     var _expensesEnd = _expensesRange.end.floor().toString();
+    var _expensesText = '£$_expensesStart to £$_expensesEnd';
     _setExpenses(RangeValues value) {
       setState(() {
         if (value != filters.getDefaultReimbursableExpenses()) filters.reimbursableExpenses = true;
@@ -366,9 +369,9 @@ class _FiltersScreenState extends State<FiltersScreen> {
                                     hintText: 'Tap to select countries',
                                     filterable: true,
                                     required: false,
-                                    value: null,
+                                    initialValue: _participatingCountriesList,
                                     onSaved: (value) {
-
+                                      _setParticipatingCountries(value);
                                     }
                                 ),
                               ),
@@ -387,7 +390,7 @@ class _FiltersScreenState extends State<FiltersScreen> {
                         ),
                       ),
                       Text(
-                        '$_ageStart to $_ageEnd years old',
+                        _ageText,
                         style: TextStyle(
                           fontSize: 10.0,
                         ),
@@ -414,11 +417,7 @@ class _FiltersScreenState extends State<FiltersScreen> {
                                   values: _ageRange,
                                   divisions: 108,
                                   onChanged: (RangeValues value) {
-                                    setState(() {
-                                      _ageRange = value;
-                                      _ageStart = value.start.floor().toString();
-                                      _ageEnd = value.end.floor().toString();
-                                    });
+                                    _setAge(value);
                                   },
                                 ),
                               ),
