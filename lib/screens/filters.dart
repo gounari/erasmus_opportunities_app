@@ -260,6 +260,7 @@ class _FiltersScreenState extends State<FiltersScreen> {
                         },
                       ),
 
+                      Divider(),
                       SizedBox(height: 30.0,),
 
                       Text(
@@ -306,6 +307,7 @@ class _FiltersScreenState extends State<FiltersScreen> {
                         ),
                       ),
 
+                      Divider(),
                       SizedBox(height: 30.0,),
 
                       Text(
@@ -346,6 +348,7 @@ class _FiltersScreenState extends State<FiltersScreen> {
                         ),
                       ),
 
+                      Divider(),
                       SizedBox(height: 30.0,),
 
                       Text(
@@ -387,6 +390,7 @@ class _FiltersScreenState extends State<FiltersScreen> {
                         ),
                       ),
 
+                      Divider(),
                       SizedBox(height: 30.0,),
 
                       Text(
@@ -433,6 +437,7 @@ class _FiltersScreenState extends State<FiltersScreen> {
                         ),
                       ),
 
+                      Divider(),
                       SizedBox(height: 30.0,),
 
                       Text(
@@ -474,6 +479,7 @@ class _FiltersScreenState extends State<FiltersScreen> {
                         ),
                       ),
 
+                      Divider(),
                       SizedBox(height: 30.0,),
 
                       Text(
@@ -520,6 +526,7 @@ class _FiltersScreenState extends State<FiltersScreen> {
                         ),
                       ),
 
+                      Divider(),
                       SizedBox(height: 30.0,),
 
                       Text(
@@ -566,6 +573,7 @@ class _FiltersScreenState extends State<FiltersScreen> {
                         ),
                       ),
 
+                      Divider(),
                       SizedBox(height: 30.0,),
 
                       Text(
