@@ -137,4 +137,29 @@ class Filters {
     return _applyFilters();
   }
 
+  onReset() {
+    sortByStartDate = true;
+    sortByDeadline = false;
+    sortByDateAdded = false;
+
+    dateRange = false;
+    dateRangeList = [];
+    duration = false;
+    durationList = RangeValues(1, 90);
+    venueLocation = false;
+    venueLocationList = [];
+    participatingCountries = false;
+    participatingCountriesList = [];
+    agesAccepted = false;
+    agesAcceptedList = [];
+    topics = false;
+    topicsList = [];
+    nonRefundableFees = false;
+    nonRefundableFeesList = [];
+    reimbursableExpenses = false;
+    reimbursableExpensesList = [];
+    accessibility = false;
+    accessibilityList = [];
+  }
+
 }

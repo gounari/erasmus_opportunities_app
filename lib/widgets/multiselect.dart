@@ -53,7 +53,7 @@ class MultiSelect extends FormField<dynamic> {
               if (existingItem != null) {
                 selectedOptions.add(Chip(
                   label: Text(existingItem[textField],
-                      overflow: TextOverflow.ellipsis),
+                      overflow: TextOverflow.ellipsis,),
                 ));
               }
             });
@@ -124,4 +124,5 @@ class MultiSelect extends FormField<dynamic> {
               ),
             ));
       });
+
 }

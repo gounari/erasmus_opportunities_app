@@ -31,43 +31,18 @@ class _FiltersScreenState extends State<FiltersScreen> {
     if (widget.filters.sortByDateAdded) return filterConstants.dateAdded;
   }
 
-//  var _durationRange;
-//  var _durationStart;
-//  var _durationEnd;
-//  _resetDuration() {
-//    _durationRange = RangeValues(1, 90);
-//    _durationStart = _durationRange.start.floor().toString();
-//    _durationEnd = _durationRange.end.floor().toString();
-//  }
-
   var _ageRange = RangeValues(12, 120);
   var _ageStart = '12';
   var _ageEnd = '120';
-  _resetAge() {
-    _ageRange = RangeValues(12, 120);
-    _ageStart = _ageRange.start.floor().toString();
-    _ageEnd = _ageRange.end.floor().toString();
-  }
 
 
   var _feesRange = RangeValues(0, 500);
   var _feesStart = '0';
   var _feesEnd = '500';
-  _resetFees() {
-    _feesRange = RangeValues(0, 500);
-    _feesStart = _feesRange.start.floor().toString();
-    _feesEnd = _feesRange.end.floor().toString();
-  }
 
   var _expensesRange = RangeValues(0, 500);
   var _expensesStart = '0';
   var _expensesEnd = '500';
-  _resetExpenses() {
-    _expensesRange = RangeValues(0, 500);
-    _expensesStart = _expensesRange.start.floor().toString();
-    _expensesEnd = _expensesRange.end.floor().toString();
-  }
-
 
 
   @override
@@ -76,14 +51,10 @@ class _FiltersScreenState extends State<FiltersScreen> {
     FlutterStatusbarcolor.setNavigationBarColor(Colors.black);
     var filters = widget.filters;
 
-
     var _durationRange = filters.durationList;
     var _durationStart = _durationRange.start.floor().toString();
     var _durationEnd = _durationRange.end.floor().toString();
     var _durationRangeText = '$_durationStart to $_durationEnd days';
-    _resetDuration() {
-      filters.durationList = RangeValues(1, 90);
-    }
     _setDuration(RangeValues value) {
       setState(() {
         if (value != RangeValues(1, 90)) filters.duration = true;
@@ -91,9 +62,29 @@ class _FiltersScreenState extends State<FiltersScreen> {
       });
     }
 
+    var _venueLocationList = filters.venueLocationList;
+    _setVenueLocation(List value) {
+      setState(() {
+        if (value.isNotEmpty) filters.venueLocation = true;
+        filters.venueLocationList = [];
+        for (var location in value) {
+          filters.venueLocationList.add(location.toString());
+        }
+      });
+    }
+
 
     var dateRangeList = filters.dateRangeList;
     var _dateRangeLabelText = dateRangeList != null && filters.dateRangeList.isNotEmpty? '' : 'Tap to select dates';
+
+
+    _onReset() {
+      setState(() {
+        filters.onReset();
+      });
+      _fbKey.currentState.reset();
+    }
+
 
     return Scaffold(
       body: SafeArea(
@@ -182,7 +173,6 @@ class _FiltersScreenState extends State<FiltersScreen> {
                               filters.dateRangeList = [];
                               _dateRangeLabelText = 'Tap to select dates';
                             } else {
-                              print(dates);
                               filters.dateRangeList = [DateTime.now()];
                               _dateRangeLabelText = '';
                             }
@@ -264,10 +254,10 @@ class _FiltersScreenState extends State<FiltersScreen> {
                                     textField: 'name',
                                     valueField: 'name',
                                     filterable: true,
+                                    initialValue: _venueLocationList,
                                     required: false,
-                                    value: null,
                                     onSaved: (value) {
-                                     //
+                                      _setVenueLocation(value);
                                     }
                                 ),
                               ),
@@ -308,7 +298,7 @@ class _FiltersScreenState extends State<FiltersScreen> {
                                     required: false,
                                     value: null,
                                     onSaved: (value) {
-                                      //print('The value is $value');
+
                                     }
                                 ),
                               ),
@@ -399,7 +389,7 @@ class _FiltersScreenState extends State<FiltersScreen> {
                                     required: false,
                                     value: null,
                                     onSaved: (value) {
-                                      //print('The value is $value');
+
                                     }
                                 ),
                               ),
@@ -560,15 +550,8 @@ class _FiltersScreenState extends State<FiltersScreen> {
                 children: <Widget>[
                   FlatButton(
                     onPressed: () {
-                      _fbKey.currentState.reset();
-                      setState(() {
-
-                        _resetAge();
-                        _resetDuration();
-                        _resetExpenses();
-                        _resetFees();
-                      });
-
+                      _onReset();
+                      _onReset();
                     },
                     child: Text(
                       "Reset",
@@ -590,22 +573,15 @@ class _FiltersScreenState extends State<FiltersScreen> {
                   FlatButton(
                     onPressed: () {
 
+                      if (_fbKey.currentState.saveAndValidate()) {
+                        FormBuilderState currentState = _fbKey.currentState;
 
-                      try {
-                        if (_fbKey.currentState.saveAndValidate()) {
-                          FormBuilderState currentState = _fbKey.currentState;
+                        filters = _updateFilters(currentState, filters);
 
-                          filters = _updateFilters(currentState, filters);
-
-                          currentState.reset();
-                        }
-
-                        Navigator.pop(context, filters);
-
-                      } catch (error) {
-                        print(error.toString());
-                        return null;
                       }
+
+                      Navigator.pop(context, filters);
+
                     },
                     child: Text(
                       "Done",

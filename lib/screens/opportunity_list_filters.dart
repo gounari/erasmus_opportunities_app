@@ -86,8 +86,6 @@ class OpportunityListFilters extends StatelessWidget {
                             setState(() {
                               filters = newFilters;
                             });
-
-                            print(filters.sortByStartDate);
                           },
                           icon: Icons.filter_list,
                         ),
