@@ -68,13 +68,15 @@ class _FiltersScreenState extends State<FiltersScreen> {
     _expensesEnd = _expensesRange.end.floor().toString();
   }
 
-  var _dateRangeLabelText = 'Tap to select dates';
+
 
   @override
   Widget build(BuildContext context) {
 
     FlutterStatusbarcolor.setNavigationBarColor(Colors.black);
     var filters = widget.filters;
+    var dateRangeList = filters.dateRangeList;
+    var _dateRangeLabelText = dateRangeList != null && filters.dateRangeList.isNotEmpty? '' : 'Tap to select dates';
 
     return Scaffold(
       body: SafeArea(
@@ -149,7 +151,7 @@ class _FiltersScreenState extends State<FiltersScreen> {
 
                       FormBuilderDateRangePicker(
                         attribute: filterConstants.dateRange,
-                        initialValue: [],
+                        initialValue: filters.dateRangeList,
                         decoration: InputDecoration(
                           labelText:  _dateRangeLabelText,
                           border: InputBorder.none,
@@ -160,8 +162,11 @@ class _FiltersScreenState extends State<FiltersScreen> {
                         onChanged: (dates) {
                           setState(() {
                             if (dates.toString().isEmpty) {
+                              filters.dateRangeList = [];
                               _dateRangeLabelText = 'Tap to select dates';
                             } else {
+                              print(dates);
+                              filters.dateRangeList = [DateTime.now()];
                               _dateRangeLabelText = '';
                             }
                           });
@@ -623,6 +628,12 @@ class _FiltersScreenState extends State<FiltersScreen> {
       filters.sortByDeadline = false;
       filters.sortByDateAdded = true;
     }
+
+    if (currentState.value[filterConstants.dateRange] != []) {
+      filters.dateRange = true;
+      filters.dateRangeList = currentState.value[filterConstants.dateRange];
+    }
+
 
 
     return filters;
