@@ -456,9 +456,9 @@ class _FiltersScreenState extends State<FiltersScreen> {
                                     hintText: 'Tap to select topics',
                                     filterable: true,
                                     required: false,
-                                    value: null,
+                                    initialValue: _topicsList,
                                     onSaved: (value) {
-
+                                      _setTopics(value);
                                     }
                                 ),
                               ),
