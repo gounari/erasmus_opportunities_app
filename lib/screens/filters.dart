@@ -31,14 +31,14 @@ class _FiltersScreenState extends State<FiltersScreen> {
     if (widget.filters.sortByDateAdded) return filterConstants.dateAdded;
   }
 
-  var _durationRange = RangeValues(1, 90);
-  var _durationStart = '0';
-  var _durationEnd = '90';
-  _resetDuration() {
-    _durationRange = RangeValues(1, 90);
-    _durationStart = _durationRange.start.floor().toString();
-    _durationEnd = _durationRange.end.floor().toString();
-  }
+//  var _durationRange;
+//  var _durationStart;
+//  var _durationEnd;
+//  _resetDuration() {
+//    _durationRange = RangeValues(1, 90);
+//    _durationStart = _durationRange.start.floor().toString();
+//    _durationEnd = _durationRange.end.floor().toString();
+//  }
 
   var _ageRange = RangeValues(12, 120);
   var _ageStart = '12';
@@ -75,6 +75,23 @@ class _FiltersScreenState extends State<FiltersScreen> {
 
     FlutterStatusbarcolor.setNavigationBarColor(Colors.black);
     var filters = widget.filters;
+
+
+    var _durationRange = filters.durationList;
+    var _durationStart = _durationRange.start.floor().toString();
+    var _durationEnd = _durationRange.end.floor().toString();
+    var _durationRangeText = '$_durationStart to $_durationEnd days';
+    _resetDuration() {
+      filters.durationList = RangeValues(1, 90);
+    }
+    _setDuration(RangeValues value) {
+      setState(() {
+        if (value != RangeValues(1, 90)) filters.duration = true;
+        filters.durationList = value;
+      });
+    }
+
+
     var dateRangeList = filters.dateRangeList;
     var _dateRangeLabelText = dateRangeList != null && filters.dateRangeList.isNotEmpty? '' : 'Tap to select dates';
 
@@ -183,7 +200,7 @@ class _FiltersScreenState extends State<FiltersScreen> {
                         ),
                       ),
                       Text(
-                        '$_durationStart to $_durationEnd days',
+                        _durationRangeText,
                         style: TextStyle(
                           fontSize: 10.0,
                         ),
@@ -210,11 +227,7 @@ class _FiltersScreenState extends State<FiltersScreen> {
                                   values: _durationRange,
                                   divisions: 90,
                                   onChanged: (RangeValues value) {
-                                    setState(() {
-                                      _durationRange = value;
-                                      _durationStart = value.start.floor().toString();
-                                      _durationEnd = value.end.floor().toString();
-                                    });
+                                    _setDuration(value);
                                   },
                                 ),
                               ),
@@ -548,10 +561,14 @@ class _FiltersScreenState extends State<FiltersScreen> {
                   FlatButton(
                     onPressed: () {
                       _fbKey.currentState.reset();
-                      _resetAge();
-                      _resetDuration();
-                      _resetExpenses();
-                      _resetFees();
+                      setState(() {
+
+                        _resetAge();
+                        _resetDuration();
+                        _resetExpenses();
+                        _resetFees();
+                      });
+
                     },
                     child: Text(
                       "Reset",
@@ -633,6 +650,7 @@ class _FiltersScreenState extends State<FiltersScreen> {
       filters.dateRange = true;
       filters.dateRangeList = currentState.value[filterConstants.dateRange];
     }
+
 
 
 

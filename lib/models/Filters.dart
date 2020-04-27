@@ -1,4 +1,6 @@
 
+import 'package:flutter/material.dart';
+
 import 'opportunity.dart';
 
 class Filters {
@@ -15,7 +17,7 @@ class Filters {
   bool dateRange = false;
   List<DateTime> dateRangeList = [];
   bool duration = false;
-  List<int> durationList = [];
+  RangeValues durationList = RangeValues(1, 90);
   bool venueLocation = false;
   List<String> venueLocationList = [];
   bool participatingCountries = false;
