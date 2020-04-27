@@ -20,18 +20,39 @@ class _FiltersScreenState extends State<FiltersScreen> {
   var _durationRange = RangeValues(1, 90);
   var _durationStart = '0';
   var _durationEnd = '90';
+  _resetDuration() {
+    _durationRange = RangeValues(1, 90);
+    _durationStart = _durationRange.start.floor().toString();
+    _durationEnd = _durationRange.end.floor().toString();
+  }
 
   var _ageRange = RangeValues(12, 120);
   var _ageStart = '12';
   var _ageEnd = '120';
+  _resetAge() {
+    _ageRange = RangeValues(12, 120);
+    _ageStart = _ageRange.start.floor().toString();
+    _ageEnd = _ageRange.end.floor().toString();
+  }
+
 
   var _feesRange = RangeValues(0, 500);
   var _feesStart = '0';
   var _feesEnd = '500';
+  _resetFees() {
+    _feesRange = RangeValues(0, 500);
+    _feesStart = _feesRange.start.floor().toString();
+    _feesEnd = _feesRange.end.floor().toString();
+  }
 
   var _expensesRange = RangeValues(0, 500);
   var _expensesStart = '0';
   var _expensesEnd = '500';
+  _resetExpenses() {
+    _expensesRange = RangeValues(0, 500);
+    _expensesStart = _expensesRange.start.floor().toString();
+    _expensesEnd = _expensesRange.end.floor().toString();
+  }
 
   var _dateRangeLabelText = 'Tap to select dates';
 
@@ -48,10 +69,6 @@ class _FiltersScreenState extends State<FiltersScreen> {
               padding: EdgeInsets.only(right: 20.0, left: 20.0, top: 60),
               child: FormBuilder(
                   key: _fbKey,
-                  initialValue: {
-                    'date': DateTime.now(),
-                    'accept_terms': false,
-                  },
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -116,10 +133,15 @@ class _FiltersScreenState extends State<FiltersScreen> {
                       ),
 
                       FormBuilderDateRangePicker(
+                        attribute: 'date_range',
+                        initialValue: [],
+                        decoration: InputDecoration(
+                          labelText:  _dateRangeLabelText,
+                          border: InputBorder.none,
+                        ),
                         format: DateFormat("dd/MM/yyyy"),
                         lastDate: DateTime.utc(2023),
                         firstDate: DateTime.now(),
-                        attribute: 'date_range',
                         onChanged: (dates) {
                           setState(() {
                             if (dates.toString().isEmpty) {
@@ -129,9 +151,6 @@ class _FiltersScreenState extends State<FiltersScreen> {
                             }
                           });
                         },
-                        decoration: InputDecoration(
-                          labelText:  _dateRangeLabelText,
-                          border: InputBorder.none,),
                       ),
 
                       SizedBox(height: 30.0,),
@@ -221,7 +240,7 @@ class _FiltersScreenState extends State<FiltersScreen> {
                                     required: false,
                                     value: null,
                                     onSaved: (value) {
-                                      print('The value is $value');
+                                     //
                                     }
                                 ),
                               ),
@@ -265,7 +284,7 @@ class _FiltersScreenState extends State<FiltersScreen> {
                                     required: false,
                                     value: null,
                                     onSaved: (value) {
-                                      print('The value is $value');
+                                      //print('The value is $value');
                                     }
                                 ),
                               ),
@@ -339,9 +358,6 @@ class _FiltersScreenState extends State<FiltersScreen> {
 
                       FormBuilderCustomField(
                         attribute: "topics",
-                        validators: [
-                          FormBuilderValidators.required(),
-                        ],
                         formField: FormField(
                           enabled: true,
                           builder: (FormFieldState<dynamic> field) {
@@ -362,7 +378,7 @@ class _FiltersScreenState extends State<FiltersScreen> {
                                     required: false,
                                     value: null,
                                     onSaved: (value) {
-                                      print('The value is $value');
+                                      //print('The value is $value');
                                     }
                                 ),
                               ),
@@ -389,9 +405,6 @@ class _FiltersScreenState extends State<FiltersScreen> {
 
                       FormBuilderCustomField(
                         attribute: "fees",
-                        validators: [
-                          FormBuilderValidators.required(),
-                        ],
                         formField: FormField(
                           enabled: true,
                           builder: (FormFieldState<dynamic> field) {
@@ -487,14 +500,32 @@ class _FiltersScreenState extends State<FiltersScreen> {
                         ),
                       ),
 
-                      FormBuilderCheckboxList(
-                        decoration: InputDecoration(
-                          border: InputBorder.none,
-                        ),
-                        activeColor: Theme.of(context).primaryColor,
+
+                      FormBuilderCustomField(
                         attribute: "accessibility",
-                        initialValue: [accessibility[0].value],
-                        options: accessibility,
+                        formField: FormField(
+                          enabled: true,
+                          builder: (FormFieldState<dynamic> field) {
+                            return InputDecorator(
+                              decoration: InputDecoration(
+                                border: InputBorder.none,
+                                errorText: field.errorText,
+                              ),
+                              child: Container(
+                                padding: EdgeInsets.only(top: 20.0),
+                                child:
+                                FormBuilderCheckboxList(
+                                  decoration: InputDecoration(
+                                    border: InputBorder.none,
+                                  ),
+                                  activeColor: Theme.of(context).primaryColor,
+                                  attribute: "accessibility",
+                                  options: accessibility,
+                                ),
+                              ),
+                            );
+                          },
+                        ),
                       ),
 
                       SizedBox(height: 30.0,),
@@ -512,6 +543,10 @@ class _FiltersScreenState extends State<FiltersScreen> {
                   FlatButton(
                     onPressed: () {
                       _fbKey.currentState.reset();
+                      _resetAge();
+                      _resetDuration();
+                      _resetExpenses();
+                      _resetFees();
                     },
                     child: Text(
                       "Reset",
@@ -534,6 +569,7 @@ class _FiltersScreenState extends State<FiltersScreen> {
                     onPressed: () {
                       Navigator.pop(context);
                       _fbKey.currentState.save();
+                      print(_fbKey.currentState.value['date_range'].toString());
                     },
                     child: Text(
                       "Done",
