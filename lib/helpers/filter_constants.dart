@@ -1,6 +1,7 @@
 class FilterConstants {
 
   FilterConstants({
+    this.sortBy: filtersSortBy,
     this.startDate: filterStartDate,
     this.deadline: filterDeadline,
     this.dateAdded: filterDateAdded,
@@ -15,6 +16,7 @@ class FilterConstants {
     this.accessibility: filterAccessibility,
   });
 
+  static const filtersSortBy = 'sortBy';
   static const filterStartDate = 'startDate';
   static const filterDeadline = 'deadline';
   static const filterDateAdded = 'dateAdded';
@@ -28,6 +30,7 @@ class FilterConstants {
   static const filterReimbursableExpenses = 'reimbursableExpenses';
   static const filterAccessibility = 'accessibility';
 
+  final String sortBy;
   final String startDate;
   final String deadline;
   final String dateAdded;

@@ -25,6 +25,12 @@ class _FiltersScreenState extends State<FiltersScreen> {
   final GlobalKey<FormBuilderState> _fbKey = GlobalKey<FormBuilderState>();
   static final filterConstants = FilterConstants();
 
+  String _getSortByInitialValue() {
+    if (widget.filters.sortByStartDate) return filterConstants.startDate;
+    if (widget.filters.sortByDeadline) return filterConstants.deadline;
+    if (widget.filters.sortByDateAdded) return filterConstants.dateAdded;
+  }
+
   var _durationRange = RangeValues(1, 90);
   var _durationStart = '0';
   var _durationEnd = '90';
@@ -68,6 +74,7 @@ class _FiltersScreenState extends State<FiltersScreen> {
   Widget build(BuildContext context) {
 
     FlutterStatusbarcolor.setNavigationBarColor(Colors.black);
+    var filters = widget.filters;
 
     return Scaffold(
       body: SafeArea(
@@ -93,8 +100,8 @@ class _FiltersScreenState extends State<FiltersScreen> {
                       ),
 
                       FormBuilderRadio(
-                        attribute: "favorite_ice_cream",
-                        initialValue: "start_date",
+                        attribute: filterConstants.sortBy,
+                        initialValue: _getSortByInitialValue(),
                         activeColor: Theme.of(context).primaryColor,
                         decoration: InputDecoration(
                           border: InputBorder.none,
@@ -107,7 +114,7 @@ class _FiltersScreenState extends State<FiltersScreen> {
                                   fontSize: 16.0,
                                 ),
                               ),
-                              value: "start_date",
+                              value: filterConstants.startDate,
                           ),
                           FormBuilderFieldOption(
                               child: Text(
@@ -116,7 +123,7 @@ class _FiltersScreenState extends State<FiltersScreen> {
                                   fontSize: 16.0,
                                 ),
                               ),
-                              value: "deadline"
+                              value: filterConstants.deadline
                           ),
                           FormBuilderFieldOption(
                               child: Text("Date Added",
@@ -124,7 +131,7 @@ class _FiltersScreenState extends State<FiltersScreen> {
                                   fontSize: 16.0,
                                 ),
                               ),
-                              value: "date_added"
+                              value: filterConstants.dateAdded
                           ),
                         ],
 
@@ -141,7 +148,7 @@ class _FiltersScreenState extends State<FiltersScreen> {
                       ),
 
                       FormBuilderDateRangePicker(
-                        attribute: 'date_range',
+                        attribute: filterConstants.dateRange,
                         initialValue: [],
                         decoration: InputDecoration(
                           labelText:  _dateRangeLabelText,
@@ -178,10 +185,7 @@ class _FiltersScreenState extends State<FiltersScreen> {
                       ),
 
                       FormBuilderCustomField(
-                        attribute: "duration",
-                        validators: [
-                          FormBuilderValidators.required(),
-                        ],
+                        attribute: filterConstants.duration,
                         formField: FormField(
                           enabled: true,
                           builder: (FormFieldState<dynamic> field) {
@@ -225,10 +229,7 @@ class _FiltersScreenState extends State<FiltersScreen> {
                       ),
 
                       FormBuilderCustomField(
-                        attribute: "venue_location",
-                        validators: [
-                          FormBuilderValidators.required(),
-                        ],
+                        attribute: filterConstants.venueLocation,
                         formField: FormField(
                           enabled: true,
                           builder: (FormFieldState<dynamic> field) {
@@ -268,10 +269,7 @@ class _FiltersScreenState extends State<FiltersScreen> {
                       ),
 
                       FormBuilderCustomField(
-                        attribute: "participating_countries",
-                        validators: [
-                          FormBuilderValidators.required(),
-                        ],
+                        attribute: filterConstants.participatingCountries,
                         formField: FormField(
                           enabled: true,
                           builder: (FormFieldState<dynamic> field) {
@@ -318,10 +316,7 @@ class _FiltersScreenState extends State<FiltersScreen> {
                       ),
 
                       FormBuilderCustomField(
-                        attribute: "ages_accepted",
-                        validators: [
-                          FormBuilderValidators.required(),
-                        ],
+                        attribute: filterConstants.agesAccepted,
                         formField: FormField(
                           enabled: true,
                           builder: (FormFieldState<dynamic> field) {
@@ -365,7 +360,7 @@ class _FiltersScreenState extends State<FiltersScreen> {
                       ),
 
                       FormBuilderCustomField(
-                        attribute: "topics",
+                        attribute: filterConstants.topics,
                         formField: FormField(
                           enabled: true,
                           builder: (FormFieldState<dynamic> field) {
@@ -412,7 +407,7 @@ class _FiltersScreenState extends State<FiltersScreen> {
                       ),
 
                       FormBuilderCustomField(
-                        attribute: "fees",
+                        attribute: filterConstants.nonRefundableFees,
                         formField: FormField(
                           enabled: true,
                           builder: (FormFieldState<dynamic> field) {
@@ -462,10 +457,7 @@ class _FiltersScreenState extends State<FiltersScreen> {
                       ),
 
                       FormBuilderCustomField(
-                        attribute: "expenses",
-                        validators: [
-                          FormBuilderValidators.required(),
-                        ],
+                        attribute: filterConstants.reimbursableExpenses,
                         formField: FormField(
                           enabled: true,
                           builder: (FormFieldState<dynamic> field) {
@@ -510,7 +502,7 @@ class _FiltersScreenState extends State<FiltersScreen> {
 
 
                       FormBuilderCustomField(
-                        attribute: "accessibility",
+                        attribute: filterConstants.accessibility,
                         formField: FormField(
                           enabled: true,
                           builder: (FormFieldState<dynamic> field) {
@@ -527,7 +519,7 @@ class _FiltersScreenState extends State<FiltersScreen> {
                                     border: InputBorder.none,
                                   ),
                                   activeColor: Theme.of(context).primaryColor,
-                                  attribute: "accessibility",
+                                  attribute: filterConstants.accessibility,
                                   options: accessibility,
                                 ),
                               ),
@@ -575,45 +567,21 @@ class _FiltersScreenState extends State<FiltersScreen> {
                   ),
                   FlatButton(
                     onPressed: () {
-                      Navigator.pop(context, widget.filters);
+
 
                       try {
                         if (_fbKey.currentState.saveAndValidate()) {
                           FormBuilderState currentState = _fbKey.currentState;
 
-//                          await DatabaseService(uid: user.uid)
-//                              .updateOpportunity(
-//                            currentState.value[opportunity.title],
-//                            currentState.value[opportunity.venueLocation],
-//                            currentState.value[opportunity.type],
-//                            currentState.value[opportunity.startDate],
-//                            currentState.value[opportunity.endDate],
-//                            currentState.value[opportunity.lowAge],
-//                            currentState.value[opportunity.highAge],
-//                            currentState.value[opportunity.topic],
-//                            currentState.value[opportunity.applicationDeadline],
-//                            currentState.value[opportunity.participationCost],
-//                            currentState.value[opportunity.reimbursementLimit],
-//                            currentState.value[opportunity.applicationLink],
-//                            currentState.value[opportunity.provideForDisabilities],
-//                            currentState.value[opportunity.description],
-//                          );
+                          filters = _updateFilters(currentState, filters);
 
                           currentState.reset();
-                          final snackBar = SnackBar(
-                            content: Text('Opportunity succesfully published!'),
-                            backgroundColor: Colors.green,
-                          );
-                          Scaffold.of(context).showSnackBar(snackBar);
                         }
+
+                        Navigator.pop(context, filters);
 
                       } catch (error) {
                         print(error.toString());
-                        final snackBar = SnackBar(
-                          content: Text('An error accured! Please try again.'),
-                          backgroundColor: Colors.red,
-                        );
-                        Scaffold.of(context).showSnackBar(snackBar);
                         return null;
                       }
                     },
@@ -637,5 +605,26 @@ class _FiltersScreenState extends State<FiltersScreen> {
         ),
       ),
     );
+  }
+
+  Filters _updateFilters(FormBuilderState currentState, Filters filters) {
+
+    final sortBy = currentState.value[filterConstants.sortBy];
+    if ( sortBy == filterConstants.startDate) {
+      filters.sortByStartDate = true;
+      filters.sortByDeadline = false;
+      filters.sortByDateAdded = false;
+    } else if (sortBy == filterConstants.deadline) {
+      filters.sortByStartDate = false;
+      filters.sortByDeadline = true;
+      filters.sortByDateAdded = false;
+    } else {
+      filters.sortByStartDate = false;
+      filters.sortByDeadline = false;
+      filters.sortByDateAdded = true;
+    }
+
+
+    return filters;
   }
 }
