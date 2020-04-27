@@ -25,43 +25,56 @@ class _FiltersScreenState extends State<FiltersScreen> {
   final GlobalKey<FormBuilderState> _fbKey = GlobalKey<FormBuilderState>();
   static final filterConstants = FilterConstants();
 
-  String _getSortByInitialValue() {
-    if (widget.filters.sortByStartDate) return filterConstants.startDate;
-    if (widget.filters.sortByDeadline) return filterConstants.deadline;
-    if (widget.filters.sortByDateAdded) return filterConstants.dateAdded;
-  }
-
-  var _ageRange = RangeValues(12, 120);
-  var _ageStart = '12';
-  var _ageEnd = '120';
-
-
-  var _feesRange = RangeValues(0, 500);
-  var _feesStart = '0';
-  var _feesEnd = '500';
-
-  var _expensesRange = RangeValues(0, 500);
-  var _expensesStart = '0';
-  var _expensesEnd = '500';
-
-
   @override
   Widget build(BuildContext context) {
-
     FlutterStatusbarcolor.setNavigationBarColor(Colors.black);
+
     var filters = widget.filters;
 
+    // Sort by
+    String _getSortByInitialValue() {
+      if (widget.filters.sortByStartDate) return filterConstants.startDate;
+      if (widget.filters.sortByDeadline) return filterConstants.deadline;
+      if (widget.filters.sortByDateAdded) return filterConstants.dateAdded;
+    }
+    _setSortBy(value) {
+      if (value == filterConstants.startDate) {
+        filters.sortByStartDate = true;
+        filters.sortByDeadline = false;
+        filters.sortByDateAdded = false;
+      } else if (value == filterConstants.deadline) {
+        filters.sortByStartDate = false;
+        filters.sortByDeadline = true;
+        filters.sortByDateAdded = false;
+      } else {
+        filters.sortByStartDate = false;
+        filters.sortByDeadline = false;
+        filters.sortByDateAdded = true;
+      }
+    }
+
+    // Date range
+    var dateRangeList = filters.dateRangeList;
+    var _dateRangeLabelText = dateRangeList != null && filters.dateRangeList.isNotEmpty? '' : 'Tap to select dates';
+    _setDateRange(value) {
+      filters.dateRange = true;
+      filters.dateRangeList = value;
+    }
+
+
+    // Duration
     var _durationRange = filters.durationList;
     var _durationStart = _durationRange.start.floor().toString();
     var _durationEnd = _durationRange.end.floor().toString();
     var _durationRangeText = '$_durationStart to $_durationEnd days';
     _setDuration(RangeValues value) {
       setState(() {
-        if (value != RangeValues(1, 90)) filters.duration = true;
+        if (value != filters.getDefaultDuration()) filters.duration = true;
         filters.durationList = value;
       });
     }
 
+    // Venue location
     var _venueLocationList = filters.venueLocationList;
     _setVenueLocation(List value) {
       setState(() {
@@ -73,10 +86,62 @@ class _FiltersScreenState extends State<FiltersScreen> {
       });
     }
 
+    // Participating countries
+    var _participatingCountriesList = filters.participatingCountriesList;
+    _setParticipatingCountries(List value) {
+      setState(() {
+        if (value.isNotEmpty) filters.participatingCountries = true;
+        filters.participatingCountriesList = [];
+        for (var location in value) {
+          filters.participatingCountriesList.add(location.toString());
+        }
+      });
+    }
 
-    var dateRangeList = filters.dateRangeList;
-    var _dateRangeLabelText = dateRangeList != null && filters.dateRangeList.isNotEmpty? '' : 'Tap to select dates';
+    // Ages accepted
+    var _ageRange = filters.agesAcceptedList;
+    var _ageStart = _ageRange.start.floor().toString();
+    var _ageEnd = _ageRange.end.floor().toString();
+    _setAge(RangeValues value) {
+      setState(() {
+        if (value != filters.getDefaultAgesAccepted()) filters.agesAccepted = true;
+        filters.agesAcceptedList = value;
+      });
+    }
 
+    // Topics
+    var _topicsList = filters.topicsList;
+    _setTopics(List value) {
+      setState(() {
+        if (value.isNotEmpty) filters.topics = true;
+        filters.topicsList = [];
+        for (var location in value) {
+          filters.topicsList.add(location.toString());
+        }
+      });
+    }
+
+    // Non refundable fees
+    var _feesRange = filters.nonRefundableFeesList;
+    var _feesStart = _feesRange.start.floor().toString();
+    var _feesEnd = _feesRange.end.floor().toString();
+    _setFees(RangeValues value) {
+      setState(() {
+        if (value != filters.getDefaultNonRefundableFees()) filters.nonRefundableFees = true;
+        filters.nonRefundableFeesList = value;
+      });
+    }
+
+    // Reimbursable expenses amount
+    var _expensesRange = filters.reimbursableExpensesList;
+    var _expensesStart = _expensesRange.start.floor().toString();
+    var _expensesEnd = _expensesRange.end.floor().toString();
+    _setExpenses(RangeValues value) {
+      setState(() {
+        if (value != filters.getDefaultReimbursableExpenses()) filters.reimbursableExpenses = true;
+        filters.reimbursableExpensesList = value;
+      });
+    }
 
     _onReset() {
       setState(() {
@@ -116,6 +181,9 @@ class _FiltersScreenState extends State<FiltersScreen> {
                         decoration: InputDecoration(
                           border: InputBorder.none,
                         ),
+                        onSaved: (value) {
+                          _setSortBy(value);
+                        },
                         options: <FormBuilderFieldOption>[
                           FormBuilderFieldOption(
                               child: Text(
@@ -164,6 +232,9 @@ class _FiltersScreenState extends State<FiltersScreen> {
                           labelText:  _dateRangeLabelText,
                           border: InputBorder.none,
                         ),
+                        onSaved: (value) {
+                          _setDateRange(value);
+                        },
                         format: DateFormat("dd/MM/yyyy"),
                         lastDate: DateTime.utc(2023),
                         firstDate: DateTime.now(),
@@ -229,7 +300,7 @@ class _FiltersScreenState extends State<FiltersScreen> {
                       SizedBox(height: 30.0,),
 
                       Text(
-                        "Venue Location",
+                        "Venue location",
                         style: TextStyle(
                           fontSize: 20.0,
                           color: Theme.of(context).primaryColor,
@@ -269,7 +340,7 @@ class _FiltersScreenState extends State<FiltersScreen> {
                       SizedBox(height: 30.0,),
 
                       Text(
-                        "Participating Countries",
+                        "Participating countries",
                         style: TextStyle(
                           fontSize: 20.0,
                           color: Theme.of(context).primaryColor,
@@ -310,7 +381,7 @@ class _FiltersScreenState extends State<FiltersScreen> {
                       SizedBox(height: 30.0,),
 
                       Text(
-                        "Ages Accepted",
+                        "Ages accepted",
                         style: TextStyle(
                           fontSize: 20.0,
                           color: Theme.of(context).primaryColor,
@@ -401,7 +472,7 @@ class _FiltersScreenState extends State<FiltersScreen> {
                       SizedBox(height: 30.0,),
 
                       Text(
-                        "Non Refundable Fees",
+                        "Non refundable fees",
                         style: TextStyle(
                           fontSize: 20.0,
                           color: Theme.of(context).primaryColor,
@@ -451,7 +522,7 @@ class _FiltersScreenState extends State<FiltersScreen> {
                       SizedBox(height: 30.0,),
 
                       Text(
-                        "Reimbursable Expenses Amount",
+                        "Reimbursable expenses amount",
                         style: TextStyle(
                           fontSize: 20.0,
                           color: Theme.of(context).primaryColor,
@@ -607,25 +678,9 @@ class _FiltersScreenState extends State<FiltersScreen> {
 
   Filters _updateFilters(FormBuilderState currentState, Filters filters) {
 
-    final sortBy = currentState.value[filterConstants.sortBy];
-    if ( sortBy == filterConstants.startDate) {
-      filters.sortByStartDate = true;
-      filters.sortByDeadline = false;
-      filters.sortByDateAdded = false;
-    } else if (sortBy == filterConstants.deadline) {
-      filters.sortByStartDate = false;
-      filters.sortByDeadline = true;
-      filters.sortByDateAdded = false;
-    } else {
-      filters.sortByStartDate = false;
-      filters.sortByDeadline = false;
-      filters.sortByDateAdded = true;
-    }
 
-    if (currentState.value[filterConstants.dateRange] != []) {
-      filters.dateRange = true;
-      filters.dateRangeList = currentState.value[filterConstants.dateRange];
-    }
+
+
 
 
 

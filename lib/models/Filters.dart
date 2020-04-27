@@ -23,13 +23,13 @@ class Filters {
   bool participatingCountries = false;
   List<String> participatingCountriesList = [];
   bool agesAccepted = false;
-  List<int> agesAcceptedList = [];
+  RangeValues agesAcceptedList = RangeValues(12, 120);
   bool topics = false;
   List<String> topicsList = [];
   bool nonRefundableFees = false;
-  List<int> nonRefundableFeesList = [];
+  RangeValues nonRefundableFeesList = RangeValues(0, 500);
   bool reimbursableExpenses = false;
-  List<int> reimbursableExpensesList = [];
+  RangeValues reimbursableExpensesList = RangeValues(0, 500);
   bool accessibility = false;
   List<String> accessibilityList = [];
 
@@ -137,6 +137,22 @@ class Filters {
     return _applyFilters();
   }
 
+  RangeValues getDefaultDuration() {
+    return RangeValues(1, 90);
+  }
+
+  RangeValues getDefaultAgesAccepted() {
+    return RangeValues(12, 120);
+  }
+
+  RangeValues getDefaultNonRefundableFees() {
+    return RangeValues(0, 500);
+  }
+
+  RangeValues getDefaultReimbursableExpenses() {
+    return RangeValues(0, 500);
+  }
+
   onReset() {
     sortByStartDate = true;
     sortByDeadline = false;
@@ -151,13 +167,13 @@ class Filters {
     participatingCountries = false;
     participatingCountriesList = [];
     agesAccepted = false;
-    agesAcceptedList = [];
+    agesAcceptedList = RangeValues(12, 120);
     topics = false;
     topicsList = [];
     nonRefundableFees = false;
-    nonRefundableFeesList = [];
+    nonRefundableFeesList = RangeValues(0, 500);
     reimbursableExpenses = false;
-    reimbursableExpensesList = [];
+    reimbursableExpensesList = RangeValues(0, 500);
     accessibility = false;
     accessibilityList = [];
   }
