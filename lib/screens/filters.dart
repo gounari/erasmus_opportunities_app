@@ -61,7 +61,6 @@ class _FiltersScreenState extends State<FiltersScreen> {
       filters.dateRangeList = value;
     }
 
-
     // Duration
     var _durationRange = filters.durationList;
     var _durationStart = _durationRange.start.floor().toString();
@@ -622,7 +621,6 @@ class _FiltersScreenState extends State<FiltersScreen> {
                   FlatButton(
                     onPressed: () {
                       _onReset();
-                      _onReset();
                     },
                     child: Text(
                       "Reset",
@@ -645,13 +643,8 @@ class _FiltersScreenState extends State<FiltersScreen> {
                     onPressed: () {
 
                       if (_fbKey.currentState.saveAndValidate()) {
-                        FormBuilderState currentState = _fbKey.currentState;
-
-                        filters = _updateFilters(currentState, filters);
-
+                        Navigator.pop(context, filters);
                       }
-
-                      Navigator.pop(context, filters);
 
                     },
                     child: Text(
@@ -674,17 +667,5 @@ class _FiltersScreenState extends State<FiltersScreen> {
         ),
       ),
     );
-  }
-
-  Filters _updateFilters(FormBuilderState currentState, Filters filters) {
-
-
-
-
-
-
-
-
-    return filters;
   }
 }
