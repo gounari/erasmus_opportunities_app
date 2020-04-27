@@ -1,6 +1,8 @@
 import 'package:erasmusopportunitiesapp/helpers/accessibility.dart';
 import 'package:erasmusopportunitiesapp/helpers/countries.dart';
+import 'package:erasmusopportunitiesapp/helpers/filter_constants.dart';
 import 'package:erasmusopportunitiesapp/helpers/topics.dart';
+import 'package:erasmusopportunitiesapp/models/Filters.dart';
 import 'package:erasmusopportunitiesapp/widgets/multiselect.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -9,6 +11,11 @@ import 'package:flutter_statusbarcolor/flutter_statusbarcolor.dart';
 import 'package:intl/intl.dart';
 
 class FiltersScreen extends StatefulWidget {
+
+  final Filters filters;
+
+  const FiltersScreen({Key key, this.filters}) : super(key: key);
+
   @override
   _FiltersScreenState createState() => _FiltersScreenState();
 }
@@ -16,6 +23,7 @@ class FiltersScreen extends StatefulWidget {
 class _FiltersScreenState extends State<FiltersScreen> {
 
   final GlobalKey<FormBuilderState> _fbKey = GlobalKey<FormBuilderState>();
+  static final filterConstants = FilterConstants();
 
   var _durationRange = RangeValues(1, 90);
   var _durationStart = '0';
@@ -567,9 +575,47 @@ class _FiltersScreenState extends State<FiltersScreen> {
                   ),
                   FlatButton(
                     onPressed: () {
-                      Navigator.pop(context);
-                      _fbKey.currentState.save();
-                      print(_fbKey.currentState.value['date_range'].toString());
+                      Navigator.pop(context, widget.filters);
+
+                      try {
+                        if (_fbKey.currentState.saveAndValidate()) {
+                          FormBuilderState currentState = _fbKey.currentState;
+
+//                          await DatabaseService(uid: user.uid)
+//                              .updateOpportunity(
+//                            currentState.value[opportunity.title],
+//                            currentState.value[opportunity.venueLocation],
+//                            currentState.value[opportunity.type],
+//                            currentState.value[opportunity.startDate],
+//                            currentState.value[opportunity.endDate],
+//                            currentState.value[opportunity.lowAge],
+//                            currentState.value[opportunity.highAge],
+//                            currentState.value[opportunity.topic],
+//                            currentState.value[opportunity.applicationDeadline],
+//                            currentState.value[opportunity.participationCost],
+//                            currentState.value[opportunity.reimbursementLimit],
+//                            currentState.value[opportunity.applicationLink],
+//                            currentState.value[opportunity.provideForDisabilities],
+//                            currentState.value[opportunity.description],
+//                          );
+
+                          currentState.reset();
+                          final snackBar = SnackBar(
+                            content: Text('Opportunity succesfully published!'),
+                            backgroundColor: Colors.green,
+                          );
+                          Scaffold.of(context).showSnackBar(snackBar);
+                        }
+
+                      } catch (error) {
+                        print(error.toString());
+                        final snackBar = SnackBar(
+                          content: Text('An error accured! Please try again.'),
+                          backgroundColor: Colors.red,
+                        );
+                        Scaffold.of(context).showSnackBar(snackBar);
+                        return null;
+                      }
                     },
                     child: Text(
                       "Done",

@@ -19,7 +19,7 @@ class OpportunityListFilters extends StatelessWidget {
 
     final opportunities = Provider.of<List<Opportunity>>(context);
     var filteredOpportunities = opportunities;
-    final filters = Filters();
+    var filters = Filters();
 
 
     return StatefulBuilder(
@@ -77,10 +77,17 @@ class OpportunityListFilters extends StatelessWidget {
                           color1: filtersButtonPressed? Theme.of(context).primaryColor : Colors.white,
                           color2: filtersButtonPressed? Colors.white : Theme.of(context).primaryColor,
                           borderColor: Theme.of(context).primaryColor,
-                          onPressed: () {
+                          onPressed: () async {
+                            Filters newFilters = await Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => FiltersScreen(filters: filters,)),
+                            );
+
                             setState(() {
-                              Navigator.of(context).push(createRoute(FiltersScreen()));
+                              filters = newFilters;
                             });
+
+                            print(filters.sortByStartDate);
                           },
                           icon: Icons.filter_list,
                         ),
