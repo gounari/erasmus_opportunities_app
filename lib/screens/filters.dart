@@ -145,6 +145,13 @@ class _FiltersScreenState extends State<FiltersScreen> {
       });
     }
 
+    // Organisations that provide
+    var accessibilityList = filters.accessibilityList;
+    _setAccessibility(value) {
+      filters.accessibility = true;
+      filters.accessibilityList = value;
+    }
+
     _onReset() {
       setState(() {
         filters.onReset();
@@ -590,6 +597,10 @@ class _FiltersScreenState extends State<FiltersScreen> {
                                   activeColor: Theme.of(context).primaryColor,
                                   attribute: filterConstants.accessibility,
                                   options: accessibility,
+                                  initialValue: accessibilityList,
+                                  onSaved: (value) {
+                                    _setAccessibility(value);
+                                  },
                                 ),
                               ),
                             );
