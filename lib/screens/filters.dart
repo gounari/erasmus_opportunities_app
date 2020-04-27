@@ -125,7 +125,7 @@ class _FiltersScreenState extends State<FiltersScreen> {
                       SizedBox(height: 30.0,),
 
                       Text(
-                        "Dates range",
+                        "Date range",
                         style: TextStyle(
                           fontSize: 20.0,
                           color: Theme.of(context).primaryColor,
