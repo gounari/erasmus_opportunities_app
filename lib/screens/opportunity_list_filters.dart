@@ -100,8 +100,8 @@ class OpportunityListFilters extends StatelessWidget {
                                 children: <Widget>[
                                   FiltersOutlineButton(
                                     text: 'Urgent',
-                                    color1: filters.sortByUrgent ? Theme.of(context).primaryColor : Colors.white,
-                                    color2: filters.sortByUrgent? Colors.white : Theme.of(context).primaryColor,
+                                    color1: filters.sortByDeadline ? Theme.of(context).primaryColor : Colors.white,
+                                    color2: filters.sortByDeadline? Colors.white : Theme.of(context).primaryColor,
                                     borderColor: Theme.of(context).primaryColor,
                                     onPressed: () {
                                       setState(() {

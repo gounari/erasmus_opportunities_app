@@ -4,10 +4,33 @@ import 'opportunity.dart';
 class Filters {
   bool title = false;
   String _titleValue = '';
-  bool sortByUrgent = false;
+
   bool sortByStartDate = true;
+  bool sortByDeadline = false;
+  bool sortByDateAdded = false;
+
   bool liked = false;
   bool free = false;
+
+  bool dateRange = false;
+  List<DateTime> dateRangeList = [];
+  bool duration = false;
+  List<int> durationList = [];
+  bool venueLocation = false;
+  List<String> venueLocationList = [];
+  bool participatingCountries = false;
+  List<String> participatingCountriesList = [];
+  bool agesAccepted = false;
+  List<int> agesAcceptedList = [];
+  bool topics = false;
+  List<String> topicsList = [];
+  bool nonRefundableFees = false;
+  List<int> nonRefundableFeesList = [];
+  bool reimbursableExpenses = false;
+  List<int> reimbursableExpensesList = [];
+  bool accessibility = false;
+  List<String> accessibilityList = [];
+
   List<Opportunity> _filteredList;
 
   List<Opportunity> _applyFilters() {
@@ -19,12 +42,16 @@ class Filters {
           .toList();
     }
 
-    if (sortByUrgent) {
+    if (sortByStartDate) {
+      _filteredList.sort((a, b) => a.startDate.compareTo(b.startDate));
+    }
+
+    if (sortByDeadline) {
       _filteredList.sort((a, b) => a.applicationDeadline.compareTo(b.applicationDeadline));
     }
 
-    if (sortByStartDate) {
-      _filteredList.sort((a, b) => a.startDate.compareTo(b.startDate));
+    if (sortByDateAdded) {
+      // Add timestamp to Opportunity
     }
 
     if (liked) {
@@ -37,6 +64,42 @@ class Filters {
           .where((opportunity) => opportunity.participationCost == 0).toList();
     }
 
+    if (dateRange) {
+
+    }
+
+    if (duration) {
+
+    }
+
+    if (venueLocation) {
+
+    }
+
+    if (participatingCountries) {
+
+    }
+
+    if (agesAccepted) {
+
+    }
+
+    if (topics) {
+
+    }
+
+    if (nonRefundableFees) {
+
+    }
+
+    if (reimbursableExpenses) {
+
+    }
+
+    if (accessibility) {
+
+    }
+
     return _filteredList;
   }
 
@@ -47,7 +110,7 @@ class Filters {
   }
 
   List<Opportunity> setSortByUrgent(List<Opportunity> opportunities) {
-    sortByUrgent = !sortByUrgent;
+    sortByDeadline = !sortByDeadline;
     sortByStartDate = !sortByStartDate;
     _filteredList = opportunities;
     return _applyFilters();
@@ -55,7 +118,7 @@ class Filters {
 
   List<Opportunity> setSortByStartDate(List<Opportunity> opportunities) {
     sortByStartDate = !sortByStartDate;
-    sortByUrgent = !sortByUrgent;
+    sortByDeadline = !sortByDeadline;
     _filteredList = opportunities;
     return _applyFilters();
   }
