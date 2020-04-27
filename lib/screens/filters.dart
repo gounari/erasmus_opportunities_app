@@ -523,7 +523,7 @@ class _FiltersScreenState extends State<FiltersScreen> {
                         ),
                       ),
                       Text(
-                        '£$_expensesStart to £$_expensesEnd',
+                        _expensesText,
                         style: TextStyle(
                           fontSize: 10.0,
                         ),
@@ -550,11 +550,7 @@ class _FiltersScreenState extends State<FiltersScreen> {
                                   values: _expensesRange,
                                   divisions: 20,
                                   onChanged: (RangeValues value) {
-                                    setState(() {
-                                      _expensesRange = value;
-                                      _expensesStart = value.start.floor().toString();
-                                      _expensesEnd = value.end.floor().toString();
-                                    });
+                                    _setExpenses(value);
                                   },
                                 ),
                               ),
