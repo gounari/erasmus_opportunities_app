@@ -72,7 +72,8 @@ class Filters {
     }
 
     if (duration) {
-
+      opportunities = opportunities
+          .where((opportunity) =>  _compareDuration(opportunity)).toList();
     }
 
     if (venueLocation) {
@@ -142,6 +143,16 @@ class Filters {
     }
   }
 
+  setDuration(List<Opportunity> opportunities, RangeValues durationRange) {
+    if (durationRange != null && durationRange != getDefaultDuration()) {
+      duration = true;
+      durationList = durationRange;
+    } else {
+      duration = false;
+      durationList = getDefaultDuration();
+    }
+  }
+
   RangeValues getDefaultDuration() {
     return RangeValues(1, 90);
   }
@@ -181,6 +192,14 @@ class Filters {
     reimbursableExpensesList = RangeValues(0, 500);
     accessibility = false;
     accessibilityList = [];
+  }
+
+  bool _compareDuration(Opportunity opp) {
+    int difference = opp.endDate.difference(opp.startDate).inDays;
+    if (difference >= durationList.start && difference <= durationList.end) {
+      return true;
+    }
+    return false;
   }
 
 }

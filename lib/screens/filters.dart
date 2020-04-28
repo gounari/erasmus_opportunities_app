@@ -68,8 +68,7 @@ class _FiltersScreenState extends State<FiltersScreen> {
     var _durationRangeText = '$_durationStart to $_durationEnd days';
     _setDuration(RangeValues value) {
       setState(() {
-        if (value != filters.getDefaultDuration()) filters.duration = true;
-        filters.durationList = value;
+        filters.setDuration(widget.opportunities, value);
       });
     }
 
