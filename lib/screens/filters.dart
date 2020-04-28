@@ -76,11 +76,7 @@ class _FiltersScreenState extends State<FiltersScreen> {
     var _venueLocationList = filters.venueLocationList;
     _setVenueLocation(List value) {
       setState(() {
-        if (value.isNotEmpty) filters.venueLocation = true;
-        filters.venueLocationList = [];
-        for (var location in value) {
-          filters.venueLocationList.add(location.toString());
-        }
+        filters.setVenueLocation(widget.opportunities, value);
       });
     }
 

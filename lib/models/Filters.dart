@@ -77,7 +77,8 @@ class Filters {
     }
 
     if (venueLocation) {
-
+      opportunities = opportunities
+          .where((opportunity) =>  venueLocationList.contains(opportunity.venueLocation)).toList();
     }
 
     if (participatingCountries) {
@@ -150,6 +151,19 @@ class Filters {
     } else {
       duration = false;
       durationList = getDefaultDuration();
+    }
+  }
+
+  setVenueLocation(List<Opportunity> opportunities, List venues) {
+    if (venues != null && venues.isNotEmpty) {
+      venueLocation = true;
+      venueLocationList = [];
+      for (var location in venues) {
+        venueLocationList.add(location.toString());
+      }
+    } else {
+      venueLocation = false;
+      venueLocationList = [];
     }
   }
 
