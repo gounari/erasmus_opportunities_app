@@ -51,7 +51,7 @@ class Filters {
     }
 
     if (sortByDateAdded) {
-      // Add timestamp to Opportunity
+      // TODO
     }
 
     if (liked) {
@@ -82,11 +82,14 @@ class Filters {
     }
 
     if (participatingCountries) {
-
+      // TODO
     }
 
     if (agesAccepted) {
-
+      opportunities = opportunities
+          .where((opportunity) =>  opportunity.lowAge >= agesAcceptedList.start
+            && opportunity.highAge <= agesAcceptedList.end)
+          .toList();
     }
 
     if (topics) {
@@ -164,6 +167,16 @@ class Filters {
     } else {
       venueLocation = false;
       venueLocationList = [];
+    }
+  }
+
+  setAgesAccepted(List<Opportunity> opportunities, RangeValues ages) {
+    if (ages != null && ages != getDefaultAgesAccepted()) {
+      agesAccepted = true;
+      agesAcceptedList = ages;
+    } else {
+      agesAccepted = false;
+      agesAcceptedList = getDefaultAgesAccepted();
     }
   }
 

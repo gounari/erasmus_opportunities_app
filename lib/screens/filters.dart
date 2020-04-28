@@ -99,8 +99,7 @@ class _FiltersScreenState extends State<FiltersScreen> {
     var _ageText = '$_ageStart to $_ageEnd years old';
     _setAge(RangeValues value) {
       setState(() {
-        if (value != filters.getDefaultAgesAccepted()) filters.agesAccepted = true;
-        filters.agesAcceptedList = value;
+        filters.setAgesAccepted(widget.opportunities, value);
       });
     }
 
