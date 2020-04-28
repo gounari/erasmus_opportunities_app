@@ -129,8 +129,7 @@ class _FiltersScreenState extends State<FiltersScreen> {
     var _expensesText = '£$_expensesStart to £$_expensesEnd';
     _setExpenses(RangeValues value) {
       setState(() {
-        if (value != filters.getDefaultReimbursableExpenses()) filters.reimbursableExpenses = true;
-        filters.reimbursableExpensesList = value;
+        filters.setReimbursableExpenses(widget.opportunities, value);
       });
     }
 

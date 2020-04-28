@@ -106,7 +106,10 @@ class Filters {
     }
 
     if (reimbursableExpenses) {
-
+      opportunities = opportunities
+          .where((opportunity) =>  opportunity.reimbursementLimit >= reimbursableExpensesList.start
+          && opportunity.reimbursementLimit <= reimbursableExpensesList.end)
+          .toList();
     }
 
     if (accessibility) {
@@ -205,6 +208,16 @@ class Filters {
     } else {
       nonRefundableFees = false;
       nonRefundableFeesList = getDefaultNonRefundableFees();
+    }
+  }
+
+  setReimbursableExpenses(List<Opportunity> opportunities, RangeValues expenses) {
+    if (expenses != null && expenses != getDefaultReimbursableExpenses()) {
+      reimbursableExpenses = true;
+      reimbursableExpensesList = expenses;
+    } else {
+      reimbursableExpenses = false;
+      reimbursableExpensesList = getDefaultReimbursableExpenses();
     }
   }
 
