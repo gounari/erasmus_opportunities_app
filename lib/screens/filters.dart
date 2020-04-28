@@ -136,8 +136,7 @@ class _FiltersScreenState extends State<FiltersScreen> {
     // Organisations that provide
     var accessibilityList = filters.accessibilityList;
     _setAccessibility(value) {
-      filters.accessibility = true;
-      filters.accessibilityList = value;
+      filters.setAccessibility(widget.opportunities, value);
     }
 
     _onReset() {

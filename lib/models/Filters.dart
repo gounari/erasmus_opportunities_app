@@ -113,7 +113,8 @@ class Filters {
     }
 
     if (accessibility) {
-
+      opportunities = opportunities
+          .where((opportunity) =>  _compareAccessibilities(opportunity)).toList();
     }
 
     return opportunities;
@@ -221,6 +222,16 @@ class Filters {
     }
   }
 
+  setAccessibility(List<Opportunity> opportunities, List provides) {
+    if (provides != null && provides.isNotEmpty) {
+      accessibility = true;
+      accessibilityList = provides;
+    } else {
+      accessibility = false;
+      accessibilityList = [];
+    }
+  }
+
   RangeValues getDefaultDuration() {
     return RangeValues(1, 90);
   }
@@ -267,6 +278,19 @@ class Filters {
     if (difference >= durationList.start && difference <= durationList.end) {
       return true;
     }
+    return false;
+  }
+
+  bool _compareAccessibilities(Opportunity opp) {
+    if (opp.provideForDisabilities.isEmpty) return false;
+
+    int counter = 0;
+    for (var disability in accessibilityList) {
+      if (opp.provideForDisabilities.contains(disability)) {
+        counter++;
+      }
+    }
+    if (counter == accessibilityList.length) return true;
     return false;
   }
 
