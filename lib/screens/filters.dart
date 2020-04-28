@@ -118,8 +118,7 @@ class _FiltersScreenState extends State<FiltersScreen> {
     var _feesText = '£$_feesStart to £$_feesEnd';
     _setFees(RangeValues value) {
       setState(() {
-        if (value != filters.getDefaultNonRefundableFees()) filters.nonRefundableFees = true;
-        filters.nonRefundableFeesList = value;
+        filters.setNonRefundableFees(widget.opportunities, value);
       });
     }
 

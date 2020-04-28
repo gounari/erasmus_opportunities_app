@@ -99,7 +99,10 @@ class Filters {
     }
 
     if (nonRefundableFees) {
-
+      opportunities = opportunities
+          .where((opportunity) =>  opportunity.participationCost >= nonRefundableFeesList.start
+          && opportunity.participationCost <= nonRefundableFeesList.end)
+          .toList();
     }
 
     if (reimbursableExpenses) {
@@ -192,6 +195,16 @@ class Filters {
     } else {
       topics = false;
       topicsList = [];
+    }
+  }
+
+  setNonRefundableFees(List<Opportunity> opportunities, RangeValues fees) {
+    if (fees != null && fees != getDefaultNonRefundableFees()) {
+      nonRefundableFees = true;
+      nonRefundableFeesList = fees;
+    } else {
+      nonRefundableFees = false;
+      nonRefundableFeesList = getDefaultNonRefundableFees();
     }
   }
 
