@@ -13,8 +13,9 @@ import 'package:intl/intl.dart';
 class FiltersScreen extends StatefulWidget {
 
   final Filters filters;
+  final List opportunities;
 
-  const FiltersScreen({Key key, this.filters}) : super(key: key);
+  const FiltersScreen({Key key, this.filters, this.opportunities}) : super(key: key);
 
   @override
   _FiltersScreenState createState() => _FiltersScreenState();
@@ -57,8 +58,7 @@ class _FiltersScreenState extends State<FiltersScreen> {
     var dateRangeList = filters.dateRangeList;
     var _dateRangeLabelText = dateRangeList != null && filters.dateRangeList.isNotEmpty? '' : 'Tap to select dates';
     _setDateRange(value) {
-      filters.dateRange = true;
-      filters.dateRangeList = value;
+      filters.setDateRange(widget.opportunities, value);
     }
 
     // Duration

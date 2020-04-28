@@ -33,23 +33,21 @@ class Filters {
   bool accessibility = false;
   List<String> accessibilityList = [];
 
-  List<Opportunity> _filteredList;
-
-  List<Opportunity> _applyFilters() {
+  List<Opportunity> applyFilters(List<Opportunity> opportunities) {
 
     if (_titleValue.isNotEmpty) {
-      _filteredList = _filteredList
+      opportunities = opportunities
           .where((opportunity) =>
           opportunity.title.toLowerCase().contains(_titleValue.toLowerCase()))
           .toList();
     }
 
     if (sortByStartDate) {
-      _filteredList.sort((a, b) => a.startDate.compareTo(b.startDate));
+      opportunities.sort((a, b) => a.startDate.compareTo(b.startDate));
     }
 
     if (sortByDeadline) {
-      _filteredList.sort((a, b) => a.applicationDeadline.compareTo(b.applicationDeadline));
+      opportunities.sort((a, b) => a.applicationDeadline.compareTo(b.applicationDeadline));
     }
 
     if (sortByDateAdded) {
@@ -57,17 +55,20 @@ class Filters {
     }
 
     if (liked) {
-      _filteredList = _filteredList
+      opportunities = opportunities
           .where((opportunity) => opportunity.liked == true).toList();
     }
 
     if (free) {
-      _filteredList = _filteredList
+      opportunities = opportunities
           .where((opportunity) => opportunity.participationCost == 0).toList();
     }
 
     if (dateRange) {
-
+      opportunities = opportunities
+          .where((opportunity) =>
+          opportunity.startDate.compareTo(dateRangeList[0]) >= 0 && opportunity.startDate.compareTo(dateRangeList[1]) < 0)
+          .toList();
     }
 
     if (duration) {
@@ -102,39 +103,43 @@ class Filters {
 
     }
 
-    return _filteredList;
+    return opportunities;
   }
 
   List<Opportunity> setTitle(List<Opportunity> opportunities, String titleValue) {
     _titleValue = titleValue;
-    _filteredList = opportunities;
-    return _applyFilters();
+    return applyFilters(opportunities);
   }
 
   List<Opportunity> setSortByUrgent(List<Opportunity> opportunities) {
     sortByDeadline = !sortByDeadline;
     sortByStartDate = !sortByStartDate;
-    _filteredList = opportunities;
-    return _applyFilters();
+    return applyFilters(opportunities);
   }
 
   List<Opportunity> setSortByStartDate(List<Opportunity> opportunities) {
     sortByStartDate = !sortByStartDate;
     sortByDeadline = !sortByDeadline;
-    _filteredList = opportunities;
-    return _applyFilters();
   }
 
   List<Opportunity> setLiked(List<Opportunity> opportunities) {
     liked = !liked;
-    _filteredList = opportunities;
-    return _applyFilters();
+    return applyFilters(opportunities);
   }
 
   List<Opportunity> setFree(List<Opportunity> opportunities) {
     free = !free;
-    _filteredList = opportunities;
-    return _applyFilters();
+    return applyFilters(opportunities);
+  }
+
+  setDateRange(List<Opportunity> opportunities, List dates) {
+    if (dates != null && dates.isNotEmpty) {
+      dateRange = true;
+      dateRangeList = dates;
+    } else {
+      dateRange = false;
+      dateRangeList = [];
+    }
   }
 
   RangeValues getDefaultDuration() {
