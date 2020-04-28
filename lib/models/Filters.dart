@@ -1,4 +1,5 @@
 
+import 'package:erasmusopportunitiesapp/helpers/topics.dart';
 import 'package:flutter/material.dart';
 
 import 'opportunity.dart';
@@ -93,7 +94,8 @@ class Filters {
     }
 
     if (topics) {
-
+      opportunities = opportunities
+          .where((opportunity) =>  topicsList.contains(opportunity.topic)).toList();
     }
 
     if (nonRefundableFees) {
@@ -177,6 +179,19 @@ class Filters {
     } else {
       agesAccepted = false;
       agesAcceptedList = getDefaultAgesAccepted();
+    }
+  }
+
+  setTopics(List<Opportunity> opportunities, List topicsL) {
+    if (topicsL != null && topicsL.isNotEmpty) {
+      topics = true;
+      topicsList = [];
+      for (var topic in topicsL) {
+        topicsList.add(topic.toString());
+      }
+    } else {
+      topics = false;
+      topicsList = [];
     }
   }
 

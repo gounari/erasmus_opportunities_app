@@ -107,11 +107,7 @@ class _FiltersScreenState extends State<FiltersScreen> {
     var _topicsList = filters.topicsList;
     _setTopics(List value) {
       setState(() {
-        if (value.isNotEmpty) filters.topics = true;
-        filters.topicsList = [];
-        for (var location in value) {
-          filters.topicsList.add(location.toString());
-        }
+        filters.setTopics(widget.opportunities, value);
       });
     }
 
