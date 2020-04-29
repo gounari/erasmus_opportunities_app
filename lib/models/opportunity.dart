@@ -85,11 +85,24 @@ class Opportunity {
   }
 
   String getStartDate() {
-    return DateFormat('dd-MM-yyyy').format(startDate);
+    if (startDate.year == DateTime.now().year) {
+      return DateFormat('dd/MM').format(startDate);
+    }
+    return DateFormat('dd/MM/yyyy').format(startDate);
   }
 
   String getEndDate() {
-    return DateFormat('dd-MM-yyyy').format(endDate);
+    if (endDate.year == DateTime.now().year) {
+      return DateFormat('dd/MM').format(endDate);
+    }
+    return DateFormat('dd/MM/yyyy').format(endDate);
+  }
+
+  String getDeadline() {
+    if (applicationDeadline.year == DateTime.now().year) {
+      return DateFormat('dd/MM').format(applicationDeadline);
+    }
+    return DateFormat('dd/MM/yyyy').format(applicationDeadline);
   }
 
   String getReimbursementLimit() {

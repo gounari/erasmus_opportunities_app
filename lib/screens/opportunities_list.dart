@@ -56,7 +56,7 @@ class OpportunitiesList extends StatelessWidget {
                                   child: Text(
                                     opportunities[index].title.toString()
                                         .trim(),
-                                    maxLines: 3,
+                                    maxLines: 2,
                                     overflow: TextOverflow.ellipsis,
                                     style: TextStyle(
                                       fontSize: 18.0,
@@ -67,11 +67,6 @@ class OpportunitiesList extends StatelessWidget {
                               ],
                             ),
                             SizedBox(height: 5.0,),
-                            Text(
-                              'Topic',
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
-                            ),
                             RichText(
                               text: TextSpan(
                                 style: Theme
@@ -91,6 +86,18 @@ class OpportunitiesList extends StatelessWidget {
                                       opportunities[index].venueCountry),
                                 ],
                               ),
+                            ),
+                            SizedBox(height: 5.0,),
+                            Text(
+                              "Deadline: " + opportunities[index].getDeadline(),
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                            SizedBox(height: 5.0,),
+                            Text(
+                              "Start date: " + opportunities[index].getStartDate(),
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
                             ),
                           ],
                         ),

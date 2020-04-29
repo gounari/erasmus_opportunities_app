@@ -16,7 +16,7 @@ class FiltersScreen extends StatefulWidget {
   final Filters filters;
   final List opportunities;
 
-  const FiltersScreen({Key key, this.filters, this.opportunities}) : super(key: key);
+  FiltersScreen({Key key, this.filters, this.opportunities}) : super(key: key);
 
   @override
   _FiltersScreenState createState() => _FiltersScreenState();
@@ -27,9 +27,11 @@ class _FiltersScreenState extends State<FiltersScreen> {
   final GlobalKey<FormBuilderState> _fbKey = GlobalKey<FormBuilderState>();
   static final filterConstants = FilterConstants();
 
-
   @override
   Widget build(BuildContext context) {
+
+
+
     FlutterStatusbarcolor.setNavigationBarColor(Colors.black);
     final List<Map<String,String>> organisations = getOrganisations(widget.opportunities);
 
@@ -167,10 +169,11 @@ class _FiltersScreenState extends State<FiltersScreen> {
 
     _onReset() {
       setState(() {
+        _fbKey.currentState.reset();
         filters.onReset();
       });
-      _fbKey.currentState.reset();
     }
+
 
 
     return Scaffold(
@@ -300,7 +303,7 @@ class _FiltersScreenState extends State<FiltersScreen> {
 
                       FormBuilderDateRangePicker(
                         attribute: filterConstants.dateRange,
-                        initialValue: filters.dateRangeList,
+                        initialValue: dateRangeList,
                         decoration: InputDecoration(
                           labelText:  _dateRangeLabelText,
                           border: InputBorder.none,
