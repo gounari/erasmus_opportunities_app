@@ -9,6 +9,10 @@ class FilterConstants {
     this.duration: filterDuration,
     this.venueLocation: filterVenueLocation,
     this.participatingCountries: filterParticipatingCountries,
+    this.type: filterType,
+    this.youthExchange: filterYouthExchange,
+    this.trainingCourse: filterTrainingCourse,
+    this.bothTypes: filterBothTypes,
     this.agesAccepted: filterAgesAccepted,
     this.topics: filterTopics,
     this.nonRefundableFees: filterNonRefundableFees,
@@ -24,6 +28,10 @@ class FilterConstants {
   static const filterDuration = 'duration';
   static const filterVenueLocation = 'venueLocation';
   static const filterParticipatingCountries = 'participatingCountries';
+  static const filterType = 'type';
+  static const filterYouthExchange = 'youthExchange';
+  static const filterTrainingCourse = 'trainingCourse';
+  static const filterBothTypes = 'both';
   static const filterAgesAccepted = 'agesAccepted';
   static const filterTopics = 'topics';
   static const filterNonRefundableFees = 'nonRefundableFees';
@@ -38,6 +46,10 @@ class FilterConstants {
   final String duration;
   final String venueLocation;
   final String participatingCountries;
+  final String type;
+  final String youthExchange;
+  final String trainingCourse;
+  final String bothTypes;
   final String agesAccepted;
   final String topics;
   final String nonRefundableFees;

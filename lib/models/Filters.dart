@@ -10,6 +10,9 @@ class Filters {
   bool sortByDeadline = false;
   bool sortByDateAdded = false;
 
+  bool onlyYouthExchange = false;
+  bool onlyTrainingCourse = false;
+
   bool liked = false;
   bool free = false;
 
@@ -51,6 +54,16 @@ class Filters {
 
     if (sortByDateAdded) {
       opportunities.sort((a, b) => b.uploadTime.compareTo(a.uploadTime));
+    }
+
+    if (onlyYouthExchange) {
+      opportunities =
+          opportunities.where((opportunity) => opportunity.type == 'Youth Exchange').toList();
+    }
+
+    if (onlyTrainingCourse) {
+      opportunities =
+          opportunities.where((opportunity) => opportunity.type == 'Training Course').toList();
     }
 
     if (liked) {

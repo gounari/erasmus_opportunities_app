@@ -34,9 +34,9 @@ class _FiltersScreenState extends State<FiltersScreen> {
 
     // Sort by
     String _getSortByInitialValue() {
-      if (widget.filters.sortByStartDate) return filterConstants.startDate;
-      if (widget.filters.sortByDeadline) return filterConstants.deadline;
-      if (widget.filters.sortByDateAdded) return filterConstants.dateAdded;
+      if (filters.sortByStartDate) return filterConstants.startDate;
+      if (filters.sortByDeadline) return filterConstants.deadline;
+      return filterConstants.dateAdded;
     }
     _setSortBy(value) {
       if (value == filterConstants.startDate) {
@@ -51,6 +51,25 @@ class _FiltersScreenState extends State<FiltersScreen> {
         filters.sortByStartDate = false;
         filters.sortByDeadline = false;
         filters.sortByDateAdded = true;
+      }
+    }
+
+    // Type
+    String _getInitialType() {
+      if (filters.onlyYouthExchange) return filterConstants.youthExchange;
+      if (filters.onlyTrainingCourse) return filterConstants.trainingCourse;
+      return filterConstants.bothTypes;
+    }
+    _setType(value) {
+      if (value == filterConstants.youthExchange) {
+        filters.onlyYouthExchange = true;
+        filters.onlyTrainingCourse = false;
+      } else if (value == filterConstants.trainingCourse) {
+        filters.onlyYouthExchange = false;
+        filters.onlyTrainingCourse = true;
+      } else {
+        filters.onlyYouthExchange = false;
+        filters.onlyTrainingCourse = false;
       }
     }
 
@@ -202,6 +221,57 @@ class _FiltersScreenState extends State<FiltersScreen> {
                                 ),
                               ),
                               value: filterConstants.dateAdded
+                          ),
+                        ],
+
+                      ),
+
+                      SizedBox(height: 30.0,),
+
+                      Text(
+                        "Type",
+                        style: TextStyle(
+                          fontSize: 20.0,
+                          color: Theme.of(context).primaryColor,
+                        ),
+                      ),
+
+                      FormBuilderRadio(
+                        attribute: filterConstants.type,
+                        initialValue: _getInitialType(),
+                        activeColor: Theme.of(context).primaryColor,
+                        decoration: InputDecoration(
+                          border: InputBorder.none,
+                        ),
+                        onSaved: (value) {
+                          _setType(value);
+                        },
+                        options: <FormBuilderFieldOption>[
+                          FormBuilderFieldOption(
+                            child: Text(
+                              "Youth Exchange",
+                              style: TextStyle(
+                                fontSize: 16.0,
+                              ),
+                            ),
+                            value: filterConstants.youthExchange,
+                          ),
+                          FormBuilderFieldOption(
+                              child: Text(
+                                "Training Course",
+                                style: TextStyle(
+                                  fontSize: 16.0,
+                                ),
+                              ),
+                              value: filterConstants.trainingCourse,
+                          ),
+                          FormBuilderFieldOption(
+                              child: Text("Both",
+                                style: TextStyle(
+                                  fontSize: 16.0,
+                                ),
+                              ),
+                              value: filterConstants.bothTypes,
                           ),
                         ],
 
