@@ -24,6 +24,8 @@ class Filters {
   List<String> venueLocationList = [];
   bool participatingCountries = false;
   List<String> participatingCountriesList = [];
+  bool receivingOrganisations = false;
+  List<String> receivingOrganisationsList = [];
   bool agesAccepted = false;
   RangeValues agesAcceptedList = RangeValues(12, 120);
   bool topics = false;
@@ -96,6 +98,11 @@ class Filters {
     if (participatingCountries) {
       opportunities = opportunities
           .where((opportunity) =>  _compareParticipatingCountries(opportunity)).toList();
+    }
+
+    if (receivingOrganisations) {
+      opportunities = opportunities
+          .where((opportunity) =>  _compareReceivingOrganisations(opportunity)).toList();
     }
 
     if (agesAccepted) {
@@ -201,6 +208,19 @@ class Filters {
     } else {
       participatingCountries = false;
       participatingCountriesList = [];
+    }
+  }
+
+  setReceivingOrganisations(List<Opportunity> opportunities, List organisations) {
+    if (organisations != null && organisations.isNotEmpty) {
+      receivingOrganisations = true;
+      receivingOrganisationsList = [];
+      for (var organisation in organisations) {
+        receivingOrganisationsList.add(organisation.toString());
+      }
+    } else {
+      receivingOrganisations = false;
+      receivingOrganisationsList = [];
     }
   }
 
@@ -316,6 +336,15 @@ class Filters {
       }
     }
     if (counter == participatingCountriesList.length) return true;
+    return false;
+  }
+
+  bool _compareReceivingOrganisations(Opportunity opp) {
+    for (var organisation in receivingOrganisationsList) {
+      if (opp.organisationName == organisation) {
+        return true;
+      }
+    }
     return false;
   }
 

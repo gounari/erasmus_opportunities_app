@@ -3,6 +3,7 @@ import 'package:erasmusopportunitiesapp/helpers/countries.dart';
 import 'package:erasmusopportunitiesapp/helpers/filter_constants.dart';
 import 'package:erasmusopportunitiesapp/helpers/topics.dart';
 import 'package:erasmusopportunitiesapp/models/Filters.dart';
+import 'package:erasmusopportunitiesapp/models/opportunity.dart';
 import 'package:erasmusopportunitiesapp/widgets/multiselect.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -26,9 +27,11 @@ class _FiltersScreenState extends State<FiltersScreen> {
   final GlobalKey<FormBuilderState> _fbKey = GlobalKey<FormBuilderState>();
   static final filterConstants = FilterConstants();
 
+
   @override
   Widget build(BuildContext context) {
     FlutterStatusbarcolor.setNavigationBarColor(Colors.black);
+    final List<Map<String,String>> organisations = getOrganisations(widget.opportunities);
 
     var filters = widget.filters;
 
@@ -104,6 +107,14 @@ class _FiltersScreenState extends State<FiltersScreen> {
     _setParticipatingCountries(List value) {
       setState(() {
         filters.setParticipatingCountries(widget.opportunities, value);
+      });
+    }
+
+    // Receiving organisations
+    var _receivingOrganisationsList = filters.receivingOrganisationsList;
+    _setReceivingOrganisations(List value) {
+      setState(() {
+        filters.setReceivingOrganisations(widget.opportunities, value);
       });
     }
 
@@ -447,6 +458,48 @@ class _FiltersScreenState extends State<FiltersScreen> {
                       SizedBox(height: 30.0,),
 
                       Text(
+                        "Receiving organisations",
+                        style: TextStyle(
+                          fontSize: 20.0,
+                          color: Theme.of(context).primaryColor,
+                        ),
+                      ),
+
+                      FormBuilderCustomField(
+                        attribute: filterConstants.organisations,
+                        formField: FormField(
+                          enabled: true,
+                          builder: (FormFieldState<dynamic> field) {
+                            return InputDecorator(
+                              decoration: InputDecoration(
+                                border: InputBorder.none,
+                                errorText: field.errorText,
+                              ),
+                              child: Container(
+                                padding: EdgeInsets.only(top: 20.0),
+                                child: MultiSelect(
+                                    autovalidate: false,
+                                    dataSource: organisations,
+                                    textField: 'organisation',
+                                    valueField: 'organisation',
+                                    hintText: 'Tap to select organisations',
+                                    filterable: true,
+                                    required: false,
+                                    initialValue: _receivingOrganisationsList,
+                                    onSaved: (value) {
+                                      _setReceivingOrganisations(value);
+                                    }
+                                ),
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+
+                      Divider(),
+                      SizedBox(height: 30.0,),
+
+                      Text(
                         "Ages accepted",
                         style: TextStyle(
                           fontSize: 20.0,
@@ -731,4 +784,21 @@ class _FiltersScreenState extends State<FiltersScreen> {
       ),
     );
   }
+}
+
+List<Map<String, String>> getOrganisations(List<Opportunity> opps) {
+
+  List<String> organisationsList = [];
+  for (var opp in opps) {
+    if (!organisationsList.contains(opp.organisationName)) {
+      organisationsList.add(opp.organisationName);
+    }
+  }
+
+  List<Map<String,String>> organisationsMap = [];
+  for (var org in organisationsList) {
+    organisationsMap.add({'organisation' : org});
+  }
+
+  return organisationsMap;
 }
