@@ -1,5 +1,3 @@
-
-import 'package:erasmusopportunitiesapp/helpers/topics.dart';
 import 'package:flutter/material.dart';
 
 import 'opportunity.dart';
@@ -52,7 +50,7 @@ class Filters {
     }
 
     if (sortByDateAdded) {
-      // TODO
+      opportunities.sort((a, b) => b.uploadTime.compareTo(a.uploadTime));
     }
 
     if (liked) {
@@ -132,7 +130,7 @@ class Filters {
     return applyFilters(opportunities);
   }
 
-  List<Opportunity> setSortByStartDate(List<Opportunity> opportunities) {
+  setSortByStartDate(List<Opportunity> opportunities) {
     sortByStartDate = !sortByStartDate;
     sortByDeadline = !sortByDeadline;
   }
