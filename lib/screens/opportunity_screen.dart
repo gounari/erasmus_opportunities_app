@@ -210,7 +210,7 @@ class _OpportunityScreenState extends State<OpportunityScreen> {
                     Row(
                       children: <Widget>[
                         Text(
-                          'Start Date: ',
+                          'Start date: ',
                           style: TextStyle(
                             color: Colors.black54,
                             fontSize: 16.0,
@@ -226,10 +226,11 @@ class _OpportunityScreenState extends State<OpportunityScreen> {
                         ),
                       ],
                     ),
+                    SizedBox(height: 16.0),
                     Row(
                       children: <Widget>[
                         Text(
-                          'End Date: ',
+                          'End date: ',
                           style: TextStyle(
                             color: Colors.black54,
                             fontSize: 16.0,
@@ -245,10 +246,51 @@ class _OpportunityScreenState extends State<OpportunityScreen> {
                         ),
                       ],
                     ),
+                    SizedBox(height: 16.0),
                     Row(
                       children: <Widget>[
                         Text(
-                          'Reimbursment Limit: ',
+                          'Deadline: ',
+                          style: TextStyle(
+                            color: Colors.black54,
+                            fontSize: 16.0,
+                          ),
+                        ),
+                        SizedBox(height: 2.0),
+                        Text(
+                          widget.opportunity.getDeadline(),
+                          style: TextStyle(
+                            fontSize: 16.0,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 16.0),
+                    Row(
+                      children: <Widget>[
+                        Text(
+                          'Ages accepted: ',
+                          style: TextStyle(
+                            color: Colors.black54,
+                            fontSize: 16.0,
+                          ),
+                        ),
+                        SizedBox(height: 2.0),
+                        Text(
+                          widget.opportunity.lowAge.toString() + "-" + widget.opportunity.highAge.toString(),
+                          style: TextStyle(
+                            fontSize: 16.0,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 16.0),
+                    Row(
+                      children: <Widget>[
+                        Text(
+                          'Reimbursment limit: ',
                           style: TextStyle(
                             color: Colors.black54,
                             fontSize: 16.0,
@@ -264,6 +306,7 @@ class _OpportunityScreenState extends State<OpportunityScreen> {
                         ),
                       ],
                     ),
+                    SizedBox(height: 16.0),
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
@@ -279,6 +322,57 @@ class _OpportunityScreenState extends State<OpportunityScreen> {
                           child: Text(
                             widget.opportunity.organisationName,
                             maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                              fontSize: 16.0,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 16.0),
+                    Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Text(
+                          'Topics: ',
+                          style: TextStyle(
+                            color: Colors.black54,
+                            fontSize: 16.0,
+                          ),
+                        ),
+                        SizedBox(height: 2.0),
+                        Flexible(
+                          child: Text(
+                            widget.opportunity.getTopicsList(),
+                            maxLines: 100,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                              fontSize: 16.0,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Text(
+                          'Participating countries: ',
+                          style: TextStyle(
+                            color: Colors.black54,
+                            fontSize: 16.0,
+                          ),
+                        ),
+                        SizedBox(height: 2.0),
+                        Flexible(
+                          child: Text(
+                            widget.opportunity.getParticipatingCountriesList(),
+                            maxLines: 100,
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(
                               fontSize: 16.0,

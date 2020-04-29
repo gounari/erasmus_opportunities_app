@@ -86,23 +86,23 @@ class Opportunity {
 
   String getStartDate() {
     if (startDate.year == DateTime.now().year) {
-      return DateFormat('dd/MM').format(startDate);
+      return DateFormat('d/MM').format(startDate);
     }
-    return DateFormat('dd/MM/yyyy').format(startDate);
+    return DateFormat('d/MM/yyyy').format(startDate);
   }
 
   String getEndDate() {
     if (endDate.year == DateTime.now().year) {
-      return DateFormat('dd/MM').format(endDate);
+      return DateFormat('d/MM').format(endDate);
     }
-    return DateFormat('dd/MM/yyyy').format(endDate);
+    return DateFormat('d/MM/yyyy').format(endDate);
   }
 
   String getDeadline() {
     if (applicationDeadline.year == DateTime.now().year) {
-      return DateFormat('dd/MM').format(applicationDeadline);
+      return DateFormat('d/MM').format(applicationDeadline);
     }
-    return DateFormat('dd/MM/yyyy').format(applicationDeadline);
+    return DateFormat('d/MM/yyyy').format(applicationDeadline);
   }
 
   String getReimbursementLimit() {
@@ -110,6 +110,22 @@ class Opportunity {
       return 'no reimbursement';
     }
     return '€' + removeDecimalZeroFormat(reimbursementLimit);
+  }
+
+  String getTopicsList() {
+    String list = '';
+    for (var topic in topics) {
+      list += '- ' + topic.toString() + '\n';
+    }
+    return  list;
+  }
+
+  String getParticipatingCountriesList() {
+    String list = '';
+    for (var country in participatingCountries) {
+      list += '- ' + country.toString() + '\n';
+    }
+    return  list;
   }
 
   String getProvideForDisabilitiesList() {
