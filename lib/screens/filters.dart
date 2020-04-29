@@ -84,11 +84,7 @@ class _FiltersScreenState extends State<FiltersScreen> {
     var _participatingCountriesList = filters.participatingCountriesList;
     _setParticipatingCountries(List value) {
       setState(() {
-        if (value.isNotEmpty) filters.participatingCountries = true;
-        filters.participatingCountriesList = [];
-        for (var location in value) {
-          filters.participatingCountriesList.add(location.toString());
-        }
+        filters.setParticipatingCountries(widget.opportunities, value);
       });
     }
 

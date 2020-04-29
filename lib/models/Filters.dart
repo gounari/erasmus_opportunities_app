@@ -83,7 +83,8 @@ class Filters {
     }
 
     if (participatingCountries) {
-      // TODO
+      opportunities = opportunities
+          .where((opportunity) =>  _compareParticipatingCountries(opportunity)).toList();
     }
 
     if (agesAccepted) {
@@ -176,6 +177,19 @@ class Filters {
     } else {
       venueLocation = false;
       venueLocationList = [];
+    }
+  }
+
+  setParticipatingCountries(List<Opportunity> opportunities, List countries) {
+    if (countries != null && countries.isNotEmpty) {
+      participatingCountries = true;
+      participatingCountriesList = [];
+      for (var location in countries) {
+        participatingCountriesList.add(location.toString());
+      }
+    } else {
+      participatingCountries = false;
+      participatingCountriesList = [];
     }
   }
 
@@ -278,6 +292,19 @@ class Filters {
     if (difference >= durationList.start && difference <= durationList.end) {
       return true;
     }
+    return false;
+  }
+
+  bool _compareParticipatingCountries(Opportunity opp) {
+    if (opp.participatingCountries.isEmpty) return false;
+
+    int counter = 0;
+    for (var country in participatingCountriesList) {
+      if (opp.participatingCountries.contains(country)) {
+        counter++;
+      }
+    }
+    if (counter == participatingCountriesList.length) return true;
     return false;
   }
 
