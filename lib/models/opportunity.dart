@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:erasmusopportunitiesapp/helpers/math.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
@@ -17,20 +18,25 @@ class Opportunity {
   String title;
   String organisationName;
   final String organisationUID;
-  String venueLocation;
+  String venueAddress;
+  String venueCountry;
+  List<dynamic> participatingCountries;
   String type;
   DateTime startDate;
   DateTime endDate;
   int lowAge;
   int highAge;
-  String topic;
+  List<dynamic> topics;
   DateTime applicationDeadline;
   double participationCost;
   double reimbursementLimit;
   String applicationLink;
   List<dynamic> provideForDisabilities;
   String description;
-  String image;
+  Timestamp uploadTime;
+  String coverImage;
+  String postImage;
+  String postVideo;
   bool liked = false;
 
   Opportunity({
@@ -38,24 +44,27 @@ class Opportunity {
     @required this.title,
     @required this.organisationName,
     @required this.organisationUID,
-    @required this.venueLocation,
+    @required this.venueAddress,
+    @required this.venueCountry,
+    @required this.participatingCountries,
     @required this.type,
     @required this.startDate,
     @required this.endDate,
     @required this.lowAge,
     @required this.highAge,
-    @required this.topic,
+    @required this.topics,
     @required this.applicationDeadline,
     @required this.participationCost,
     @required this.reimbursementLimit,
     @required this.applicationLink,
     @required this.provideForDisabilities,
     @required this.description,
-    this.image,
+    @required this.uploadTime,
+    this.coverImage,
     this.liked,
   }){
-    if (image == null) {
-      image = randomChoice(images);
+    if (coverImage == null) {
+      coverImage = randomChoice(images);
     }
   }
 

@@ -68,7 +68,7 @@ class OpportunitiesList extends StatelessWidget {
                             ),
                             SizedBox(height: 5.0,),
                             Text(
-                              opportunities[index].topic,
+                              'Topic',
                               maxLines: 2,
                               overflow: TextOverflow.ellipsis,
                             ),
@@ -88,7 +88,7 @@ class OpportunitiesList extends StatelessWidget {
                                     ),
                                   ),
                                   TextSpan(text: '' +
-                                      opportunities[index].venueLocation),
+                                      opportunities[index].venueCountry),
                                 ],
                               ),
                             ),
@@ -150,7 +150,7 @@ class OpportunitiesList extends StatelessWidget {
                       borderRadius: BorderRadius.circular(20.0),
                       child: Image(
                         width: 110.0,
-                        image: AssetImage(opportunities[index].image),
+                        image: AssetImage(opportunities[index].coverImage),
                         fit: BoxFit.cover,
                       ),
                     ),

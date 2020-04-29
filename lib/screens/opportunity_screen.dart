@@ -35,7 +35,7 @@ class _OpportunityScreenState extends State<OpportunityScreen> {
                       height: 400.0,
                       width: double.infinity,
                       fit: BoxFit.cover,
-                      image: AssetImage(widget.opportunity.image),
+                      image: AssetImage(widget.opportunity.coverImage),
                     ),
                   ),
                 ),
@@ -161,7 +161,7 @@ class _OpportunityScreenState extends State<OpportunityScreen> {
                         ),
                         SizedBox(height: 2.0),
                         Text(
-                          widget.opportunity.venueLocation,
+                          widget.opportunity.venueCountry,
                           style: TextStyle(
                             fontSize: 18.0,
                             fontWeight: FontWeight.w600,

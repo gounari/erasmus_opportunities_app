@@ -79,7 +79,7 @@ class Filters {
 
     if (venueLocation) {
       opportunities = opportunities
-          .where((opportunity) =>  venueLocationList.contains(opportunity.venueLocation)).toList();
+          .where((opportunity) =>  venueLocationList.contains(opportunity.venueCountry)).toList();
     }
 
     if (participatingCountries) {
@@ -95,7 +95,7 @@ class Filters {
 
     if (topics) {
       opportunities = opportunities
-          .where((opportunity) =>  topicsList.contains(opportunity.topic)).toList();
+          .where((opportunity) =>  topicsList.contains(opportunity.topics)).toList();
     }
 
     if (nonRefundableFees) {
