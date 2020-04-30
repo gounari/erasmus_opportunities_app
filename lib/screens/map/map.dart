@@ -1,4 +1,5 @@
 import 'package:erasmusopportunitiesapp/models/opportunity.dart';
+import 'package:erasmusopportunitiesapp/screens/map/preview.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:geocoder/geocoder.dart';
@@ -21,6 +22,8 @@ class _MapScreenState extends State<MapScreen> {
     return LatLng(addresses.first.coordinates.latitude, addresses.first.coordinates.longitude);
   }
 
+  Opportunity currentOpp;
+
 
   @override
   Widget build(BuildContext context) {
@@ -30,6 +33,12 @@ class _MapScreenState extends State<MapScreen> {
     void _onMapCreated(GoogleMapController controller) {
       mapController = controller;
 
+    }
+
+    _onTap(Opportunity opportunity) {
+      setState(() {
+        currentOpp = opportunity;
+      });
     }
 
     setMarkers(List<Opportunity> opportunitiesList) async {
@@ -43,6 +52,7 @@ class _MapScreenState extends State<MapScreen> {
               markerId: MarkerId(opp.oid),
               position: value,
               infoWindow: InfoWindow(title: opp.title),
+              onTap: () =>_onTap(opp),
             )
           );
           print(opp.venueAddress + " " + value.toString());
@@ -62,15 +72,36 @@ class _MapScreenState extends State<MapScreen> {
 
     return MaterialApp(
       home: Scaffold(
-        body: GoogleMap(
-          onMapCreated: _onMapCreated,
-          initialCameraPosition: CameraPosition(
-            target: _center,
-            zoom: 5.0,
-          ),
-          markers: markers.isEmpty ? setMarkersWhenEmpty(opportunities) : markers,
-        ),
+        body: Stack(
+          children: <Widget>[
+
+            GoogleMap(
+              onMapCreated: _onMapCreated,
+              initialCameraPosition: CameraPosition(
+                target: _center,
+                zoom: 5.0,
+              ),
+              myLocationButtonEnabled: false,
+              markers: markers.isEmpty ? setMarkersWhenEmpty(opportunities) : markers,
+            ),
+
+            Expanded(
+              child: Align(
+                alignment: FractionalOffset.bottomCenter,
+                child: Padding(
+                  padding: const EdgeInsets.only(bottom: 20.0),
+                  child: currentOpp == null ? Text('') : OpportunityPreviewForMap(opportunity: currentOpp,),
+                ),
+              ),
+            ),
+
+
+
+          ],
+        )
       ),
     );
   }
 }
+
+
