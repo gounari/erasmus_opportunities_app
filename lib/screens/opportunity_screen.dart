@@ -1,8 +1,10 @@
+import 'package:erasmusopportunitiesapp/widgets/chewie_list_item.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:erasmusopportunitiesapp/widgets/Circular_clipper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:erasmusopportunitiesapp/models/opportunity.dart';
+import 'package:video_player/video_player.dart';
 
 class OpportunityScreen extends StatefulWidget {
   final Opportunity opportunity;
@@ -315,6 +317,17 @@ class _OpportunityScreenState extends State<OpportunityScreen> {
                       ],
                     ),
                     SizedBox(height: 16.0),
+                    widget.opportunity.postImage != null ?
+                    Image.network(
+                      widget.opportunity.postImage,
+                      fit: BoxFit.cover,
+                    ) :
+                    Image(
+                      width: 110.0,
+                      image: AssetImage(widget.opportunity.getRandomImage()),
+                      fit: BoxFit.cover,
+                    ),
+                    SizedBox(height: 16.0),
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
@@ -414,6 +427,12 @@ class _OpportunityScreenState extends State<OpportunityScreen> {
                           ),
                         ),
                       ],
+                    ),
+
+                    ChewieListItem(
+                      videoPlayerController: VideoPlayerController.network(
+                        widget.opportunity.postVideo,
+                      ),
                     ),
                   ],
                 ),
