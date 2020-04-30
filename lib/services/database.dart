@@ -1,10 +1,6 @@
-
-
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:erasmusopportunitiesapp/helpers/opportunity_constants.dart';
 import 'package:erasmusopportunitiesapp/models/opportunity.dart';
-import 'package:flutter/material.dart';
 
 class DatabaseService {
 
@@ -47,5 +43,4 @@ class DatabaseService {
     return opportunitiesCollection.orderBy(oppConstants.startDate).snapshots()
         .map(_opportunityListFromSnapshot);
   }
-
 }

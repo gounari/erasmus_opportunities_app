@@ -3,6 +3,7 @@ import 'package:erasmusopportunitiesapp/helpers/math.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:dart_random_choice/dart_random_choice.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:intl/intl.dart';
 
 List<String> images = [
@@ -19,6 +20,7 @@ class Opportunity {
   String organisationName;
   final String organisationUID;
   String venueAddress;
+  LatLng latLong;
   String venueCountry;
   List<dynamic> participatingCountries;
   String type;
@@ -45,6 +47,7 @@ class Opportunity {
     @required this.organisationName,
     @required this.organisationUID,
     @required this.venueAddress,
+    @required this.latLong,
     @required this.venueCountry,
     @required this.participatingCountries,
     @required this.type,

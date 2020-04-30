@@ -6,6 +6,7 @@ class FirebaseOpportunityConstants {
     this.organisationName: opportunityOrganisationName,
     this.organisationUID: opportunityOrganisationUID,
     this.venueAddress: opportunityVenueAddress,
+    this.latLong: opportunityLatLong,
     this.venueCountry: opportunityVenueCountry,
     this.participatingCountries: opportunityParticipatingCountries,
     this.type: opportunityType,
@@ -31,6 +32,7 @@ class FirebaseOpportunityConstants {
   static const opportunityOrganisationName = 'organisationName';
   static const opportunityOrganisationUID = 'organisationUID';
   static const opportunityVenueAddress = 'venueAddress';
+  static const opportunityLatLong = 'latLong';
   static const opportunityVenueCountry = 'venueCountry';
   static const opportunityParticipatingCountries = 'participatingCountries';
   static const opportunityType = 'type';
@@ -55,6 +57,7 @@ class FirebaseOpportunityConstants {
   final String organisationName;
   final String organisationUID;
   final String venueAddress;
+  final String latLong;
   final String venueCountry;
   final String participatingCountries;
   final String type;

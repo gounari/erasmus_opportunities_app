@@ -47,6 +47,8 @@ dependencies:
   chewie: ^0.9.10
   video_player: ^0.10.9+1
   google_maps_flutter: ^0.5.27
+  geocoder: ^0.2.1
+
 
 dev_dependencies:
   flutter_test:
