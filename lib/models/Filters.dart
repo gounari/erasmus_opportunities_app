@@ -361,4 +361,27 @@ class Filters {
     return false;
   }
 
+  bool filtersActive() {
+
+    if (sortByDateAdded == true ||
+        onlyYouthExchange == true ||
+        onlyTrainingCourse == true ||
+        dateRange == true ||
+        duration == true ||
+        venueLocation == true ||
+        participatingCountries == true ||
+        receivingOrganisations == true ||
+        agesAccepted == true ||
+        topics == true ||
+        nonRefundableFees == true ||
+        reimbursableExpenses == true ||
+        accessibility == true
+    )
+    {
+      return true;
+    }
+
+    return false;
+  }
+
 }

@@ -30,8 +30,6 @@ class _FiltersScreenState extends State<FiltersScreen> {
   @override
   Widget build(BuildContext context) {
 
-
-
     FlutterStatusbarcolor.setNavigationBarColor(Colors.black);
     final List<Map<String,String>> organisations = getOrganisations(widget.opportunities);
 

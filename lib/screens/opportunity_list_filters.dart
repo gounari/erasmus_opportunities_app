@@ -13,11 +13,11 @@ class OpportunityListFilters extends StatelessWidget {
   Widget build(BuildContext context) {
 
     var _searchController = TextEditingController();
-    var filtersButtonPressed = false;
 
     final opportunities = Provider.of<List<Opportunity>>(context);
     var filteredOpportunities = opportunities;
     var filters = Filters();
+    var _filtersActivated = false;
 
 
     return StatefulBuilder(
@@ -72,8 +72,8 @@ class OpportunityListFilters extends StatelessWidget {
                       children: <Widget>[
                         FiltersOutlineButton(
                           text: 'Filters',
-                          color1: filtersButtonPressed? Theme.of(context).primaryColor : Colors.white,
-                          color2: filtersButtonPressed? Colors.white : Theme.of(context).primaryColor,
+                          color1: _filtersActivated? Theme.of(context).primaryColor : Colors.white,
+                          color2: _filtersActivated? Colors.white : Theme.of(context).primaryColor,
                           borderColor: Theme.of(context).primaryColor,
                           onPressed: () async {
                             Filters newFilters = await Navigator.push(
@@ -82,6 +82,11 @@ class OpportunityListFilters extends StatelessWidget {
                             );
 
                             setState(() {
+                              if (newFilters.filtersActive()) {
+                                _filtersActivated = true;
+                              } else {
+                                _filtersActivated = false;
+                              }
                               filters = newFilters;
                               filteredOpportunities = filters.applyFilters(opportunities);
                             });
