@@ -71,34 +71,41 @@ class _MapScreenState extends State<MapScreen> {
     }
 
     return MaterialApp(
-      home: Scaffold(
-        body: Stack(
-          children: <Widget>[
+      home: Theme(
+        data: ThemeData(
+          primaryColor: Color.fromRGBO(0, 68, 149, 1),
+          accentColor: Color(0xFFD8ECF1),
+          scaffoldBackgroundColor: Color(0xFFF3F5F7),
+        ),
+        child: Scaffold(
+          body: Stack(
+            children: <Widget>[
 
-            GoogleMap(
-              onMapCreated: _onMapCreated,
-              initialCameraPosition: CameraPosition(
-                target: _center,
-                zoom: 5.0,
+              GoogleMap(
+                onMapCreated: _onMapCreated,
+                initialCameraPosition: CameraPosition(
+                  target: _center,
+                  zoom: 5.0,
+                ),
+                myLocationButtonEnabled: false,
+                markers: markers.isEmpty ? setMarkersWhenEmpty(opportunities) : markers,
               ),
-              myLocationButtonEnabled: false,
-              markers: markers.isEmpty ? setMarkersWhenEmpty(opportunities) : markers,
-            ),
 
-            Expanded(
-              child: Align(
-                alignment: FractionalOffset.bottomCenter,
-                child: Padding(
-                  padding: const EdgeInsets.only(bottom: 20.0),
-                  child: currentOpp == null ? Text('') : OpportunityPreviewForMap(opportunity: currentOpp,),
+              Expanded(
+                child: Align(
+                  alignment: FractionalOffset.bottomCenter,
+                  child: Padding(
+                    padding: const EdgeInsets.only(bottom: 20.0),
+                    child: currentOpp == null ? Text('') : OpportunityPreviewForMap(opportunity: currentOpp,),
+                  ),
                 ),
               ),
-            ),
 
 
 
-          ],
-        )
+            ],
+          )
+        ),
       ),
     );
   }

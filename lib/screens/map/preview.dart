@@ -29,11 +29,21 @@ class _OpportunityPreviewForMapState extends State<OpportunityPreviewForMap> {
         children: <Widget>[
           Container(
             margin: EdgeInsets.fromLTRB(40.0, 5.0, 20.0, 5.0),
-            height: 180.0,
+            height: 170.0,
             width: double.infinity,
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(20.0),
+              boxShadow: [
+                BoxShadow(
+                  color: Theme.of(context).primaryColor,
+                  spreadRadius: 0.1,
+                  offset: Offset(
+                    4.0, // horizontal, move right 10
+                    4.0, // vertical, move down 10
+                  ),
+                )
+              ],
             ),
             child: Padding(
               padding: EdgeInsets.fromLTRB(100.0, 15.0, 20.0, 20.0),
@@ -63,27 +73,6 @@ class _OpportunityPreviewForMapState extends State<OpportunityPreviewForMap> {
                             ),
                           ),
                         ],
-                      ),
-                      SizedBox(height: 5.0,),
-                      RichText(
-                        text: TextSpan(
-                          style: Theme
-                              .of(context)
-                              .textTheme
-                              .body1,
-                          children: [
-                            WidgetSpan(
-                              child: Padding(
-                                padding: EdgeInsets.symmetric(
-                                    vertical: 2.7),
-                                child: Icon(Icons.location_on,
-                                  color: Colors.blueGrey, size: 11.7,),
-                              ),
-                            ),
-                            TextSpan(text: '' +
-                                widget.opportunity.venueCountry),
-                          ],
-                        ),
                       ),
                       SizedBox(height: 5.0,),
                       Text(
