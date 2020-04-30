@@ -31,11 +31,19 @@ class _OpportunityScreenState extends State<OpportunityScreen> {
                     shadow: Shadow(
                         color: Colors.black,
                         blurRadius: 20.0),
-                    child: Image(
+                    child:
+                    widget.opportunity.coverImage != null ?
+                    Image.network(
+                      widget.opportunity.coverImage,
                       height: 400.0,
                       width: double.infinity,
                       fit: BoxFit.cover,
-                      image: AssetImage(widget.opportunity.coverImage),
+                    ) :
+                    Image(
+                      height: 400.0,
+                      width: double.infinity,
+                      image: AssetImage(widget.opportunity.getRandomImage()),
+                      fit: BoxFit.cover,
                     ),
                   ),
                 ),

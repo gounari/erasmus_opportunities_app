@@ -155,11 +155,17 @@ class OpportunitiesList extends StatelessWidget {
                     tag: opportunities[index].oid,
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(20.0),
-                      child: Image(
-                        width: 110.0,
-                        image: AssetImage(opportunities[index].coverImage),
-                        fit: BoxFit.cover,
-                      ),
+                      child: opportunities[index].coverImage != null ?
+                            Image.network(
+                              opportunities[index].coverImage,
+                              width: 110.0,
+                              fit: BoxFit.cover,
+                            ) :
+                            Image(
+                              width: 110.0,
+                              image: AssetImage(opportunities[index].getRandomImage()),
+                              fit: BoxFit.cover,
+                            ),
                     ),
                   ),
                 )

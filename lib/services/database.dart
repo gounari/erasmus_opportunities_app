@@ -33,7 +33,10 @@ class DatabaseService {
       applicationLink: doc[oppConstants.applicationLink],
       provideForDisabilities: doc[oppConstants.provideForDisabilities],
       description: doc[oppConstants.description],
-      uploadTime: doc[oppConstants.uploadTime]
+      uploadTime: doc[oppConstants.uploadTime],
+      coverImage: doc[oppConstants.coverImage],
+      postImage: doc[oppConstants.postImage],
+      postVideo: doc[oppConstants.postVideo],
       );
     }).toList();
 

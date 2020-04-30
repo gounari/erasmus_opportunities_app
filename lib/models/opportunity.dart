@@ -60,12 +60,14 @@ class Opportunity {
     @required this.provideForDisabilities,
     @required this.description,
     @required this.uploadTime,
-    this.coverImage,
+    @required this.coverImage,
+    @required this.postImage,
+    @required this.postVideo,
     this.liked,
-  }){
-    if (coverImage == null) {
-      coverImage = randomChoice(images);
-    }
+  });
+
+  String getRandomImage() {
+    return randomChoice(images);
   }
 
   String getPreviewType() {

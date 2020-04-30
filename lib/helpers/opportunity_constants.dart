@@ -21,6 +21,9 @@ class FirebaseOpportunityConstants {
     this.provideForDisabilities: opportunityProvideForDisabilities,
     this.description: opportunityDescription,
     this.uploadTime: opportunityUploadTime,
+    this.coverImage: opportunityCoverImage,
+    this.postImage: opportunityPostImage,
+    this.postVideo: opportunityPostVideo,
   });
 
   static const opportunitiesCollection = 'opportunities';
@@ -43,6 +46,9 @@ class FirebaseOpportunityConstants {
   static const opportunityProvideForDisabilities = 'provideForDisabilities';
   static const opportunityDescription = 'description';
   static const opportunityUploadTime = 'timestamp';
+  static const opportunityCoverImage = 'coverImage';
+  static const opportunityPostImage = 'postImage';
+  static const opportunityPostVideo = 'postVideo';
 
   final String collection;
   final String title;
@@ -64,4 +70,7 @@ class FirebaseOpportunityConstants {
   final String provideForDisabilities;
   final String description;
   final String uploadTime;
+  final String coverImage;
+  final String postImage;
+  final String postVideo;
 }
