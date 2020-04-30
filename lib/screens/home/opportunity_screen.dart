@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:erasmusopportunitiesapp/models/opportunity.dart';
 import 'package:video_player/video_player.dart';
+import 'package:share/share.dart';
 
 class OpportunityScreen extends StatefulWidget {
   final Opportunity opportunity;
@@ -16,6 +17,18 @@ class OpportunityScreen extends StatefulWidget {
 }
 
 class _OpportunityScreenState extends State<OpportunityScreen> {
+
+  _share(BuildContext context) {
+    final RenderBox box = context.findRenderObject();
+    final text = 'Hey! I found a great opportunity on the urerasmus app.' +
+        "You can apply here ---> " + widget.opportunity.applicationLink;
+
+    Share.share(text,
+        subject: 'Opportunity "' + widget.opportunity.title + '"',
+        sharePositionOrigin: box.localToGlobal(Offset.zero) & box.size);
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -115,7 +128,7 @@ class _OpportunityScreenState extends State<OpportunityScreen> {
                 bottom: 0.0,
                 right: 25.0,
                 child: IconButton(
-                  onPressed: () => print('Share'),
+                  onPressed: () => _share(context),
                   icon: Icon(Icons.share),
                   iconSize: 35.0,
                   color: Colors.black,

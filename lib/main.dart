@@ -66,10 +66,6 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
       style: optionStyle,
     ),
     Text(
-      'Index 3: Messages',
-      style: optionStyle,
-    ),
-    Text(
       'Index 4: Account',
       style: optionStyle,
     ),
@@ -93,8 +89,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
         items: <Widget>[
           Icon(Icons.home, color: Colors.white, size: 30),
           Icon(Icons.map, color: Colors.white, size: 30),
-          Icon(Icons.whatshot, color: Colors.white, size: 30),
-          Icon(Icons.email, color: Colors.white, size: 30),
+          Icon(Icons.info, color: Colors.white, size: 30),
           Icon(Icons.account_circle, color: Colors.white, size: 30),
         ],
         onTap: _onItemTapped,
