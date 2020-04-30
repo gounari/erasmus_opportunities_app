@@ -1,5 +1,5 @@
 import 'package:erasmusopportunitiesapp/models/opportunity.dart';
-import 'package:erasmusopportunitiesapp/screens/opportunity_list_filters.dart';
+import 'package:erasmusopportunitiesapp/screens/home/opportunity_list_filters.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:erasmusopportunitiesapp/services/database.dart';

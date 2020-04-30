@@ -1,5 +1,6 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
-import 'package:erasmusopportunitiesapp/screens/home.dart';
+import 'package:erasmusopportunitiesapp/screens/home/home.dart';
+import 'package:erasmusopportunitiesapp/screens/map/map.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -54,10 +55,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   List<Widget> _widgetOptions = <Widget>[
     Home(),
-    Text(
-      'Index 1: Favourites',
-      style: optionStyle,
-    ),
+    MapScreen(),
     Text(
       'Index 2: Urgent',
       style: optionStyle,
@@ -89,7 +87,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
         color: Theme.of(context).primaryColor,
         items: <Widget>[
           Icon(Icons.home, color: Colors.white, size: 30),
-          Icon(Icons.favorite, color: Colors.white, size: 30),
+          Icon(Icons.map, color: Colors.white, size: 30),
           Icon(Icons.whatshot, color: Colors.white, size: 30),
           Icon(Icons.email, color: Colors.white, size: 30),
           Icon(Icons.account_circle, color: Colors.white, size: 30),
