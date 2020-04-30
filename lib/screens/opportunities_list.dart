@@ -52,7 +52,7 @@ class OpportunitiesList extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: <Widget>[
                                 Container(
-                                  width: 190.0,
+                                  width: 180.0,
                                   child: Text(
                                     opportunities[index].title.toString()
                                         .trim(),
