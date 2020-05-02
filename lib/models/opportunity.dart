@@ -47,7 +47,6 @@ class Opportunity {
     @required this.organisationName,
     @required this.organisationUID,
     @required this.venueAddress,
-    @required this.latLong,
     @required this.venueCountry,
     @required this.participatingCountries,
     @required this.type,

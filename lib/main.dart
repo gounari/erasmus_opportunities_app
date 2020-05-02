@@ -1,17 +1,13 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:erasmusopportunitiesapp/screens/account/wrapper.dart';
 import 'package:erasmusopportunitiesapp/screens/home/home.dart';
-import 'package:erasmusopportunitiesapp/screens/map/map.dart';
+import 'package:erasmusopportunitiesapp/screens/info/info.dart';
 import 'package:erasmusopportunitiesapp/screens/map/map_helper.dart';
 import 'package:erasmusopportunitiesapp/services/auth.dart';
-import 'package:erasmusopportunitiesapp/services/database.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-
-import 'models/opportunity.dart';
-
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -64,10 +60,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   List<Widget> _widgetOptions = <Widget>[
     Home(),
     MapHelperScreen(),
-    Text(
-      'Index 2: Urgent',
-      style: optionStyle,
-    ),
+    InfoScreen(),
     Wrapper(),
   ];
 
