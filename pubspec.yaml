@@ -49,6 +49,7 @@ dependencies:
   google_maps_flutter: ^0.5.27
   geocoder: ^0.2.1
   share: ^0.6.4
+  flushbar: ^1.9.1
 
 dev_dependencies:
   flutter_test:
