@@ -49,17 +49,20 @@ class OnBoarding extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FlutterLogin(
-      title: '',
-      logo: 'assets/images/logo_white.png',
-      onLogin: _signInUser,
-      onSignup: _signUpUser,
-      onSubmitAnimationCompleted: () {
-        Navigator.of(context).pushReplacement(MaterialPageRoute(
-          builder: (context) => Account(),
-        ));
-      },
-      onRecoverPassword: _recoverPassword,
+    return Scaffold(
+      appBar: AppBar(
+        title: Image.asset('assets/images/logo_white.png', scale: AppBar().preferredSize.height / 8,),
+      ),
+      body: FlutterLogin(
+        onLogin: _signInUser,
+        onSignup: _signUpUser,
+        onSubmitAnimationCompleted: () {
+          Navigator.of(context).pushReplacement(MaterialPageRoute(
+            builder: (context) => Account(),
+          ));
+        },
+        onRecoverPassword: _recoverPassword,
+      ),
     );
   }
 }
