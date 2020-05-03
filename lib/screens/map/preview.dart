@@ -1,7 +1,9 @@
 import 'package:erasmusopportunitiesapp/models/opportunity.dart';
+import 'package:erasmusopportunitiesapp/models/volunteer.dart';
 import 'package:erasmusopportunitiesapp/screens/home/opportunity_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class OpportunityPreviewForMap extends StatefulWidget {
   final Opportunity opportunity;
@@ -14,6 +16,11 @@ class OpportunityPreviewForMap extends StatefulWidget {
 class _OpportunityPreviewForMapState extends State<OpportunityPreviewForMap> {
   @override
   Widget build(BuildContext context) {
+
+    final user = Provider.of<Volunteer>(context);
+
+    var isLikedActive = user == null ? false : true;
+
     return  GestureDetector(
       onTap: () =>
           Navigator.push(
@@ -156,7 +163,7 @@ class _OpportunityPreviewForMapState extends State<OpportunityPreviewForMap> {
               ),
             ),
           ),
-          Positioned(
+          isLikedActive ? Positioned(
             right: 30.0,
             top: 66.0,
             child: IconButton(
@@ -165,7 +172,7 @@ class _OpportunityPreviewForMapState extends State<OpportunityPreviewForMap> {
               iconSize: 30.0,
               color: Colors.black,
             ),
-          ),
+          ) : Text(''),
         ],
       ),
     );;
