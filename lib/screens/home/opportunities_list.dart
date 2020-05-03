@@ -8,12 +8,13 @@ import 'opportunity_screen.dart';
 
 class OpportunitiesList extends StatelessWidget {
 
-  final List<Opportunity> opportunities;
-  OpportunitiesList({this.opportunities, UniqueKey key});
+  final List<dynamic> opportunities;
+  final Volunteer volunteer;
+  OpportunitiesList({this.opportunities, UniqueKey key, this.volunteer});
 
   @override
   Widget build(BuildContext context) {
-    final user = Provider.of<Volunteer>(context);
+    final user = volunteer == null ? Provider.of<Volunteer>(context) : volunteer;
 
     var isLikedActive = user == null ? false : true;
 

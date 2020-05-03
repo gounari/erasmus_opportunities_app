@@ -1,6 +1,9 @@
+import 'package:erasmusopportunitiesapp/models/volunteer.dart';
+import 'package:erasmusopportunitiesapp/screens/home/opportunities_list.dart';
 import 'package:erasmusopportunitiesapp/services/auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class Account extends StatefulWidget {
   @override
@@ -13,6 +16,9 @@ class _AccountState extends State<Account> {
 
   @override
   Widget build(BuildContext context) {
+    final user = Provider.of<Volunteer>(context);
+    final volunteersData = Provider.of<VolunteerData>(context);
+
     return Scaffold(
       appBar: AppBar(
         title: Image.asset('assets/images/logo_white.png', scale: AppBar().preferredSize.height / 8,),
@@ -61,9 +67,16 @@ class _AccountState extends State<Account> {
                   ),
                   FlatButton(
                     onPressed: () async {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (_) =>
+                                OpportunitiesList(volunteer: user, opportunities: volunteersData.liked,),
+                        ),
+                      );
                     },
                     child: Text(
-                      "Browse",
+                      "Browse liked opportunities >",
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                       ),
