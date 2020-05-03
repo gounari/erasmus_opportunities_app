@@ -1,4 +1,3 @@
-import 'package:erasmusopportunitiesapp/screens/home/home.dart';
 import 'package:erasmusopportunitiesapp/services/auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

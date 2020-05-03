@@ -49,6 +49,7 @@ class AuthService {
 
       // Create a new document for the volunteer with uid
       await DatabaseService(uid: user.uid).updateUserData(email);
+      await DatabaseService(uid: user.uid).updateUserData(email);
 
       return _volunteerFromFirebaseUser(user);
     } catch (error) {

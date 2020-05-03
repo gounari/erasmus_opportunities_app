@@ -1,6 +1,5 @@
 import 'package:erasmusopportunitiesapp/models/volunteer.dart';
 import 'package:erasmusopportunitiesapp/services/database.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:erasmusopportunitiesapp/models/opportunity.dart';
@@ -16,7 +15,7 @@ class OpportunitiesList extends StatelessWidget {
   Widget build(BuildContext context) {
     final user = Provider.of<Volunteer>(context);
 
-    // var buttonPressed = user == null ? false : user.
+    var isLikedActive = user == null ? false : true;
 
     if (opportunities != null && opportunities.isNotEmpty) {
       return ListView.builder(
@@ -176,7 +175,7 @@ class OpportunitiesList extends StatelessWidget {
                     ),
                   ),
                 ),
-                Positioned(
+                isLikedActive ? Positioned(
                   right: 30.0,
                   top: 67.5,
                   child: IconButton(
@@ -191,7 +190,7 @@ class OpportunitiesList extends StatelessWidget {
                     iconSize: 30.0,
                     color: Colors.black,
                   ),
-                ),
+                ) : Text(''),
               ],
             ),
           );

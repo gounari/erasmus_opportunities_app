@@ -48,30 +48,26 @@ class DatabaseService {
         .map(_opportunityListFromSnapshot);
   }
 
+  VolunteerData _volunteerDataFromSnapshot(DocumentSnapshot snapshot) {
+
+    return VolunteerData(
+      uid: snapshot.data['uid'],
+      email: snapshot.data['email'],
+      liked: snapshot.data['liked'],
+    );
+  }
+
+  Stream<VolunteerData> get volunteerData {
+    return volunteersCollection.document(uid).snapshots()
+        .map(_volunteerDataFromSnapshot);
+  }
+
   final CollectionReference volunteersCollection = Firestore.instance.collection('volunteers');
   Future updateUserData(String email) async {
     return await volunteersCollection.document(uid).setData({
       'email' : email,
+      'liked' : [],
     });
-  }
-
-  Future getVolunteerData() async {
-    Volunteer user;
-    await volunteersCollection.document(uid).get()
-        .then((doc) => {
-      if (!doc.exists) {
-        print('No such document!')
-      } else {
-        user = Volunteer(
-          uid: doc.documentID,
-          email: doc.data['email'],
-          liked: doc.data['liked'],
-        ),
-      }
-    }).catchError((error) => {
-      print('Error getting document $error')
-    });
-    return user;
   }
 
   Future addLikedOpportunityToUser(String oid) async {

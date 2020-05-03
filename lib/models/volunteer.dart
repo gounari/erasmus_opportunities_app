@@ -4,9 +4,19 @@ import 'package:flutter/foundation.dart';
 class Volunteer {
   final String uid;
   String email;
-  List<dynamic> liked;
 
   Volunteer({
+    @required this.uid,
+    @required this.email,
+  });
+}
+
+class VolunteerData {
+  final String uid;
+  String email;
+  List<dynamic> liked;
+
+  VolunteerData({
     @required this.uid,
     @required this.email,
     @required this.liked,
