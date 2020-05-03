@@ -75,6 +75,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
     return StreamProvider<FirebaseUser>.value(
       value: AuthService().user,
       child: Scaffold(
+
         body: Center(
           child: _widgetOptions.elementAt(_selectedIndex),
         ),

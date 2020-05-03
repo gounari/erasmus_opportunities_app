@@ -71,6 +71,7 @@ class _MapScreenState extends State<MapScreen> {
     }
 
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: Theme(
         data: ThemeData(
           primaryColor: Color.fromRGBO(0, 68, 149, 1),

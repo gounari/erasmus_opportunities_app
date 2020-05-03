@@ -5,8 +5,11 @@ import 'package:flutter/material.dart';
 class InfoScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: SafeArea(
+    return Scaffold(
+      appBar: AppBar(
+        title: Image.asset('assets/images/logo_white.png', scale: AppBar().preferredSize.height / 8,),
+      ),
+      body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(20.0),
           child: ListView(

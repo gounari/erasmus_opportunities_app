@@ -18,7 +18,12 @@ class _HomeState extends State<Home> {
 
     return StreamProvider<List<Opportunity>>.value(
       value: DatabaseService().opportunities,
-      child: OpportunityListFilters(),
+      child: Scaffold(
+        appBar: AppBar(
+          title: Image.asset('assets/images/logo_white.png', scale: AppBar().preferredSize.height / 8,),
+        ),
+        body: OpportunityListFilters(),
+      ),
     );
   }
 }
