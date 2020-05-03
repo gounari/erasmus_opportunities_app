@@ -168,7 +168,17 @@ class OpportunitiesList extends StatelessWidget {
                             ),
                     ),
                   ),
-                )
+                ),
+                Positioned(
+                  right: 30.0,
+                  top: 67.5,
+                  child: IconButton(
+                    onPressed: () => print('Add to Favorites'),
+                    icon: Icon(Icons.favorite_border),
+                    iconSize: 30.0,
+                    color: Colors.black,
+                  ),
+                ),
               ],
             ),
           );

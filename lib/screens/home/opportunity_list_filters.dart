@@ -114,19 +114,6 @@ class OpportunityListFilters extends StatelessWidget {
                                   ),
                                   SizedBox(width: 10.0,),
                                   FiltersOutlineButton(
-                                    text: 'Liked',
-                                    color1: filters.liked? Theme.of(context).primaryColor : Colors.white,
-                                    color2: filters.liked? Colors.white : Theme.of(context).primaryColor,
-                                    borderColor: Theme.of(context).primaryColor,
-                                    onPressed: () {
-                                      setState(() {
-                                        filteredOpportunities = filters.setLiked(opportunities);
-                                      });
-                                    },
-                                    icon: Icons.favorite_border,
-                                  ),
-                                  SizedBox(width: 10.0,),
-                                  FiltersOutlineButton(
                                     text: 'Free',
                                     color1: filters.free? Theme.of(context).primaryColor : Colors.white,
                                     color2: filters.free? Colors.white : Theme.of(context).primaryColor,
