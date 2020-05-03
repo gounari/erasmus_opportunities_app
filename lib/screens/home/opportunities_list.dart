@@ -1,7 +1,10 @@
+import 'package:erasmusopportunitiesapp/models/volunteer.dart';
+import 'package:erasmusopportunitiesapp/services/database.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:erasmusopportunitiesapp/models/opportunity.dart';
-
+import 'package:provider/provider.dart';
 import 'opportunity_screen.dart';
 
 class OpportunitiesList extends StatelessWidget {
@@ -11,6 +14,10 @@ class OpportunitiesList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final user = Provider.of<Volunteer>(context);
+
+    // var buttonPressed = user == null ? false : user.
+
     if (opportunities != null && opportunities.isNotEmpty) {
       return ListView.builder(
         padding: EdgeInsets.only(top: 10.0, bottom: 15.0),
@@ -173,7 +180,13 @@ class OpportunitiesList extends StatelessWidget {
                   right: 30.0,
                   top: 67.5,
                   child: IconButton(
-                    onPressed: () => print('Add to Favorites'),
+                    onPressed: () {
+                      print('pressed');
+                      if(user != null) {
+
+                      }
+                      DatabaseService(uid: user.uid).addLikedOpportunityToUser(opportunities[index].oid);
+                    },
                     icon: Icon(Icons.favorite_border),
                     iconSize: 30.0,
                     color: Colors.black,

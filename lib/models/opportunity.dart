@@ -39,7 +39,6 @@ class Opportunity {
   String coverImage;
   String postImage;
   String postVideo;
-  bool liked = false;
 
   Opportunity({
     @required this.oid,
@@ -65,7 +64,6 @@ class Opportunity {
     @required this.coverImage,
     @required this.postImage,
     @required this.postVideo,
-    this.liked,
   });
 
   String getRandomImage() {

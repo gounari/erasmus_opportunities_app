@@ -1,8 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:erasmusopportunitiesapp/helpers/opportunity_constants.dart';
 import 'package:erasmusopportunitiesapp/models/opportunity.dart';
+import 'package:erasmusopportunitiesapp/models/volunteer.dart';
 
 class DatabaseService {
+
+  final String uid;
+  DatabaseService({ this.uid });
 
   static final oppConstants = FirebaseOpportunityConstants();
   final CollectionReference opportunitiesCollection = Firestore.instance.collection(oppConstants.collection);
@@ -42,5 +46,45 @@ class DatabaseService {
   Stream<List<Opportunity>> get opportunities {
     return opportunitiesCollection.orderBy(oppConstants.startDate).snapshots()
         .map(_opportunityListFromSnapshot);
+  }
+
+  final CollectionReference volunteersCollection = Firestore.instance.collection('volunteers');
+  Future updateUserData(String email) async {
+    return await volunteersCollection.document(uid).setData({
+      'email' : email,
+    });
+  }
+
+  Future getVolunteerData() async {
+    Volunteer user;
+    await volunteersCollection.document(uid).get()
+        .then((doc) => {
+      if (!doc.exists) {
+        print('No such document!')
+      } else {
+        user = Volunteer(
+          uid: doc.documentID,
+          email: doc.data['email'],
+          liked: doc.data['liked'],
+        ),
+      }
+    }).catchError((error) => {
+      print('Error getting document $error')
+    });
+    return user;
+  }
+
+  Future addLikedOpportunityToUser(String oid) async {
+
+    return await volunteersCollection.document(uid).updateData({
+      'liked': FieldValue.arrayUnion([oid]),
+    });
+  }
+
+  Future removeLikedOpportunityFromUser(String oid) async {
+
+    return await volunteersCollection.document(uid).updateData({
+      'liked': FieldValue.arrayRemove([oid]),
+    });
   }
 }

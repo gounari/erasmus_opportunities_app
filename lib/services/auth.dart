@@ -1,17 +1,19 @@
+import 'package:erasmusopportunitiesapp/models/volunteer.dart';
+import 'package:erasmusopportunitiesapp/services/database.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class AuthService {
 
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
-  // Create new user based on FirebaseUser
-  FirebaseUser _userFromFirebaseUser(FirebaseUser user) {
-    return user != null ? user : null;
+  // Create new volunteer based on FirebaseUser
+  Volunteer _volunteerFromFirebaseUser(FirebaseUser user) {
+    return user != null ? Volunteer(uid: user.uid, email: user.email) : null;
   }
 
   // authantication change user stream
-  Stream<FirebaseUser> get user {
-    return _auth.onAuthStateChanged.map(_userFromFirebaseUser);
+  Stream<Volunteer> get user {
+    return _auth.onAuthStateChanged.map(_volunteerFromFirebaseUser);
   }
 
   // sign in anonymously
@@ -40,15 +42,15 @@ class AuthService {
   }
 
   // register with email & password
-  Future registerWithEmailAndPassword(String email, String password, String name, String location) async {
+  Future registerWithEmailAndPassword(String email, String password) async {
     try {
       AuthResult result = await _auth.createUserWithEmailAndPassword(email: email, password: password);
       FirebaseUser user = result.user;
 
-      // Create a new document for the organisation with uid
-      //await DatabaseService(uid: user.uid).updateUserData(name, email, location);
+      // Create a new document for the volunteer with uid
+      await DatabaseService(uid: user.uid).updateUserData(email);
 
-      return _userFromFirebaseUser(user);
+      return _volunteerFromFirebaseUser(user);
     } catch (error) {
       print(error.toString());
       return null;

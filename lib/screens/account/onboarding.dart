@@ -28,7 +28,7 @@ class OnBoarding extends StatelessWidget {
   Future<String> _signUpUser(SignUpData data) async {
     return Future.delayed(loginTime).then((_) async {
 
-      dynamic user = await _auth.registerWithEmailAndPassword(data.email, data.password, data.organisationName, data.organisationLocation);
+      dynamic user = await _auth.registerWithEmailAndPassword(data.email, data.password);
       if (user == null) {
         return 'Error signing up';
       }

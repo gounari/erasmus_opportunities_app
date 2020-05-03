@@ -68,11 +68,6 @@ class Filters {
           opportunities.where((opportunity) => opportunity.type == 'Training Course').toList();
     }
 
-    if (liked) {
-      opportunities = opportunities
-          .where((opportunity) => opportunity.liked == true).toList();
-    }
-
     if (free) {
       opportunities = opportunities
           .where((opportunity) => opportunity.participationCost == 0).toList();

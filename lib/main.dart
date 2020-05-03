@@ -1,4 +1,5 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
+import 'package:erasmusopportunitiesapp/models/volunteer.dart';
 import 'package:erasmusopportunitiesapp/screens/account/wrapper.dart';
 import 'package:erasmusopportunitiesapp/screens/home/home.dart';
 import 'package:erasmusopportunitiesapp/screens/info/info.dart';
@@ -55,8 +56,6 @@ class MyStatefulWidget extends StatefulWidget {
 
 class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   int _selectedIndex = 0;
-  static const TextStyle optionStyle =
-  TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   List<Widget> _widgetOptions = <Widget>[
     Home(),
     MapHelperScreen(),
@@ -72,7 +71,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return StreamProvider<FirebaseUser>.value(
+    return StreamProvider<Volunteer>.value(
       value: AuthService().user,
       child: Scaffold(
 
