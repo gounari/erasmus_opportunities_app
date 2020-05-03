@@ -1,3 +1,4 @@
+import 'package:erasmusopportunitiesapp/models/opportunity.dart';
 import 'package:erasmusopportunitiesapp/models/volunteer.dart';
 import 'package:erasmusopportunitiesapp/screens/home/opportunities_list.dart';
 import 'package:erasmusopportunitiesapp/services/auth.dart';
@@ -18,6 +19,7 @@ class _AccountState extends State<Account> {
   Widget build(BuildContext context) {
     final user = Provider.of<Volunteer>(context);
     final volunteersData = Provider.of<VolunteerData>(context);
+    final opportunities = Provider.of<List<Opportunity>>(context);
 
     return Scaffold(
       appBar: AppBar(
@@ -71,7 +73,7 @@ class _AccountState extends State<Account> {
                         context,
                         MaterialPageRoute(
                             builder: (_) =>
-                                OpportunitiesList(volunteer: user, opportunities: volunteersData.liked,),
+                                OpportunitiesList(volunteer: user, opportunities: opportunities,),
                         ),
                       );
                     },

@@ -1,3 +1,4 @@
+import 'package:erasmusopportunitiesapp/models/opportunity.dart';
 import 'package:erasmusopportunitiesapp/models/volunteer.dart';
 import 'package:erasmusopportunitiesapp/screens/account/account.dart';
 import 'package:erasmusopportunitiesapp/screens/account/onboarding.dart';
@@ -14,8 +15,15 @@ class Wrapper extends StatelessWidget {
     if (user == null) {
       return OnBoarding();
     } else {
-      return StreamProvider<VolunteerData>.value(
-        value: DatabaseService(uid: user.uid).volunteerData,
+      return MultiProvider(
+        providers: [
+          StreamProvider<VolunteerData>.value(
+            value: DatabaseService(uid: user.uid).volunteerData
+          ),
+          StreamProvider<List<Opportunity>>.value(
+            value: DatabaseService().opportunities
+          ),
+        ],
         child: Account(),
       );
     }
