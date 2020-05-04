@@ -33,6 +33,28 @@ class _OpportunityScreenState extends State<OpportunityScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
+      floatingActionButton: new FloatingActionButton(
+          elevation: 10.0,
+          child: Icon(
+            Icons.assignment,
+            size: 25.0,
+            color: Colors.white,
+          ),
+          backgroundColor: Theme.of(context).primaryColor,
+          onPressed: () async {
+            print('1');
+            final url = widget.opportunity.applicationLink;
+            if (await canLaunch(url)) {
+              await launch(url);
+            } else {
+              final snackBar = SnackBar(
+                content: Text('An error accured! Please try again.'),
+                backgroundColor: Colors.red,
+              );
+              Scaffold.of(context).showSnackBar(snackBar);
+            }
+          }
+      ),
       body: ListView(
         children: <Widget>[
           Stack(
@@ -80,40 +102,6 @@ class _OpportunityScreenState extends State<OpportunityScreen> {
                   padding: EdgeInsets.all(5.0),
                 ),
               ),
-              Positioned.fill(
-                bottom: 10.0,
-                child: Align(
-                  alignment: Alignment.bottomCenter,
-                  child: RawMaterialButton(
-                    padding: EdgeInsets.all(20.0),
-                    elevation: 12.0,
-                    shape: CircleBorder(),
-                    splashColor: Theme.of(context).primaryColor,
-                    focusColor: Theme.of(context).primaryColor,
-                    highlightColor: Theme.of(context).primaryColor,
-                    hoverColor: Theme.of(context).primaryColor,
-                    fillColor: Colors.white,
-                    onPressed: () async {
-                      print('1');
-                      final url = widget.opportunity.applicationLink;
-                      if (await canLaunch(url)) {
-                        await launch(url);
-                      } else {
-                        final snackBar = SnackBar(
-                          content: Text('An error accured! Please try again.'),
-                          backgroundColor: Colors.red,
-                        );
-                        Scaffold.of(context).showSnackBar(snackBar);
-                      }
-                    },
-                    child: Icon(
-                      Icons.assignment,
-                      size: 50.0,
-                      color: Theme.of(context).primaryColor,
-                    ),
-                  ),
-                ),
-              ),
               Positioned(
                 bottom: 0.0,
                 left: 20.0,
@@ -137,7 +125,7 @@ class _OpportunityScreenState extends State<OpportunityScreen> {
             ],
           ),
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: 40.0, vertical: 20.0),
+            padding: EdgeInsets.symmetric(horizontal: 40.0, vertical: 10.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
@@ -341,7 +329,8 @@ class _OpportunityScreenState extends State<OpportunityScreen> {
                       fit: BoxFit.cover,
                     ),
                     SizedBox(height: 16.0),
-                    Row(
+                    Column(
+                      mainAxisSize: MainAxisSize.min,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         Text(
