@@ -40,7 +40,7 @@ class _OpportunityScreenState extends State<OpportunityScreen> {
             size: 25.0,
             color: Colors.white,
           ),
-          backgroundColor: Theme.of(context).primaryColor,
+          backgroundColor: Color.fromRGBO(0, 68, 149, 1),
           onPressed: () async {
             print('1');
             final url = widget.opportunity.applicationLink;
@@ -93,7 +93,7 @@ class _OpportunityScreenState extends State<OpportunityScreen> {
                   },
                   child: new Icon(
                     Icons.arrow_back,
-                    color: Theme.of(context).primaryColor,
+                    color: Color.fromRGBO(0, 68, 149, 1),
                     size: 30.0,
                   ),
                   shape: new CircleBorder(),
@@ -133,7 +133,7 @@ class _OpportunityScreenState extends State<OpportunityScreen> {
                   widget.opportunity.title,
                   style: TextStyle(
                     fontSize: 20.0,
-                    color: Theme.of(context).primaryColor,
+                    color: Color.fromRGBO(0, 68, 149, 1),
                     fontWeight: FontWeight.bold,
                   ),
                   textAlign: TextAlign.center,
