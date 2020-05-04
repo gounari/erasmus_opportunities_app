@@ -180,12 +180,15 @@ class OpportunitiesList extends StatelessWidget {
                 top: 67.5,
                 child: IconButton(
                   onPressed: () {
-                    print('pressed');
-                    if (user != null) {
-
+                    print('PRESSED');
+                    print('USER ID: ' + user.uid);
+                    if (user.isOpportunityLiked(opportunities[index].oid)) {
+                      DatabaseService(uid: user.uid).removeLikedOpportunityFromUser(
+                          opportunities[index].oid);
+                    } else {
+                      DatabaseService(uid: user.uid).addLikedOpportunityToUser(
+                          opportunities[index].oid);
                     }
-                    DatabaseService(uid: user.uid).addLikedOpportunityToUser(
-                        opportunities[index].oid);
                   },
                   icon: Icon(Icons.favorite_border),
                   iconSize: 30.0,

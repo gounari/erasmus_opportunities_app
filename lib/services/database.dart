@@ -51,7 +51,7 @@ class DatabaseService {
   VolunteerData _volunteerDataFromSnapshot(DocumentSnapshot snapshot) {
 
     return VolunteerData(
-      uid: snapshot.data['uid'],
+      uid: uid,
       email: snapshot.data['email'],
       liked: snapshot.data['liked'],
     );
@@ -76,7 +76,8 @@ class DatabaseService {
 
     return await volunteersCollection.document(uid).updateData({
       'liked': FieldValue.arrayUnion([oid]),
-    });
+    })
+    .catchError((error) => print('Function addLikedOpportunityToUser threw: ' + error.toString()));
   }
 
   Future removeLikedOpportunityFromUser(String oid) async {
