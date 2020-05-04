@@ -4,7 +4,7 @@ import 'opportunity.dart';
 
 class Filters {
   bool title = false;
-  String _titleValue = '';
+  String titleValue = '';
 
   bool sortByStartDate = true;
   bool sortByDeadline = false;
@@ -13,7 +13,6 @@ class Filters {
   bool onlyYouthExchange = false;
   bool onlyTrainingCourse = false;
 
-  bool liked = false;
   bool free = false;
 
   bool dateRange = false;
@@ -39,10 +38,10 @@ class Filters {
 
   List<Opportunity> applyFilters(List<Opportunity> opportunities) {
 
-    if (_titleValue.isNotEmpty) {
+    if (title) {
       opportunities = opportunities
           .where((opportunity) =>
-          opportunity.title.toLowerCase().contains(_titleValue.toLowerCase()))
+          opportunity.title.toLowerCase().contains(titleValue.toLowerCase()))
           .toList();
     }
 
@@ -55,7 +54,7 @@ class Filters {
     }
 
     if (sortByDateAdded) {
-      opportunities.sort((a, b) => b.uploadTime.compareTo(a.uploadTime));
+      opportunities.sort((a, b) => a.uploadTime.compareTo(b.uploadTime));
     }
 
     if (onlyYouthExchange) {
@@ -76,7 +75,7 @@ class Filters {
     if (dateRange) {
       opportunities = opportunities
           .where((opportunity) =>
-          opportunity.startDate.compareTo(dateRangeList[0]) >= 0 && opportunity.startDate.compareTo(dateRangeList[1]) < 0)
+          opportunity.startDate.compareTo(dateRangeList[0]) >= 0 && opportunity.endDate.compareTo(dateRangeList[1]) < 0)
           .toList();
     }
 
@@ -102,27 +101,32 @@ class Filters {
 
     if (agesAccepted) {
       opportunities = opportunities
-          .where((opportunity) =>  opportunity.lowAge >= agesAcceptedList.start
-            && opportunity.highAge <= agesAcceptedList.end)
+          .where((opportunity) =>
+            opportunity.lowAge <= agesAcceptedList.start &&
+            agesAcceptedList.start <= opportunity.highAge &&
+            opportunity.lowAge <= agesAcceptedList.end &&
+            agesAcceptedList.end <= opportunity.highAge)
           .toList();
     }
 
     if (topics) {
       opportunities = opportunities
-          .where((opportunity) =>  topicsList.contains(opportunity.topics)).toList();
+          .where((opportunity) =>  _compareTopics(opportunity)).toList();
     }
 
     if (nonRefundableFees) {
       opportunities = opportunities
-          .where((opportunity) =>  opportunity.participationCost >= nonRefundableFeesList.start
-          && opportunity.participationCost <= nonRefundableFeesList.end)
+          .where((opportunity) =>
+            nonRefundableFeesList.start <= opportunity.participationCost &&
+            opportunity.participationCost <= nonRefundableFeesList.end)
           .toList();
     }
 
     if (reimbursableExpenses) {
       opportunities = opportunities
-          .where((opportunity) =>  opportunity.reimbursementLimit >= reimbursableExpensesList.start
-          && opportunity.reimbursementLimit <= reimbursableExpensesList.end)
+          .where((opportunity) =>
+            reimbursableExpensesList.start <= opportunity.reimbursementLimit &&
+            opportunity.reimbursementLimit <= reimbursableExpensesList.end)
           .toList();
     }
 
@@ -134,25 +138,30 @@ class Filters {
     return opportunities;
   }
 
-  List<Opportunity> setTitle(List<Opportunity> opportunities, String titleValue) {
-    _titleValue = titleValue;
+  List<Opportunity> setTitle(List<Opportunity> opportunities, String value) {
+    title = true;
+    titleValue = value;
     return applyFilters(opportunities);
   }
 
   List<Opportunity> setSortByUrgent(List<Opportunity> opportunities) {
-    sortByDeadline = !sortByDeadline;
-    sortByStartDate = !sortByStartDate;
+    sortByDeadline = true;
+    sortByStartDate = false;
+    sortByDateAdded = false;
     return applyFilters(opportunities);
   }
 
   setSortByStartDate(List<Opportunity> opportunities) {
-    sortByStartDate = !sortByStartDate;
-    sortByDeadline = !sortByDeadline;
+    // TODO do we need to take in the oops?
+    sortByDeadline = false;
+    sortByStartDate = true;
+    sortByDateAdded = false;
   }
 
-  List<Opportunity> setLiked(List<Opportunity> opportunities) {
-    liked = !liked;
-    return applyFilters(opportunities);
+  setSortByDateAdded(List<Opportunity> opportunities) {
+    sortByDeadline = false;
+    sortByStartDate = false;
+    sortByDateAdded = true;
   }
 
   List<Opportunity> setFree(List<Opportunity> opportunities) {
@@ -324,20 +333,27 @@ class Filters {
   bool _compareParticipatingCountries(Opportunity opp) {
     if (opp.participatingCountries.isEmpty) return false;
 
-    int counter = 0;
     for (var country in participatingCountriesList) {
       if (opp.participatingCountries.contains(country)) {
-        counter++;
+        return true;
       }
     }
-    if (counter == participatingCountriesList.length) return true;
     return false;
   }
 
   bool _compareReceivingOrganisations(Opportunity opp) {
-    for (var organisation in receivingOrganisationsList) {
-      if (opp.organisationName == organisation) {
+    for (var organisationName in receivingOrganisationsList) {
+      if (opp.organisationName == organisationName) {
         return true;
+      }
+    }
+    return false;
+  }
+
+  bool _compareTopics(Opportunity opp) {
+    for (var topic in topicsList) {
+      for (var topicFromOpp in opp.topics) {
+        if (topicFromOpp.toString() == topic) return true;
       }
     }
     return false;
