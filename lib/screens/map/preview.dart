@@ -1,14 +1,16 @@
 import 'package:erasmusopportunitiesapp/models/opportunity.dart';
 import 'package:erasmusopportunitiesapp/models/volunteer.dart';
 import 'package:erasmusopportunitiesapp/screens/home/opportunity_screen.dart';
+import 'package:erasmusopportunitiesapp/services/database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class OpportunityPreviewForMap extends StatefulWidget {
   final Opportunity opportunity;
+  final VolunteerData user;
 
-  const OpportunityPreviewForMap({Key key, this.opportunity}) : super(key: key);
+  const OpportunityPreviewForMap({Key key, this.opportunity, this.user}) : super(key: key);
   @override
   _OpportunityPreviewForMapState createState() => _OpportunityPreviewForMapState();
 }
@@ -17,9 +19,28 @@ class _OpportunityPreviewForMapState extends State<OpportunityPreviewForMap> {
   @override
   Widget build(BuildContext context) {
 
-    final user = Provider.of<Volunteer>(context);
+    var currentUser = widget.user;
+    var currentOpp = widget.opportunity;
+    var isLikedActive = currentUser == null ? false : true;
 
-    var isLikedActive = user == null ? false : true;
+    bool isOppLiked(String oid) {
+      if (currentUser.liked.contains(oid)) {
+        return true;
+      }
+      return false;
+    }
+
+    _onFavored() {
+      if (currentUser.isOpportunityLiked(currentOpp.oid)) {
+        DatabaseService(uid: currentUser.uid)
+            .removeLikedOpportunityFromUser(currentOpp.oid);
+        currentUser.liked.add(currentOpp.oid);
+      } else {
+        DatabaseService(uid: currentUser.uid)
+            .addLikedOpportunityToUser(currentOpp.oid);
+      }
+      currentUser.liked.remove(currentOpp.oid);
+    }
 
     return  GestureDetector(
       onTap: () =>
@@ -28,7 +49,7 @@ class _OpportunityPreviewForMapState extends State<OpportunityPreviewForMap> {
             MaterialPageRoute(
                 builder: (_) =>
                     OpportunityScreen(
-                      opportunity: widget.opportunity,
+                      opportunity: currentOpp,
                     )
             ),
           ),
@@ -69,7 +90,7 @@ class _OpportunityPreviewForMapState extends State<OpportunityPreviewForMap> {
                           Container(
                             width: 180.0,
                             child: Text(
-                              widget.opportunity.title.toString()
+                              currentOpp.title.toString()
                                   .trim(),
                               maxLines: 2,
                               overflow: TextOverflow.ellipsis,
@@ -83,13 +104,13 @@ class _OpportunityPreviewForMapState extends State<OpportunityPreviewForMap> {
                       ),
                       SizedBox(height: 5.0,),
                       Text(
-                        "Deadline: " +  widget.opportunity.getDeadline(),
+                        "Deadline: " +  currentOpp.getDeadline(),
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
                       ),
                       SizedBox(height: 5.0,),
                       Text(
-                        "Start date: " +  widget.opportunity.getStartDate(),
+                        "Start date: " +  currentOpp.getStartDate(),
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
                       ),
@@ -107,7 +128,7 @@ class _OpportunityPreviewForMapState extends State<OpportunityPreviewForMap> {
                         ),
                         alignment: Alignment.center,
                         child: Text(
-                            widget.opportunity.getPreviewType()),
+                            currentOpp.getPreviewType()),
                       ),
                       SizedBox(width: 10.0,),
                       Container(
@@ -133,7 +154,7 @@ class _OpportunityPreviewForMapState extends State<OpportunityPreviewForMap> {
                         ),
                         alignment: Alignment.center,
                         child: Text(
-                            widget.opportunity.getPreviewDuration()),
+                            currentOpp.getPreviewDuration()),
                       ),
                     ],
                   ),
@@ -146,18 +167,18 @@ class _OpportunityPreviewForMapState extends State<OpportunityPreviewForMap> {
             top: 15.0,
             bottom: 15.0,
             child: Hero(
-              tag:  widget.opportunity.oid,
+              tag:  currentOpp.oid,
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(20.0),
-                child:  widget.opportunity.coverImage != null ?
+                child:  currentOpp.coverImage != null ?
                 Image.network(
-                  widget.opportunity.coverImage,
+                  currentOpp.coverImage,
                   width: 110.0,
                   fit: BoxFit.cover,
                 ) :
                 Image(
                   width: 110.0,
-                  image: AssetImage( widget.opportunity.getRandomImage()),
+                  image: AssetImage(currentOpp.getRandomImage()),
                   fit: BoxFit.cover,
                 ),
               ),
@@ -167,14 +188,18 @@ class _OpportunityPreviewForMapState extends State<OpportunityPreviewForMap> {
             right: 30.0,
             top: 66.0,
             child: IconButton(
-              onPressed: () => print('Add to Favorites'),
-              icon: Icon(Icons.favorite_border),
+              onPressed: () {
+                _onFavored();
+              },
+              icon: isOppLiked(currentOpp.oid) ?
+              Icon(Icons.favorite) :
+              Icon(Icons.favorite_border),
               iconSize: 30.0,
-              color: Colors.black,
+              color: Colors.red,
             ),
           ) : Text(''),
         ],
       ),
-    );;
+    );
   }
 }

@@ -1,4 +1,5 @@
 import 'package:erasmusopportunitiesapp/models/opportunity.dart';
+import 'package:erasmusopportunitiesapp/models/volunteer.dart';
 import 'package:erasmusopportunitiesapp/screens/map/preview.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -14,7 +15,7 @@ class MapScreen extends StatefulWidget {
 class _MapScreenState extends State<MapScreen> {
   GoogleMapController mapController;
 
-  final LatLng _center = const LatLng(47.658933, 16.181248);
+  LatLng _center = const LatLng(47.658933, 16.181248);
   Set<Marker> markers = Set.from([]);
 
   Future<LatLng> getLatLong(String address) async {
@@ -29,6 +30,7 @@ class _MapScreenState extends State<MapScreen> {
   Widget build(BuildContext context) {
 
     final opportunities = Provider.of<List<Opportunity>>(context);
+    final volunteer = Provider.of<VolunteerData>(context);
 
     void _onMapCreated(GoogleMapController controller) {
       mapController = controller;
@@ -97,13 +99,12 @@ class _MapScreenState extends State<MapScreen> {
                   alignment: FractionalOffset.bottomCenter,
                   child: Padding(
                     padding: const EdgeInsets.only(bottom: 20.0),
-                    child: currentOpp == null ? Text('') : OpportunityPreviewForMap(opportunity: currentOpp,),
+                    child: currentOpp == null ?
+                    Text('') :
+                    OpportunityPreviewForMap(opportunity: currentOpp, user: volunteer,),
                   ),
                 ),
               ),
-
-
-
             ],
           )
         ),

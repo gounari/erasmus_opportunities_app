@@ -1,4 +1,5 @@
 import 'package:erasmusopportunitiesapp/models/opportunity.dart';
+import 'package:erasmusopportunitiesapp/models/volunteer.dart';
 import 'package:erasmusopportunitiesapp/screens/map/map.dart';
 import 'package:erasmusopportunitiesapp/services/database.dart';
 import 'package:flutter/cupertino.dart';
@@ -9,14 +10,23 @@ class MapHelperScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    return StreamProvider<List<Opportunity>>.value(
-      value: DatabaseService().opportunities,
-      child: Scaffold(
-          appBar: AppBar(
-            title: Image.asset('assets/images/logo_white.png', scale: AppBar().preferredSize.height / 8,),
-          ),
-          body: MapScreen()
-      ),
+    final user = Provider.of<Volunteer>(context);
+
+    return Scaffold(
+        appBar: AppBar(
+          title: Image.asset('assets/images/logo_white.png', scale: AppBar().preferredSize.height / 8,),
+        ),
+        body: MultiProvider(
+            providers: [
+              StreamProvider<VolunteerData>.value(
+                  value: DatabaseService(uid: user.uid).volunteerData
+              ),
+              StreamProvider<List<Opportunity>>.value(
+                  value: DatabaseService().opportunities
+              ),
+            ],
+            child: MapScreen(),
+        )
     );
   }
 }
