@@ -39,6 +39,19 @@ class InfoScreen extends StatelessWidget {
               Text(
                   "🤸‍️  Young people can study, volunteer and gain work experience abroad, to develop new skills, gain vital international experience and boost their employability\n‍🎓  Staff can teach or train abroad, to develop their professional practice, build relationships with international peers, and gain fresh ideas.\n🌈  Organisations can collaborate with international partners, to drive innovation, share best practice, and offer new opportunities to young people."
               ),
+              SizedBox(height: 20.0,),
+              Text(
+                'The proccess',
+                style: TextStyle(
+                  fontSize: 25.0,
+                  fontWeight: FontWeight.bold,
+                  color: Theme.of(context).primaryColor,
+                ),
+              ),
+              SizedBox(height: 20.0,),
+              Text(
+'🍄 After the submission deadline organisation will get in contact with you via email to inform you if you are accepted or not.\n🌴 The successful participants need to book their own travel to the venue.\n🌹 After successful completion of the program and relevant document submission the money spent is reimbursed.\n🌺 Successful completion requires attending of more than 90% of the workshops.\n🌼 The organisation takes care of accommodation and board throughout the program. Note that if you need any adjustment you should get in contact with the organisation before the start of the program.'
+              ),
             ],
           ),
         ),
