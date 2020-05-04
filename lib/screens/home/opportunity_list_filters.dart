@@ -3,6 +3,7 @@ import 'package:erasmusopportunitiesapp/models/opportunity.dart';
 import 'package:erasmusopportunitiesapp/models/volunteer.dart';
 import 'package:erasmusopportunitiesapp/screens/home/filters.dart';
 import 'package:erasmusopportunitiesapp/widgets/FiltersOutlineButton.dart';
+import 'package:erasmusopportunitiesapp/widgets/error_message_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -136,9 +137,12 @@ class OpportunityListFilters extends StatelessWidget {
                     ),
                   ),
                   Expanded(
-                    child: OpportunitiesList(
+                    child: filteredOpportunities != null && filteredOpportunities.isNotEmpty ? OpportunitiesList(
                       opportunities: filteredOpportunities,
                       volunteer: volunteer,
+                    ) :
+                    ErrorMessageScreen(
+                      message: 'There are no opportunities that match your search filters.',
                     ),
                   ),
                 ],
