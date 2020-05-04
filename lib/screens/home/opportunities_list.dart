@@ -2,19 +2,17 @@ import 'package:erasmusopportunitiesapp/models/volunteer.dart';
 import 'package:erasmusopportunitiesapp/services/database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:erasmusopportunitiesapp/models/opportunity.dart';
-import 'package:provider/provider.dart';
 import 'opportunity_screen.dart';
 
 class OpportunitiesList extends StatelessWidget {
 
   final List<dynamic> opportunities;
-  final Volunteer volunteer;
+  final VolunteerData volunteer;
   OpportunitiesList({this.opportunities, UniqueKey key, this.volunteer});
 
   @override
   Widget build(BuildContext context) {
-    final user = volunteer == null ? Provider.of<Volunteer>(context) : volunteer;
+    final user = volunteer;
 
     var isLikedActive = user == null ? false : true;
 

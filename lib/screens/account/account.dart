@@ -1,6 +1,6 @@
 import 'package:erasmusopportunitiesapp/models/opportunity.dart';
 import 'package:erasmusopportunitiesapp/models/volunteer.dart';
-import 'package:erasmusopportunitiesapp/screens/home/opportunities_list.dart';
+import 'package:erasmusopportunitiesapp/screens/account/liked_opportunities.dart';
 import 'package:erasmusopportunitiesapp/services/auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -17,7 +17,6 @@ class _AccountState extends State<Account> {
 
   @override
   Widget build(BuildContext context) {
-    final user = Provider.of<Volunteer>(context);
     final volunteersData = Provider.of<VolunteerData>(context);
     final opportunities = Provider.of<List<Opportunity>>(context);
 
@@ -68,12 +67,12 @@ class _AccountState extends State<Account> {
                     textAlign: TextAlign.center,
                   ),
                   FlatButton(
-                    onPressed: () async {
+                    onPressed: () {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
                             builder: (_) =>
-                                OpportunitiesList(volunteer: user, opportunities: opportunities,),
+                              LikedOpportunities(opportunities: opportunities, volunteer: volunteersData),
                         ),
                       );
                     },

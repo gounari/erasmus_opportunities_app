@@ -58,8 +58,10 @@ class DatabaseService {
   }
 
   Stream<VolunteerData> get volunteerData {
-    return volunteersCollection.document(uid).snapshots()
-        .map(_volunteerDataFromSnapshot);
+    if (uid != null) {
+      return volunteersCollection.document(uid).snapshots()
+          .map(_volunteerDataFromSnapshot);
+    }
   }
 
   final CollectionReference volunteersCollection = Firestore.instance.collection('volunteers');

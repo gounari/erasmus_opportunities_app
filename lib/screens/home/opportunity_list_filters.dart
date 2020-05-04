@@ -1,5 +1,6 @@
 import 'package:erasmusopportunitiesapp/models/Filters.dart';
 import 'package:erasmusopportunitiesapp/models/opportunity.dart';
+import 'package:erasmusopportunitiesapp/models/volunteer.dart';
 import 'package:erasmusopportunitiesapp/screens/home/filters.dart';
 import 'package:erasmusopportunitiesapp/widgets/FiltersOutlineButton.dart';
 import 'package:flutter/cupertino.dart';
@@ -14,6 +15,7 @@ class OpportunityListFilters extends StatelessWidget {
 
     var _searchController = TextEditingController();
 
+    final volunteer = Provider.of<VolunteerData>(context);
     final opportunities = Provider.of<List<Opportunity>>(context);
     var filteredOpportunities = opportunities;
     var filters = Filters();
@@ -134,7 +136,10 @@ class OpportunityListFilters extends StatelessWidget {
                     ),
                   ),
                   Expanded(
-                      child: OpportunitiesList(opportunities: filteredOpportunities),
+                    child: OpportunitiesList(
+                      opportunities: filteredOpportunities,
+                      volunteer: volunteer,
+                    ),
                   ),
                 ],
               ),
