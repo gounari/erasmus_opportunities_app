@@ -17,6 +17,13 @@ class OpportunitiesList extends StatelessWidget {
 
     var isLikedActive = user == null ? false : true;
 
+    bool isOppLiked(String oid) {
+      if (user.liked.contains(oid)) {
+        return true;
+      }
+      return false;
+    }
+
     return ListView.builder(
       padding: EdgeInsets.only(top: 10.0, bottom: 15.0),
       itemCount: opportunities.length,
@@ -185,14 +192,18 @@ class OpportunitiesList extends StatelessWidget {
                     if (user.isOpportunityLiked(opportunities[index].oid)) {
                       DatabaseService(uid: user.uid).removeLikedOpportunityFromUser(
                           opportunities[index].oid);
+                      user.liked.add(opportunities[index].oid);
                     } else {
                       DatabaseService(uid: user.uid).addLikedOpportunityToUser(
                           opportunities[index].oid);
                     }
+                    user.liked.remove(opportunities[index].oid);
                   },
-                  icon: Icon(Icons.favorite_border),
+                  icon: isOppLiked(opportunities[index].oid) ?
+                      Icon(Icons.favorite) :
+                      Icon(Icons.favorite_border),
                   iconSize: 30.0,
-                  color: Colors.black,
+                  color: Colors.red,
                 ),
               ) : Text(''),
             ],
