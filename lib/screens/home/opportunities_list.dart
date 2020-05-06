@@ -187,8 +187,7 @@ class OpportunitiesList extends StatelessWidget {
                 top: 67.5,
                 child: IconButton(
                   onPressed: () {
-                    print('PRESSED');
-                    print('USER ID: ' + user.uid);
+
                     if (user.isOpportunityLiked(opportunities[index].oid)) {
                       DatabaseService(uid: user.uid).removeLikedOpportunityFromUser(
                           opportunities[index].oid);
@@ -198,6 +197,7 @@ class OpportunitiesList extends StatelessWidget {
                           opportunities[index].oid);
                     }
                     user.liked.remove(opportunities[index].oid);
+
                   },
                   icon: isOppLiked(opportunities[index].oid) ?
                       Icon(Icons.favorite) :

@@ -21,7 +21,7 @@ void main() {
     startDate: DateTime.parse("2020-06-27"),
     endDate: DateTime.parse("2020-07-05"),
     lowAge: 16,
-    highAge: 70,
+    highAge: 24,
     topics: [topics[0], topics[2]],
     applicationDeadline: DateTime.parse("2020-05-01"),
     participationCost: 50,
@@ -195,15 +195,54 @@ void main() {
     expect(list.length, 2);
   });
 
-  test('setAgesAccepted', () {
+  test('setAgesAccepted min-nom', () {
     final filters = Filters();
 
-    filters.setAgesAccepted(oppList, RangeValues(31, 33));
+    filters.setAgesAccepted(oppList, RangeValues(16, 20));
     List<Opportunity> list = filters.applyFilters(oppList);
 
     expect(list[0], opp1);
-    expect(list[1], opp3);
-    expect(list.length, 2);
+    expect(list.length, 1);
+  });
+
+  test('setAgesAccepted minPlus-nom', () {
+    final filters = Filters();
+
+    filters.setAgesAccepted(oppList, RangeValues(17, 20));
+    List<Opportunity> list = filters.applyFilters(oppList);
+
+    expect(list[0], opp1);
+    expect(list.length, 1);
+  });
+
+  test('setAgesAccepted nom-nom', () {
+    final filters = Filters();
+
+    filters.setAgesAccepted(oppList, RangeValues(20, 20));
+    List<Opportunity> list = filters.applyFilters(oppList);
+
+    expect(list[0], opp1);
+    expect(list.length, 1);
+  });
+
+  test('setAgesAccepted nom-maxMinus', () {
+    final filters = Filters();
+
+    filters.setAgesAccepted(oppList, RangeValues(20, 23));
+    List<Opportunity> list = filters.applyFilters(oppList);
+
+    expect(list[0], opp1);
+    expect(list.length, 1);
+  });
+
+  test('setAgesAccepted nom-maxMinus', () {
+    final filters = Filters();
+
+    filters.setAgesAccepted(oppList, RangeValues(20, 24));
+    List<Opportunity> list = filters.applyFilters(oppList);
+
+    expect(list[0], opp1);
+    expect(list.length, 1);
   });
 
   test('setTopics', () {
